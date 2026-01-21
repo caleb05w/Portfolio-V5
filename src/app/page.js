@@ -13,7 +13,7 @@ export default function Page() {
 
   const cards = [
     { id: 1, type: "Intro", name: "Intro" },
-    { id: 2, type: "Case", name: "RevisionDojo", link: "/RevisionDojo", videoSrc: "/images/NewDemo2.mp4", body: "Redesigning the search experience for 400,000 IBDP users.", year: "2025" },
+    { id: 2, type: "Case", name: "RevisionDojo", link: "/RevisionDojo", videoSrc: "/images/newDemo2.mp4", body: "Redesigning the search experience for 400,000 IBDP users.", year: "2025" },
     { id: 3, type: "Case", name: "Axis", link: "/Axis", videoSrc: "/images/Axis/AxisCover.mp4", body: "Launching an ambitious rebrand for a consulting club.", year: "2024" },
     { id: 4, type: "End", name: "Contact" },
   ];

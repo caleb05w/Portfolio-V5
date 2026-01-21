@@ -162,14 +162,6 @@ function Page() {
                                     imgHeight="h-[60vh]"
                                 />
 
-                                <ContainerLine
-                                    subheader="Design Decision"
-                                    title="Filters, filters, and more filters."
-                                    body={["With content spanning 4 layers, we needed to think about when and where we should be segmenting content. The web app is seriously massive, so "]}
-                                    img="/images/RD10new.png"
-                                    alt="Project Research Timeline"
-                                    gutter="case-x-gutter"
-                                />
 
                                 <ContainerVideo
                                     subheader="Design Decision"

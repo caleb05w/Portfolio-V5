@@ -38,13 +38,13 @@ function Label({ text }) {
                 </div>
                 <div className='w-full flex flex-col gap-[0.5rem] items-start h-fit'>
                     <p className='text-left'> {text} </p>
-                    <div className="flex flex-row flex-wrap gap-[0.25rem]">
-                        <p> Reach out to</p>
-                        <a href="mailto:caleb05w@gmail.com" className=' hover:underline'>
-                            <p className='!font-[600]'>caleb05w@gmail.com</p>
+                    <p className="flex flex-row flex-wrap gap-[0.25rem]">
+                        <span>Reach out to</span>
+                        <a href="mailto:caleb05w@gmail.com" className='hover:underline font-[600]'>
+                            caleb05w@gmail.com
                         </a>
-                        <p className='text-nowrap'> for the full story!</p>
-                    </div>
+                        <span className='whitespace-nowrap'>for the full story!</span>
+                    </p>
                 </div>
             </div>
         </button>
