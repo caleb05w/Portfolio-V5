@@ -1,0 +1,192 @@
+"use client"
+
+import React, { useRef, useEffect } from 'react'
+import ContainerLine from '../../../components/containerLine'
+import ContainerIntro from '../../../components/ContainerIntro'
+import ContainerReflection from '../../../components/containerReflection'
+import ContainerVideo from "../../../components/containerVideo"
+import { useCaseContext } from "../../../utils/caseContext";
+import Label from "../../../components/label"
+import Sidebar from "../../../components/sidebar"
+
+
+function Page() {
+    const team = ["1 Design Director (Me)", "2 Designers"]
+    const { setShowTop, showTop } = useCaseContext();
+    const pageTop = useRef(null)
+
+    const scrollToSection = (sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+        }
+    };
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            setShowTop(entry.isIntersecting)
+        })
+        observer.observe(pageTop.current)
+        return () => observer.disconnect();
+    }, [setShowTop])
+
+    return (
+        <div className='flex flex-col'>
+            {/* Fixed spacer */}
+            <div className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1] lg:bg-transparent ${showTop ? 'h-[8rem]' : 'h-[0rem]'}`} />
+
+            <div className='flex flex-row h-screen w-full'>
+                {/* Sidebar */}
+                <div className={`h-full ${showTop ? "md:w-[4rem] lg:w-[4rem] xl:w-[4rem]" : "md:w-[8rem] lg:w-[8rem] xl:w-[8rem]"} ease-fast duration-[400ms]`}>
+                    <div className={`z-[10] fixed h-full w-[0] xl:w-[8rem] md:w-[8rem] lg:w-[8rem] flex flex-col overflow-hidden top-[6rem] justify-start h-full ease-fast duration-[450ms] pl-[1rem]
+                    ${showTop ? "opacity-[0%]" : "opacity-[100%]"}
+                    `}>
+                        <Sidebar
+                            cards={[
+                                { id: 'about', name: 'Intro' },
+                                { id: 'design', name: 'Design' },
+                                { id: 'pillars', name: 'Pillars' },
+                                { id: 'reflection', name: 'Reflection' },
+                            ]}
+                            onCardSelect={scrollToSection}
+                        />
+                    </div>
+                </div>
+
+                {/* Main content */}
+                <div className='flex flex-col flex-1 min-w-0 h-fit transition-all duration-[450ms] ease-out'>
+                    <div ref={pageTop} />
+
+                    <div className='w-full flex flex-col pb-[4-rem] bg-secondary items-center'>
+                        <div className={`flex flex-col bg-white w-full justify-center y-gutter ease-in-out duration-[450ms] px-[0] md:px-[2rem] lg:px-[2rem] xl:px-[2rem]
+                            ${showTop ? " rounded-[1rem]" : " rounded-[0rem]"}
+                            `}>
+
+                            {/* About Section */}
+                            <div id="about" className='flex flex-col gap-[0.5rem] case-mt'>
+                                <ContainerIntro
+                                    Name="Axis Consulting"
+                                    Year="2025"
+                                    body={[
+                                        "Axis Consulting, a pro bono consulting club at Simon Fraser University, needed a bold rebrand to reignite engagement. ",
+                                        "As the Design Director, I developed a striking visual identity to inspire and captivate its audience."
+                                    ]}
+                                    Teammates={team}
+                                />
+                                <ContainerLine
+                                    img="/images/Axis/Axis1.png"
+                                    img2="/images/Axis/Axis2.png"
+                                    alt="Project Research Timeline"
+                                    gutter="case-x-gutter"
+                                    imgHeight="h-[20rem]"
+                                    imgw="w-full"
+                                    imgw2="lg:w-[50%] w-full"
+                                    imgobj2="object-cover"
+                                    imgobj="object-cover"
+                                />
+                                <ContainerLine
+                                    img="/images/Axis/Axis3.png"
+                                    alt="Project Research Timeline"
+                                    gutter="case-x-gutter"
+                                    imgHeight="h-[25rem]"
+                                    imgobj="object-cover"
+                                />
+                            </div>
+
+                            {/* Mission Section */}
+                            <div id="design" className='flex flex-col gap-[0.5rem] case-mt' >
+                                <ContainerLine
+                                    subheader="The Mission"
+                                    title="Reignite a dying brand"
+                                    body={["The brand is built on contrast: structured, strategic geometry paired with fluid motion. It reflects consultants who are grounded in precision, yet constantly adapting"]}
+                                    img="/images/Axis/Axis4.png"
+                                    img2="/images/Axis/Axis5.png"
+                                    alt="Project Research Timeline"
+                                    gutter="case-x-gutter"
+                                    imgHeight="h-[20rem]"
+                                    imgobj="object-cover"
+                                    imgobj2="object-cover"
+                                />
+                                <ContainerLine
+                                    img="/images/Axis/Axis6.png"
+                                    alt="Project Research Timeline"
+                                    gutter="case-x-gutter"
+                                    imgHeight="h-[25rem]"
+                                />
+                                <ContainerLine
+                                    img="/images/Axis/Axis7.png"
+                                    img2="/images/Axis/Axis8.png"
+                                    alt="Project Research Timeline"
+                                    gutter="case-x-gutter"
+                                    imgHeight="h-[20rem]"
+                                    imgw="w-full"
+                                    imgw2="lg:w-[60%] w-full"
+                                    imgobj2="object-cover"
+                                />
+                                <ContainerLine
+                                    img2="/images/Axis/Axis10.png"
+                                    alt="Project Research Timeline"
+                                    gutter="case-x-gutter"
+                                    imgHeight="h-[20rem]"
+                                    imgw=" lg:w-[40%] w-full"
+                                    imgw2="w-full"
+                                    imgobj="object-cover"
+                                />
+                            </div>
+
+                            {/* Solution Section */}
+                            <div id="pillars" className='flex flex-col gap-[0.5rem] case-mt' >
+                                <ContainerLine
+                                    subheader="Visual Pillars"
+                                    title="Visual Pillars inspired by core values."
+                                    body={["Much of the visual motifs that decorate our images were inspired by the 3 core values of Axis: Strategy, Clarity, and Impact. Their presence across the art direction were meant to ground assets, just as the core values ground our organization."]}
+                                    img="/images/Axis/Axis11.png"
+                                    alt="Project Research Timeline"
+                                    gutter="case-x-gutter"
+                                    imgHeight="h-[25rem]"
+                                />
+                                <ContainerLine
+                                    img="/images/Axis/Axis12.png"
+                                    alt="Project Research Timeline"
+                                    gutter="case-x-gutter"
+                                    imgHeight="h-[25rem]"
+                                />
+                                <ContainerLine
+                                    img="/images/Axis/Axis13.png"
+                                    img2="/images/Axis/Axis14a.png"
+                                    alt="Project Research Timeline"
+                                    gutter="case-x-gutter"
+                                    imgHeight="h-[20rem]"
+                                    imgobj2="object-cover"
+                                />
+                            </div>
+
+
+                            {/* Reflection Section */}
+                            <div id="reflection" className='case-mt case-gap flex flex-col'>
+                                <ContainerReflection
+                                    reflections={[
+                                        "Good ideas come from anywhere. Leading a powerhouse of a team meant doing more collaborating then delegating. Some of the weirdest ideas came while I was on the toilet.",
+                                        "Chase feedback in moderation. Trying to appease a 13+ person executive team is incredibly hard.",
+                                    ]}
+                                />
+                                <Label text="This is just a snapshot of the entire design process." />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* //left side */}
+                <div className={` h-full duration-[400ms] ease-fast
+                ${showTop ? "md:w-[4rem] xl:w-[4rem] lg:w-[4rem]" : "w-[0rem]"}
+                `}></div>
+            </div>
+        </div >
+    )
+}
+
+export default Page

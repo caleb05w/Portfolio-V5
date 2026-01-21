@@ -1,15 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #e8eaeb;
   --foreground: #171717;
+  --text-teritary: #58534d;
+  --primary-orange: #f54900;
+  --primary-gray: #e8eaeb;
+  --text-secondary: #737373;
+  --ease-slow: cubic-bezier(0.7, 0, 0.2, 1);
+  --ease-fast: cubic-bezier(0.62, 0.61, 0.02, 1);
+  --ease-fastfast: cubic-bezier(0.5, 0, 0, 1);
+}
+
+@layer utilities {
+  .ease-slow {
+    transition-timing-function: var(--ease-slow);
+  }
+
+  .ease-fast {
+    transition-timing-function: var(--ease-fast);
+  }
+
+  .ease-fastfast {
+    transition-timing-function: var(--ease-fastfast);
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  /* --color-primary: var(--primary-orange); */
+  --color-primary: var(--primary-orange);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-teritary: var(--text-teritary);
+  --color-secondary: var(--primary-gray);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1680px;
+  --breakpoint-2xl: 1920px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,4 +54,272 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* //debug */
+/* * {
+  border: 2px solid red;
+} */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  /* font-family: var(--font-pp-neue-montreal), system-ui, sans-serif; */
+  font-family: "SF Pro Display";
+  font-weight: 500;
+  line-height: 150%;
+}
+
+h1,
+h2 {
+  font-size: 1.1rem;
+}
+
+h3,
+p {
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.24px;
+}
+
+h4,
+h5 {
+  font-size: 0.6rem;
+  letter-spacing: 0.24px;
+}
+
+h6 {
+  font-size: 0.8rem;
+  line-height: 140%;
+  letter-spacing: 0.12px;
+  font-weight: 400;
+}
+
+.clamp {
+  height: full;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  width: 0;
+  overflow:hidden
+}
+
+.nav-bg {
+  background: linear-gradient(to top, transparent 0%, #e8eaeb 95%);
+  mask-image: linear-gradient(
+    to bottom,
+    #e8ea 0%,
+    #e8eab 45%,
+    transparent 100%
+  );
+}
+/* //highlight color change */
+::selection {
+  background: #f54900; /* highlight color */
+  color: white; /* text color */
+}
+
+/* Hide scrollbar but keep scrolling */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+/* clamps for page content */
+.x-gutter {
+  padding-inline: clamp(2rem, 8vw, 16rem);
+}
+
+.y-gutter {
+  padding-bottom: clamp(3rem, 12vw, 8rem);
+}
+
+.case-gap {
+  gap: 3rem;
+}
+ 
+.case-x-gutter {
+  padding-inline: clamp(2rem, 2rem, 20rem);
+}
+
+/* --------------------- */
+
+/* Medium (md) */
+@media (min-width: 768px) {
+  :root {
+    /* example overrides */
+  }
+  .x-gutter {
+    padding-inline: clamp(1rem, 12vw, 16rem);
+  }
+
+  .case-x-gutter {
+    padding-inline: clamp(2rem, 2rem, 20rem);
+  }
+
+  .y-gutter {
+    padding-bottom: clamp(3rem, 12vw, 8rem);
+  }
+
+  .case-gap {
+    gap: 4rem;
+  }
+
+  /* //offset to top. */
+  .case-mt {
+    margin-top: 4rem;
+    scroll-margin-top: 100px;
+  }
+
+  .clamp {
+    height: 100%;
+    width: clamp(6rem, 14vw, 24rem);
+  }
+
+  h1 {
+    font-size: rem;
+    line-height: 100%;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    line-height: 140%;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+    line-height: 170%;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  h6 {
+    font-size: 0.8rem;
+  }
+}
+
+/*  Large (lg) */
+@media (min-width: 1280px) {
+  :root {
+  }
+  .x-gutter {
+    padding-inline: clamp(1rem, 10vw, 16rem);
+  }
+
+  .case-x-gutter {
+    padding-inline: clamp(4rem, 8rem, 20rem);
+  }
+
+  .y-gutter {
+    padding-bottom: clamp(2.5rem, 8.5vw, 24rem);
+  }
+
+  .case-gap {
+    gap: 6rem;
+  }
+
+  .clamp {
+    height: 100%;
+    width: clamp(10rem, 18vw, 24rem);
+  }
+
+  h1 {
+    font-size: 1rem;
+    line-height: 100%;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    line-height: 140%;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  h4 {
+    font-size: 1.4rem;
+    line-height: 170%;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+  }
+}
+
+/* Extra Large (lg) */
+@media (min-width: 1920px) {
+  :root {
+  }
+  .x-gutter {
+    padding-inline: clamp(1rem, 24vw, 48rem);
+  }
+
+  .y-gutter {
+    padding-bottom: clamp(3rem, 12vw, 12rem);
+  }
+
+  .case-gap {
+    gap: 8rem;
+  }
+
+  h1,
+  h2 {
+    font-size: 2.1rem;
+  }
+
+  h3,
+  p {
+    font-size: 1.6rem;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 1.5rem;
+  }
+
+  /* //clamps control the left and right elements on the home page. */
+  .clamp {
+    height: 100%;
+    width: clamp(16rem, 16vw, 24rem);
+  }
+
+  .x-gutter {
+    padding-inline: clamp(1rem, 32vw, 64rem);
+  }
+
+  .y-gutter {
+    padding-bottom: clamp(3rem, 12vw, 8rem);
+  }
 }
