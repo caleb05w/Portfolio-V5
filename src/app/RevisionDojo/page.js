@@ -105,7 +105,7 @@ function Page() {
                                     img="/images/RD3a.png"
                                     alt="Project Research Timeline"
                                     gutter="case-x-gutter"
-                                    imgHeight="h-[20rem]"
+                                    imgHeight="h-[50vh]"
                                 />
 
                                 <div className="flex flex-col md:flex-row lg:flex-row gap-[2rem] case-x-gutter">
@@ -137,6 +137,7 @@ function Page() {
                                     alt="Project Research Timeline"
                                     gutter="case-x-gutter"
                                     videoSrc="/images/newDemo1.mp4"
+                                    videoHeight="h-[60vh]"
                                 />
 
                                 <ContainerVideo
@@ -147,6 +148,7 @@ function Page() {
                                     gutter="case-x-gutter"
                                     vidPad="p-[0rem] lg:p-[2rem] md:p-[2rem]"
                                     videoSrc="/images/newDemo2.mp4"
+                                    videoHeight="h-[60vh]"
                                 />
                             </div>
 
@@ -172,6 +174,7 @@ function Page() {
                                     rivStateMachine="State Machine 2"
                                     gutter="case-x-gutter"
                                     vidPad="p-[0rem] lg:p-[6rem] md:p-[4rem]"
+                                    videoHeight="h-[60vh]"
                                 />
                             </div>
 

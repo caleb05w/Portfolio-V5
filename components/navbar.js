@@ -33,17 +33,17 @@ function Navbar({ active }) {
                 : pathname === "/playground"
                     ? [
                         { name: "Caleb Wu", other: "none", cta: "/", visibility: true, isLogo: true },
-                        { name: "/Playground", other: "none", cta: "/playground", visibility: true },
+                        { name: "Playground", other: "none", cta: "/playground", visibility: true },
                     ]
                     : pathname === "/about"
                         ? [
                             { name: "Caleb Wu", other: "none", cta: "/", visibility: true, isLogo: true },
-                            { name: "/About", other: "none", cta: "/about", visibility: true },
+                            { name: "About", other: "none", cta: "/about", visibility: true },
                         ]
                         : [
                             { name: "About", other: "none", cta: "/about", visibility: true },
                             { name: "Playground", other: "none", cta: "/playground", visibility: true },
-                            { name: "Resume", other: "none", cta: "/", visibility: true },
+                            { name: "Resume", other: "none", cta: "/Caleb-Wu-Resume.pdf", visibility: true },
                         ];
 
     // Build combined array function

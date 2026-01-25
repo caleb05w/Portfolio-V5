@@ -21,13 +21,13 @@ function Page() {
     }, []); // Empty array - run once on moun
 
     const cards = [
-        { name: "Neal, Nah I'd Win.", category: "Drawing", year: "2025", src: "/images/playground1a.png", alt: "Card 1" },
-        { name: "Pixel Demon Guy", year: "2023", category: "Pixel Art", src: "/images/playground2aa.png", alt: "Card 2" },
-        { name: "test3", src: "/images/playground3a.png", alt: "Card 3" },
-        { name: "Empire Clash", category: "Digital Art", src: "/images/playground4a.png", alt: "Card 4" },
-        { name: "test4", src: "/images/playground5.png", alt: "Card 4" },
-        { name: "test4", src: "/images/playground6.png", alt: "Card 4" },
-        { name: "test4", src: "/images/playground7.png", alt: "Card 4" },
+        { name: "Namecard", category: "Design", year: "2025", src: "/images/playground1a.png", alt: "Card 1" },
+        { name: "Neal, Nah I'd Win.", year: "2024", category: "Pixel Art", src: "/images/playground2aa.png", alt: "Card 2" },
+        { name: "Pixel Aquarium", year: "2025", category: "Pixel Art", src: "/images/playground3a.png", alt: "Card 3" },
+        { name: "Empire Clash", year: "2024", category: "Digital Art", src: "/images/playground4a.png", alt: "Card 4" },
+        { name: "Dojo Calendar", year: "2025", category: "Digital Art", src: "/images/playground5.png", alt: "Card 4" },
+        { name: "Slide Showcase", year: "2025", category: "Design", src: "/images/playground6.png", alt: "Card 4" },
+        { name: "Dojo Treasure Chest", year: "2025", category: "Digital Art", src: "/images/playground7.png", alt: "Card 4" },
     ];
 
     return (

@@ -32,7 +32,7 @@ function Label({ text }) {
             onClick={copyEmail}
             {...tooltip("Copy Email")}
         >
-            <div className="flex flex-col md:flex-row gap-[3rem] lg:gap-[1rem] xl:flex-row lg:flex-row-reverse bg-secondary p-[1.5rem] h-fit">
+            <div className="min-w-full flex flex-col md:flex-row gap-[3rem] lg:gap-[1rem] xl:flex-row lg:flex-row-reverse bg-secondary p-[1.5rem] h-fit">
                 <div className='h-[3.5rem] w-[5rem] lg:w-[10%] flex-shrink-0'>
                     <RiveComponent />
                 </div>

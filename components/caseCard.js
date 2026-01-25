@@ -37,7 +37,7 @@ function caseCard({ name, img, link, header, body, year, active, type, videoSrc 
         <div className={`
             w-[80vw]
             md:w-[60vw]
-            lg:w-[60vw]
+            lg:w-[65vw]
             xl:w-[60vw]
             aspect-[5/3]
             lg:aspect-[5.5/3]
@@ -61,7 +61,7 @@ function caseCard({ name, img, link, header, body, year, active, type, videoSrc 
                             <div className='flex flex-col gap-[1rem] w-full items-center'>
 
                                 <div className='border-[0.75px] w-[3rem] border-secondary'></div>
-                                <h6 className='text-text-secondary max-w-[16rem] text-center'>
+                                <h6 className='text-text-secondary max-w-[20rem] text-center'>
                                     Currently Product @
                                     <a target="_blank" href="https://www.revisiondojo.com/" rel="noopener noreferrer" className="hover:text-black transition-colors duration-300">
                                         RevisionDojo(YCF24)
@@ -83,15 +83,6 @@ function caseCard({ name, img, link, header, body, year, active, type, videoSrc 
                 <section className="w-full h-full hover:cursor-pointer">
                     <Link href={link ?? "/"}>
                         <div className="flex overflow-hidden w-full h-full relative">
-                            {/* <div className="flex flex-row justify-center items-end absolute inset-0 w-full p-[2rem]">
-                                <div className="flex h-fit w-fit rounded-full bg-white backdrop-blur-sm">
-                                    <div className="flex flex-row w-full gap-[1rem] h-fit justify-center items-center p-[1.4rem]">
-                                        <h6 className='w-fit h-fit '>{name}</h6>
-                                        <h6> | </h6>
-                                        <h6 className='w-fit h-fit '>Shipping Search to 400,000 Users</h6>
-                                    </div>
-                                </div>
-                            </div> */}
                             {img &&
                                 <Image
                                     src={img ?? "/images/testfram1.png"}
@@ -132,9 +123,13 @@ function caseCard({ name, img, link, header, body, year, active, type, videoSrc 
                         <div className="flex flex-col gap-[2rem]">
                             <h2> Say Helloooo </h2>
                             <div className='flex flex-row gap-[0.25rem]'>
-                                <a href="" target="_blank"><p className='text-underline text-black hover:text-black hover:cursor-pointer'>/ Linkedin</p></a>
-                                <a href="" target="_blank"><p className='text-underline text-black hover:text-black hover:cursor-pointer'>/ Twitter</p></a>
-                                <a href="" target="_blank"><p className='text-underline text-black hover:text-black hover:cursor-pointer'>/ caleb05w@gmail.com</p></a>
+                                <a href="https://www.linkedin.com/in/caleb-wu-/" target="_blank"><p className='hover:text-underline text-black hover:text-black hover:cursor-pointer'>/ Linkedin</p></a>
+                                <a href="https://x.com/calebwu_" target="_blank"><p className='hover:text-underline text-black hover:text-black hover:cursor-pointer'>/ Twitter</p></a>
+                                <a href="mailto:caleb05w@gmail.com" target="_blank">
+                                    <p className=' text-black hover:text-underlinehover:cursor-pointer'>
+                                        / caleb05w@gmail.com
+                                    </p>
+                                </a>
                             </div>
                         </div>
                     </div>
