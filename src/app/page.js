@@ -185,7 +185,7 @@ export default function Page() {
             );
           })}
         </div>
-    </div>
+      </div>
 
       <div className="p-[2rem] flex flex-col w-full h-full ">
         <div className="w-full h-[50rem] md:w-full md:h-full flex items-center justify-center">
@@ -196,7 +196,7 @@ export default function Page() {
 
             let transformStyle = '';
             let filterStyle = '';
-            let opacity = 1;e
+            let opacity = 1;
             let zIndex = 10 - offset;
             let pointerEvents = 'auto';
             let opacityDelay = '0ms';
