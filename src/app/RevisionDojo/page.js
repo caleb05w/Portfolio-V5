@@ -136,7 +136,7 @@ function Page() {
                                     img="/images/RD8.png"
                                     alt="Project Research Timeline"
                                     gutter="case-x-gutter"
-                                    videoSrc="/images/newDemo1.mp4"
+                                    videoSrc="/images/RDDemo1.mp4"
                                     videoHeight="h-[60vh]"
                                 />
 

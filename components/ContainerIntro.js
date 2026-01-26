@@ -4,7 +4,7 @@ import ContainerImagesShowcase from './containerImagesShowcase'
 
 function ContainerIntro({ Teammates, Name, Year, body, videoSrc, image2, image3 }) {
     return (
-        <div className="flex flex-col gap-[5.125rem] xl:mt-[9rem] lg:mt-[8rem] mt-[4rem]  case-x-gutter">
+        <div className="flex flex-col gap-[5.125rem] case-x-gutter">
             <div className="flex flex-col lg:gap-[2rem] md:gap-[2rem] gap-[2rem] md:flex-row xl:flex-row lg:flex-row justify-between w-full">
                 <div className="flex flex-col gap-[1.5rem] md:max-w-[60%] xl:max-w-[60%] lg:max-w-[60%] w-full">
                     <h2>{Name}</h2>

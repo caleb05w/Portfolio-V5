@@ -3,6 +3,7 @@ import React, { useEffect, useLayoutEffect, useState, useCallback, useRef } from
 import CaseCard from "../../components/caseCard";
 import { useTooltip } from "../../utils/toolTipContext";
 
+
 export default function Page() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const lastTriggerTime = useRef(0);
@@ -13,8 +14,26 @@ export default function Page() {
 
   const cards = [
     { id: 1, type: "Intro", name: "Intro" },
-    { id: 2, type: "Case", name: "RevisionDojo", link: "/RevisionDojo", videoSrc: "/images/newDemo2.mp4", body: "Redesigning the search experience for 400,000 IBDP users.", year: "2025" },
-    { id: 3, type: "Case", name: "Axis", link: "/Axis", videoSrc: "/images/Axis/AxisCover.mp4", body: "Launching an ambitious rebrand for a consulting club.", year: "2024" },
+    {
+      id: 2,
+      type: "Case",
+      name: "RevisionDojo",
+      link: "/RevisionDojo",
+      videoSrc: "/images/newDemo2.mp4",
+      posterSrc: "/images/newDemo2-poster.jpg", // Add poster images
+      body: "Redesigning the search experience for 400,000 IBDP users.",
+      year: "2025",
+    },
+    {
+      id: 3,
+      type: "Case",
+      name: "Axis",
+      link: "/Axis",
+      videoSrc: "/images/Axis/AxisCover.mp4",
+      posterSrc: "/images/Axis/AxisCover-poster.jpg", // Add poster images
+      body: "Launching an ambitious rebrand for a consulting club.",
+      year: "2024",
+    },
     { id: 4, type: "End", name: "Contact" },
   ];
   const currentCard = cards[currentIndex];
@@ -116,17 +135,31 @@ export default function Page() {
     };
   }, [moveDown, moveUp]);
 
+  // Preload next video
+  useEffect(() => {
+    const nextIndex = (currentIndex + 1) % cards.length;
+    const nextCard = cards[nextIndex];
+
+    if (nextCard.videoSrc) {
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.as = 'video';
+      link.href = nextCard.videoSrc;
+      document.head.appendChild(link);
+
+      return () => {
+        document.head.removeChild(link);
+      };
+    }
+  }, [currentIndex, cards]);
+
   const goToCard = (index) => {
     setCurrentIndex(index);
   };
 
   return (
     <div className="w-screen md:px-[1rem] xl:px-[2rem] lg:px-[1rem] flex-col md:flex-row lg:flex-row h-screen fixed flex overscroll-none max-h-screen max-w-screen overflow-hidden bg-secondary will-change-transform">
-      {/* <div className='w-screen fixed z-[100] top-[2rem] bg-red-500'>
-        <h1 className="text-white p-4">Scroll Count: {scroll}</h1>
-      </div> */}
-
-      {/* //left side bar */}
+      {/* left side bar */}
       <div className='clamp'>
         <div className='flex flex-col w-full'>
           {cards.map((card, key) => {
@@ -148,45 +181,11 @@ export default function Page() {
                     {card.name}
                   </h6>
                 </div>
-                <div className="flex flex-row gap-[0.5rem] items-center">
-
-                  {/* main line */}
-                  {/* <div className={`relative h-[1px] overflow-hidden bg-gray-400 transition-all duration-500
-                  ${isActive ? "w-[2.5rem]" : "w-[1.5rem] group-hover:w-[2.5rem]"}`}>
-                  <div
-                    className={`absolute inset-0 bg-primary transition-transform duration-500 ease-in-out
-                      ${isActive ? 'translate-x-0' : '-translate-x-full'}
-                    `}
-                  />
-                </div> */}
-
-                  {/* /second line */}
-                  {/* <div className={`overflow-hidden transition-all duration-500
-                  ${isActive ? 'translate-y-0' : '-translate-y-full group-hover:translate-y-0'}
-                 `}>
-                  <h6
-                    className={`transition-transform duration-500 h-[1rem] !leading-[1rem] text-sm font-medium text-black
-                      ${isActive ? 'translate-y-0' : 'translate-y-[2rem] group-hover:translate-y-0'}
-                    `}
-                  >
-                    {card.name}
-                  </h6>
-                </div> */}
-
-
-                </div>
-                {/* <div className='relative w-[1rem] h-[1px] overflow-hidden bg-gray-400 group-hover:w-[1.5rem] duration-500 ease-in-out'>
-                <div
-                  className={`absolute inset-0 bg-black transition-transform duration-700 ease-in-out
-                    ${isActive ? 'translate-x-0' : '-translate-x-full'}
-                  `}
-                />
-              </div> */}
               </div>
             );
           })}
         </div>
-      </div>
+    </div>
 
       <div className="p-[2rem] flex flex-col w-full h-full ">
         <div className="w-full h-[50rem] md:w-full md:h-full flex items-center justify-center">
@@ -197,7 +196,7 @@ export default function Page() {
 
             let transformStyle = '';
             let filterStyle = '';
-            let opacity = 1;
+            let opacity = 1;e
             let zIndex = 10 - offset;
             let pointerEvents = 'auto';
             let opacityDelay = '0ms';
@@ -207,6 +206,7 @@ export default function Page() {
             const isMoving3to2 = prevOffset === 3 && offset === 2;
             const isInstantTransition = isMoving2to3 || isMoving3to2;
 
+            // PRESERVED: All your original transition logic
             if (offset === 0) {
               transformStyle = 'translateY(0) scale(1)';
               zIndex = 10;
@@ -231,6 +231,16 @@ export default function Page() {
               opacity = 0;
               zIndex = 100;
               pointerEvents = 'none';
+            }
+
+            // Determine video loading strategy based on position
+            let videoLoadStrategy = "none";
+            if (offset === 0) {
+              videoLoadStrategy = "auto"; // Active card - load immediately
+            } else if (offset === 1) {
+              videoLoadStrategy = "metadata"; // Next card - preload metadata
+            } else if (offset === 2) {
+              videoLoadStrategy = "none"; // Two cards ahead - don't load yet
             }
 
             return (
@@ -263,6 +273,8 @@ export default function Page() {
                   position={offset}
                   name={card.name}
                   videoSrc={card.videoSrc}
+                  posterSrc={card.posterSrc}
+                  videoPreload={videoLoadStrategy}
                 />
               </div>
             );

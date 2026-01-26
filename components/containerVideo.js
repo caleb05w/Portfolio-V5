@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import ContainerText from "../components/containerText";
 import { useRive } from "@rive-app/react-canvas"
 
-function ContainerVideo({ title, body, videoSrc, hint, subheader, gutter, vidPad, rivSrc, rivStateMachine, videoHeight }) {
+function ContainerVideo({ title, body, videoSrc, hint, subheader, gutter, vidPad, rivSrc, rivStateMachine, videoHeight, videoPreload, posterSrc }) {
     const videoContainerRef = useRef(null);
     const videoRef = useRef(null);
 
@@ -56,6 +56,9 @@ function ContainerVideo({ title, body, videoSrc, hint, subheader, gutter, vidPad
                                 muted
                                 loop
                                 playsInline
+                                preload={videoPreload}
+                                poster={posterSrc}
+                                autoPlay
                                 style={{
                                     backgroundColor: "#F8F8F8",
                                     objectFit: "contain",

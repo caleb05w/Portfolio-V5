@@ -43,7 +43,7 @@ function Navbar({ active }) {
                         : [
                             { name: "About", other: "none", cta: "/about", visibility: true },
                             { name: "Playground", other: "none", cta: "/playground", visibility: true },
-                            { name: "Resume", other: "none", cta: "/Caleb-Wu-Resume.pdf", visibility: true },
+                            { name: "Resume", other: "none", cta: "/Caleb-Wu-Resume.pdf", visibility: true, target: "_blank" },
                         ];
 
     // Build combined array function
@@ -171,7 +171,7 @@ function Navbar({ active }) {
                             return (
                                 <div
                                     key={index}
-                                    className={`relative h-[1.2rem] overflow-hidden ${enableTransitions ? 'transition-all duration-700 ease-fast' : ''}`}
+                                    className={`relative lg:h-[1.3rem] h-[1.2rem] overflow-hidden ${enableTransitions ? 'transition-all duration-700 ease-fast' : ''}`}
                                     style={{
                                         width: `${targetWidth}px`,
                                         transitionDelay: enableTransitions ? `${staggerDelay + 100}ms` : '0ms'
@@ -236,7 +236,7 @@ function Navbar({ active }) {
                                             transform: stage ? 'translateY(0%)' : 'translateY(100%)'
                                         }}
                                     >
-                                        <Link href={item.new.cta ?? "/"}>
+                                        <Link href={item.new.cta ?? "/"} target={item.new.target ?? ""}>
                                             {item.new.isLogo ? (
                                                 <div className='flex flex-row gap-[0.6rem] items-center justify-center hover:cursor-pointer whitespace-nowrap'>
                                                     <div className='h-[0.7rem] w-[0.7rem] rounded-full bg-primary'></div>

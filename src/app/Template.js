@@ -1,18 +1,19 @@
-'use client'
-import { motion } from 'framer-motion'
-import { usePathname } from 'next/navigation'
+//for animations between pages.
+
+"use client";
+import { motion } from "framer-motion";
 
 export default function Template({ children }) {
-    const pathname = usePathname()
-
     return (
         <motion.div
-            key={pathname} // This triggers re-mount on route change
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, ease: [0.43, 0.13, 0.23, 0.96] }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+                duration: 0.5,
+                ease: [0.22, 1, 0.36, 1],
+            }}
         >
             {children}
         </motion.div>
-    )
+    );
 }

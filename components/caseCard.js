@@ -1,37 +1,39 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import Image from "next/image"
 import Link from "next/link"
 import TitleAnimation from './titleAnimation'
 
-//one time fonts for entry card.
-import { Merriweather, Crimson_Text, Rasa } from 'next/font/google'
+function CaseCard({
+    name,
+    img,
+    link,
+    header,
+    body, //unused, but this was used back when I had card information
+    year,
+    type, //the type of card
+    videoSrc, //link
+    posterSrc, //snapshot
+    videoPreload = "none", //controls video preload
+    position = 0, //position which determines preload state
+    isEmpty
+}) {
 
+    const videoRef = useRef(null);
 
-
-const merriweather = Merriweather({
-    subsets: ['latin'],
-    weight: ['400'],
-    display: 'swap',
-})
-
-const crimsonText = Crimson_Text({
-    subsets: ['latin'],
-    style: ['italic'],
-    weight: ['400'],
-    display: 'swap',
-})
-
-const rasa = Rasa({
-    subsets: ['latin'],
-    style: ['italic'],
-    weight: ['400', '600'],
-    display: 'swap',
-})
-
-
-function caseCard({ name, img, link, header, body, year, active, type, videoSrc }) {
-
-
+    // Play/pause video when position changes
+    useEffect(() => {
+        if (videoRef.current) {
+            if (position === 0) {
+                // Play when active
+                videoRef.current.play().catch(err => {
+                    console.log("Video play prevented:", err);
+                });
+            } else {
+                // Pause when not active
+                videoRef.current.pause();
+            }
+        }
+    }, [position]);
 
     return (
         <div className={`
@@ -39,14 +41,14 @@ function caseCard({ name, img, link, header, body, year, active, type, videoSrc 
             md:w-[60vw]
             lg:w-[65vw]
             xl:w-[60vw]
-            aspect-[5/3]
+            aspect-[1/1]
             lg:aspect-[5.5/3]
             xl:aspect-[5.5/3]
             md:aspect-[5.5/3]
             max-w-[60rem]
             transition-all duration-700 
             flex flex-row items-center justify-center 
-            rounded-[1rem] 
+            rounded-[1.4rem] 
             overflow-hidden
            `}>
             {/* //about card */}
@@ -59,7 +61,6 @@ function caseCard({ name, img, link, header, body, year, active, type, videoSrc 
                     <div className="flex flex-col w-full items-center">
                         <div className="flex flex-col gap-[1rem] h-full items-center w-full">
                             <div className='flex flex-col gap-[1rem] w-full items-center'>
-
                                 <div className='border-[0.75px] w-[3rem] border-secondary'></div>
                                 <h6 className='text-text-secondary max-w-[20rem] text-center'>
                                     Currently Product @
@@ -78,7 +79,6 @@ function caseCard({ name, img, link, header, body, year, active, type, videoSrc 
 
             {/* //case card */}
             {
-
                 type === "Case" &&
                 <section className="w-full h-full hover:cursor-pointer">
                     <Link href={link ?? "/"}>
@@ -96,9 +96,11 @@ function caseCard({ name, img, link, header, body, year, active, type, videoSrc 
                                 videoSrc &&
                                 <div className='bg-[#F7F7F7] w-full flex flex-row justify-center'>
                                     <video
+                                        ref={videoRef}  // ✅ ADDED REF
                                         className="h-full w-full"
                                         src={videoSrc}
-                                        autoPlay
+                                        preload={videoPreload}
+                                        poster={posterSrc}
                                         muted
                                         loop
                                         playsInline
@@ -133,33 +135,9 @@ function caseCard({ name, img, link, header, body, year, active, type, videoSrc 
                             </div>
                         </div>
                     </div>
-
                 </section>}
         </div >
-
     )
 }
 
-export default caseCard
-
-// <section className={`w-[60vw] h-[70vh] flex flex-col snap-start shrink-0 gap-[2rem] `}>
-//     <a href={link} className="block w-full flex-1 min-h-0">
-//         <Image
-//             width={1200}
-//             height={1200}
-//             src={img ?? "/images/showcase3.png"}
-//             alt="no name"
-//             className="w-full h-full object-cover"
-//         />
-//     </a>
-
-//     <div className="w-full shrink-0">
-//         <div className="flex flex-row justify-between w-full gap-[8rem]">
-//             <div className="flex flex-col">
-//                 <p>{header}</p>
-//                 <p>{year}</p>
-//             </div>
-//             <p className="max-w-[30rem]">{body}</p>
-//         </div>
-//     </div>
-// </section >
+export default CaseCard
