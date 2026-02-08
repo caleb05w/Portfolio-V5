@@ -234,13 +234,22 @@ export default function Page() {
             }
 
             // Determine video loading strategy based on position
+            // let videoLoadStrategy = "none";
+            // if (offset === 0) {
+            //   videoLoadStrategy = "auto"; // Active card - load immediately
+            // } else if (offset === 1) {
+            //   videoLoadStrategy = "metadata"; // Next card - preload metadata
+            // } else if (offset === 2) {
+            //   videoLoadStrategy = "none"; // Two cards ahead - don't load yet
+            // }
+
             let videoLoadStrategy = "none";
             if (offset === 0) {
               videoLoadStrategy = "auto"; // Active card - load immediately
             } else if (offset === 1) {
-              videoLoadStrategy = "metadata"; // Next card - preload metadata
+              videoLoadStrategy = "auto"; // Next card - preload metadata
             } else if (offset === 2) {
-              videoLoadStrategy = "none"; // Two cards ahead - don't load yet
+              videoLoadStrategy = "auto"; // Two cards ahead - don't load yet
             }
 
             return (

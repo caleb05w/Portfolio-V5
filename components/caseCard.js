@@ -62,16 +62,20 @@ function CaseCard({
                         <div className="flex flex-col gap-[1rem] h-full items-center w-full">
                             <div className='flex flex-col gap-[1rem] w-full items-center'>
                                 <div className='border-[0.75px] w-[3rem] border-secondary'></div>
-                                <h6 className='text-text-secondary max-w-[20rem] text-center'>
-                                    Currently Product @
-                                    <a target="_blank" href="https://www.revisiondojo.com/" rel="noopener noreferrer" className="hover:text-black transition-colors duration-300">
-                                        RevisionDojo(YCF24)
-                                    </a>
-                                    , Previously Product @
-                                    <a target="_blank" href="https://metalab.com" rel="noopener noreferrer" className="hover:text-black transition-colors duration-300">
-                                        Metalab
-                                    </a>
-                                </h6>
+                                <div className='flex flex-col gap-[0.5rem'>
+                                    <h6 className='text-text-secondary text-center'>
+                                        Currently Product @
+                                        <a target="_blank" href="https://www.revisiondojo.com/" rel="noopener noreferrer" className="hover:text-black transition-colors duration-300">
+                                            RevisionDojo(YCF24)
+                                        </a>
+                                    </h6>
+                                    <h6 className='text-text-secondary text-center'>
+                                        Previously Product @
+                                        <a target="_blank" href="https://metalab.com" rel="noopener noreferrer" className="hover:text-black transition-colors duration-300">
+                                            Metalab
+                                        </a>
+                                    </h6>
+                                </div>
                             </div>
                         </div>
                     </div>
