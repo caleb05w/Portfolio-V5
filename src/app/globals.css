@@ -43,12 +43,12 @@
   --breakpoint-2xl: 1920px;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   background: var(--background);
@@ -69,7 +69,15 @@ h5,
 h6,
 p {
   /* font-family: var(--font-pp-neue-montreal), system-ui, sans-serif; */
-  font-family: "SF Pro Display";
+  font-family:
+    "SF Pro Display",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
   font-weight: 500;
   line-height: 150%;
 }
@@ -120,9 +128,9 @@ h6 {
   background: linear-gradient(to top, transparent 0%, #e8eaeb 95%);
   mask-image: linear-gradient(
     to bottom,
-    #e8ea 0%,
-    #e8eaba 45%,
-    transparent 100%
+    #e8eaeb 0%,
+    /* Fixed: 6 digits */ #e8eaebba 45%,
+    /* Fixed: 8 digits (added alpha) */ transparent 100%
   );
 }
 /* //highlight color change */

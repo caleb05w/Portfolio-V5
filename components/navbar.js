@@ -171,7 +171,7 @@ function Navbar({ active }) {
                             return (
                                 <div
                                     key={index}
-                                    className={`relative lg:h-[1.3rem] h-[1.2rem] overflow-hidden ${enableTransitions ? 'transition-all duration-700 ease-fast' : ''}`}
+                                    className={`relative lg:h-[1.8rem] h-[1.2rem] overflow-hidden ${enableTransitions ? 'transition-all duration-700 ease-fast' : ''}`}
                                     style={{
                                         width: `${targetWidth}px`,
                                         transitionDelay: enableTransitions ? `${staggerDelay + 100}ms` : '0ms'

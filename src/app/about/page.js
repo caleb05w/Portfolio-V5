@@ -38,7 +38,7 @@ function Page() {
             />
             <div ref={pageTop}></div>
             {/* Main content */}
-            <div className='case-mt w-full flex flex-col transition-all duration-300 ease-fast gap-[3rem] x-gutter max-w-[60vw] bg-white y-gutter lg:pt-[12vh] pt-[8.5vh]'>
+            <div className='w-full flex flex-col transition-all duration-300 ease-fast gap-[3rem] x-gutter max-w-[60vw] bg-white y-gutter lg:pt-[12vh] pt-[8.5vh]'>
 
                 {/* //content block */}
                 <div className="flex flex-col h-fit gap-[2rem] w-full">
@@ -96,12 +96,12 @@ function Page() {
 
                 <div className='flex flex-col gap-[1rem]'>
 
-                    <div className='flex flex-row gap-[1rem] w-full min-h-fit'>
+                    <div className='flex flex-row gap-[1rem] w-full h-[25vh]'>
                         <div className='flex-1 h-full'>
                             <ContainerImage
                                 img="/images/about/about1.png"
                                 alt="me and crew"
-                                imgHeight="h-[25rem]"
+                                imgHeight="h-[25vh]"
                                 imgWidth="flex-1"
                                 object="object-cover"
                             />
@@ -110,7 +110,7 @@ function Page() {
                             <ContainerImage
                                 img="/images/about/caleb.png"
                                 alt="me and crew"
-                                imgHeight="h-[25rem]"
+                                imgHeight="h-[25vh]"
                                 imgWidth="flex-1"
                                 object="object-cover"
                             />
