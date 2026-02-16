@@ -39,6 +39,7 @@ export default function RootLayout({ children }) {
             <ToolTip />
           </CaseProvider>
         </ToolTipProvider>
+        <Analytics />
       </body>
     </html>
   );
