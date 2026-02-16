@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${ppNeueMontreal.variable} antialiased`}
-      >
+      > 
         <ToolTipProvider>
           <CaseProvider>
             <Navbar />

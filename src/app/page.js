@@ -1,88 +1,79 @@
 "use client";
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useState,
-  useCallback,
-  useRef,
-} from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import CaseCard from "../../components/caseCard";
 import { useTooltip } from "../../utils/toolTipContext";
 
+const cards = [
+  { id: 1, type: "Intro", name: "Intro" },
+  {
+    id: 2,
+    type: "Case",
+    name: "RevisionDojo",
+    link: "/RevisionDojo",
+    videoSrc: "/images/RDDemo2a.mp4",
+    posterSrc: "/images/RDDemo2a-poster.jpg",
+    body: "Redesigning the search experience for 400,000 IBDP users.",
+    year: "2025",
+  },
+  {
+    id: 3,
+    type: "Case",
+    name: "Axis",
+    link: "/Axis",
+    videoSrc: "/images/Axis/AxisCover.mp4",
+    posterSrc: "/images/Axis/AxisCover-poster.jpg",
+    body: "Launching an ambitious rebrand for a consulting club.",
+    year: "2024",
+  },
+  { id: 4, type: "End", name: "Contact" },
+];
+
+const SCROLL_RATE_LIMIT = 300;
+
 export default function Page() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const lastTriggerTime = useRef(0);
-  const [prevPositions, setPrevPositions] = useState({});
+  const [indices, setIndices] = useState({ current: 0, prev: 0 });
+  const { current: currentIndex, prev: prevIndex } = indices;
+  const { tooltip } = useTooltip();
 
-  const { tooltip, message } = useTooltip();
-  const [scroll, setScroll] = useState(0);
-
-  const cards = [
-    { id: 1, type: "Intro", name: "Intro" },
-    {
-      id: 2,
-      type: "Case",
-      name: "RevisionDojo",
-      link: "/RevisionDojo",
-      videoSrc: "/images/RDDemo2a.mp4",
-      posterSrc: "/images/RDDemo2a-poster.jpg", // Add poster images
-      body: "Redesigning the search experience for 400,000 IBDP users.",
-      year: "2025",
-    },
-    {
-      id: 3,
-      type: "Case",
-      name: "Axis",
-      link: "/Axis",
-      videoSrc: "/images/Axis/AxisCover.mp4",
-      posterSrc: "/images/Axis/AxisCover-poster.jpg", // Add poster images
-      body: "Launching an ambitious rebrand for a consulting club.",
-      year: "2024",
-    },
-    { id: 4, type: "End", name: "Contact" },
-  ];
   const currentCard = cards[currentIndex];
 
   const getVisualPosition = useCallback(
     (cardIndex) => {
       let offset = cardIndex - currentIndex;
-      if (offset < 0) {
-        offset = cards.length + offset;
-      }
+      if (offset < 0) offset += cards.length;
       return offset;
     },
-    [currentIndex, cards.length],
+    [currentIndex],
   );
 
-  // Update previous positions after each render using useLayoutEffect
-  useLayoutEffect(() => {
-    const newPositions = {};
-    cards.forEach((_, index) => {
-      newPositions[index] = getVisualPosition(index);
-    });
-    setPrevPositions(newPositions);
-  }, [currentIndex, cards, getVisualPosition]);
+  const getPrevVisualPosition = useCallback(
+    (cardIndex) => {
+      let offset = cardIndex - prevIndex;
+      if (offset < 0) offset += cards.length;
+      return offset;
+    },
+    [prevIndex],
+  );
 
   const moveUp = useCallback(() => {
-    setCurrentIndex((prev) => {
-      const newIndex = prev + 1;
-      return newIndex >= cards.length ? 0 : newIndex;
-    });
-  }, [cards.length]);
+    setIndices((prev) => ({
+      current: (prev.current + 1) % cards.length,
+      prev: prev.current,
+    }));
+  }, []);
 
   const moveDown = useCallback(() => {
-    setCurrentIndex((prev) => {
-      const newIndex = prev - 1;
-      return newIndex < 0 ? cards.length - 1 : newIndex;
-    });
-  }, [cards.length]);
+    setIndices((prev) => ({
+      current: (prev.current - 1 + cards.length) % cards.length,
+      prev: prev.current,
+    }));
+  }, []);
 
   const lastTime = useRef(0);
   const lastVelocity = useRef(0);
   const isInMomentum = useRef(false);
   const momentumTimeout = useRef(null);
   const lastScrollTrigger = useRef(0);
-  const SCROLL_RATE_LIMIT = 300;
 
   useEffect(() => {
     const handleWheel = (e) => {
@@ -96,29 +87,23 @@ export default function Page() {
         velocity > lastVelocity.current * 2.0 &&
         velocity > 1.0;
 
+      const shouldTrigger =
+        now - lastScrollTrigger.current >= SCROLL_RATE_LIMIT;
+
+      if (
+        (!isInMomentum.current || significantVelocityIncrease) &&
+        shouldTrigger
+      ) {
+        lastScrollTrigger.current = now;
+        if (e.deltaY > 0) {
+          moveUp();
+        } else {
+          moveDown();
+        }
+      }
+
       if (!isInMomentum.current) {
-        if (now - lastScrollTrigger.current >= SCROLL_RATE_LIMIT) {
-          setScroll((prev) => prev + 1);
-          lastScrollTrigger.current = now;
-
-          if (e.deltaY > 0) {
-            moveUp();
-          } else {
-            moveDown();
-          }
-        }
         isInMomentum.current = true;
-      } else if (significantVelocityIncrease) {
-        if (now - lastScrollTrigger.current >= SCROLL_RATE_LIMIT) {
-          setScroll((prev) => prev + 1);
-          lastScrollTrigger.current = now;
-
-          if (e.deltaY > 0) {
-            moveUp();
-          } else {
-            moveDown();
-          }
-        }
       }
 
       lastVelocity.current = velocity;
@@ -143,27 +128,64 @@ export default function Page() {
     };
   }, [moveDown, moveUp]);
 
-  // Preload next video
+  // Touch/swipe support for mobile (velocity-based, Apple-style)
+  const touchStartY = useRef(0);
+  const lastTouchY = useRef(0);
+  const lastTouchTime = useRef(0);
+  const touchVelocity = useRef(0);
+
   useEffect(() => {
-    const nextIndex = (currentIndex + 1) % cards.length;
-    const nextCard = cards[nextIndex];
+    const handleTouchStart = (e) => {
+      const y = e.touches[0].clientY;
+      touchStartY.current = y;
+      lastTouchY.current = y;
+      lastTouchTime.current = Date.now();
+      touchVelocity.current = 0;
+    };
 
-    if (nextCard.videoSrc) {
-      const link = document.createElement("link");
-      link.rel = "prefetch";
-      link.as = "video";
-      link.href = nextCard.videoSrc;
-      document.head.appendChild(link);
+    const handleTouchMove = (e) => {
+      const y = e.touches[0].clientY;
+      const now = Date.now();
+      const dt = now - lastTouchTime.current;
+      if (dt > 0) {
+        touchVelocity.current = (lastTouchY.current - y) / dt;
+      }
+      lastTouchY.current = y;
+      lastTouchTime.current = now;
+    };
 
-      return () => {
-        document.head.removeChild(link);
-      };
-    }
-  }, [currentIndex, cards]);
+    const handleTouchEnd = () => {
+      const distance = touchStartY.current - lastTouchY.current;
+      const velocity = touchVelocity.current; // px/ms
 
-  const goToCard = (index) => {
-    setCurrentIndex(index);
-  };
+      const VELOCITY_THRESHOLD = 0.3;
+      const DISTANCE_THRESHOLD = 50;
+
+      // Quick flick (high velocity) OR deliberate swipe (large distance)
+      if (
+        Math.abs(velocity) > VELOCITY_THRESHOLD ||
+        Math.abs(distance) > DISTANCE_THRESHOLD
+      ) {
+        const direction =
+          Math.abs(velocity) > VELOCITY_THRESHOLD ? velocity : distance;
+        if (direction > 0) {
+          moveUp();
+        } else {
+          moveDown();
+        }
+      }
+    };
+
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [moveUp, moveDown]);
 
   return (
     <div className="w-screen md:px-[1rem] xl:px-[2rem] lg:px-[1rem] flex-col md:flex-row lg:flex-row h-screen fixed flex overscroll-none max-h-screen max-w-screen overflow-hidden bg-secondary will-change-transform">
@@ -174,9 +196,9 @@ export default function Page() {
             const isActive = currentIndex === key;
             return (
               <div
-                key={key}
+                key={card.id}
                 className="flex flex-col group py-[0.25rem] hover:cursor-pointer w-full"
-                onClick={() => goToCard(key)}
+                onClick={() => setIndices((prev) => ({ current: key, prev: prev.current }))}
               >
                 <div
                   className={`flex flex-row gap-[0.5rem] items-center w-full h-fit`}
@@ -205,7 +227,7 @@ export default function Page() {
           {cards.map((card, index) => {
             const offset = getVisualPosition(index);
             const isActive = offset === 0;
-            const prevOffset = prevPositions[index] ?? offset;
+            const prevOffset = getPrevVisualPosition(index);
 
             let transformStyle = "";
             let filterStyle = "";
@@ -214,12 +236,10 @@ export default function Page() {
             let pointerEvents = "auto";
             let opacityDelay = "0ms";
 
-            // Check for instant transitions
             const isMoving2to3 = prevOffset === 2 && offset === 3;
             const isMoving3to2 = prevOffset === 3 && offset === 2;
             const isInstantTransition = isMoving2to3 || isMoving3to2;
 
-            // PRESERVED: All your original transition logic
             if (offset === 0) {
               transformStyle = "translateY(0) scale(1)";
               zIndex = 10;
@@ -246,23 +266,11 @@ export default function Page() {
               pointerEvents = "none";
             }
 
-            // Determine video loading strategy based on position
-            // let videoLoadStrategy = "none";
-            // if (offset === 0) {
-            //   videoLoadStrategy = "auto"; // Active card - load immediately
-            // } else if (offset === 1) {
-            //   videoLoadStrategy = "metadata"; // Next card - preload metadata
-            // } else if (offset === 2) {
-            //   videoLoadStrategy = "none"; // Two cards ahead - don't load yet
-            // }
-
             let videoLoadStrategy = "none";
             if (offset === 0) {
-              videoLoadStrategy = "auto"; // Active card - load immediately
+              videoLoadStrategy = "auto";
             } else if (offset === 1) {
-              videoLoadStrategy = "auto"; // Next card - preload metadata
-            } else if (offset === 2) {
-              videoLoadStrategy = "auto"; // Two cards ahead - don't load yet
+              videoLoadStrategy = "metadata";
             }
 
             return (
@@ -270,7 +278,7 @@ export default function Page() {
                 {...tooltip(
                   card.type === "Case" ? "Click to Open" : "Scroll Down!",
                 )}
-                key={index}
+                key={card.id}
                 style={{
                   zIndex,
                   opacity,
@@ -281,7 +289,7 @@ export default function Page() {
                     ? "transform 0ms, filter 0ms, opacity 0ms"
                     : `transform 450ms cubic-bezier(0.62, 0.61, 0.02, 1), filter 450ms cubic-bezier(0.62, 0.61, 0.02, 1), opacity 450ms cubic-bezier(0.62, 0.61, 0.02, 1) ${opacityDelay}`,
                 }}
-                className={`overflow-hidden max-w-full flex flex-row absolute lg:mt-[14vh] xl:mt-[4vh] md:mt-[12vh] 
+                className={`overflow-hidden max-w-full flex flex-row absolute lg:mt-[14vh] xl:mt-[4vh] md:mt-[12vh]
             before:content-[''] before:absolute before:inset-0 before:rounded-[1rem] before:pointer-events-none before:transition-opacity before:duration-700
             ${!isActive && "brightness-100"}
           `}

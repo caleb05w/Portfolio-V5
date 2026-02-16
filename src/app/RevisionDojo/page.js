@@ -38,16 +38,16 @@ function Page() {
     <div className="flex flex-col">
       {/* Fixed spacer */}
       <div
-        className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1]  lg:bg-transparent ${showTop ? "h-[8rem]" : "h-[0rem]"}`}
+        className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1]  lg:bg-transparent ${showTop ? "h-[8rem] xl:h-[12rem]" : "h-[0rem]"}`}
       />
 
       <div className="flex flex-row h-screen w-full">
         {/* Sidebar */}
         <div
-          className={` h-full ${showTop ? "md:w-[4rem] lg:w-[4rem] xl:w-[4rem]" : "md:w-[8rem] lg:w-[8rem] xl:w-[8rem]"} ease-fast duration-[400ms]`}
+          className={` h-full ${showTop ? "md:w-[4rem] lg:w-[4rem] xl:w-[4rem]" : "md:w-[8rem] lg:w-[8rem] xl:w-[12rem]"} ease-fast duration-[400ms]`}
         >
           <div
-            className={`fixed h-full w-[0] xl:w-[8rem] md:w-[8rem] lg:w-[8rem] flex flex-col overflow-hidden top-[6rem] justify-start  h-full ease-fast duration-[450ms] pl-[1rem]
+            className={`fixed h-full w-[0] xl:w-[8rem] md:w-[8rem] lg:w-[8rem] xl:w-[12rem] flex flex-col overflow-hidden top-[6rem] justify-start  h-full ease-fast duration-[450ms] pl-[1rem]
                     ${showTop ? "opacity-[0%]" : "opacity-[100%]"}
                     `}
           >
