@@ -33,11 +33,11 @@ function ContainerIntro({
           <p>{Year}</p>
         </div>
       </div>
-      {/* <ContainerImagesShowcase
-                videoSrc={videoSrc}
-                image2={image2}
-                image3={image3}
-            /> */}
+      <ContainerImagesShowcase
+        videoSrc={videoSrc}
+        image2={image2}
+        image3={image3}
+      />
     </div>
   );
 }

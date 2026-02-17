@@ -1,17 +1,16 @@
 import React from "react";
 import Image from "next/image";
 
-function containerImagesShowcase({ videoSrc, image2, image3 }) {
-  // Use image2 for image1 if image1 is not provided (first can use same as second)
+function ContainerImagesShowcase({ videoSrc, image2, image3 }) {
   const secondImage = image2;
   const thirdImage = image3;
 
   return (
-    <div className="flex flex-col gap-[0.5rem] w-full">
+    <div className="flex flex-col gap-2 w-full overflow-hidden">
       {videoSrc && (
-        <div className="w-full h-full bg-[#F8F8F8] items-center justify-center flex flex-row p-[2rem]">
+        <div className="w-full bg-[#F8F8F8] flex items-center justify-center p-8 overflow-hidden">
           <video
-            className="top-0 left-0 md:max-w-[25rem] xl:max-w-[25rem] lg:max-w-[25rem] aspect-square"
+            className="w-full max-w-[25rem] aspect-square"
             src={videoSrc}
             autoPlay
             muted
@@ -26,9 +25,9 @@ function containerImagesShowcase({ videoSrc, image2, image3 }) {
         </div>
       )}
       {(secondImage || thirdImage) && (
-        <div className="flex flex-row gap-[0.5rem] w-full max-w-full">
+        <div className="flex flex-row gap-2 w-full overflow-hidden">
           {secondImage && (
-            <div className="flex-[1] min-w-0 h-auto">
+            <div className="flex-1 min-w-0 overflow-hidden">
               <Image
                 src={secondImage.src}
                 width={secondImage.width}
@@ -43,9 +42,9 @@ function containerImagesShowcase({ videoSrc, image2, image3 }) {
           )}
           {thirdImage && (
             <div
-              className={
-                secondImage ? "flex-[2] min-w-0 h-auto" : "w-full h-auto"
-              }
+              className={`min-w-0 overflow-hidden ${
+                secondImage ? "flex-[2]" : "w-full"
+              }`}
             >
               <Image
                 src={thirdImage.src}
@@ -63,4 +62,4 @@ function containerImagesShowcase({ videoSrc, image2, image3 }) {
   );
 }
 
-export default containerImagesShowcase;
+export default ContainerImagesShowcase;
