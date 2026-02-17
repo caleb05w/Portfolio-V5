@@ -50,6 +50,10 @@
   }
 } */
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -96,7 +100,7 @@ p {
 
 h4,
 h5 {
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   letter-spacing: 0.24px;
 }
 
@@ -235,10 +239,16 @@ h6 {
 
 /*  Large (lg) */
 @media (min-width: 1280px) {
+  
   :root {
   }
   .x-gutter {
     padding-inline: clamp(1rem, 10vw, 16rem);
+  }
+  
+  .case-mt {
+    margin-top: 6rem;
+    
   }
 
   .case-x-gutter {

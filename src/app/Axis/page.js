@@ -39,7 +39,7 @@ function Page() {
     <div className="flex flex-col">
       {/* Fixed spacer */}
       <div
-        className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1] lg:bg-transparent ${showTop ? "h-[8rem] xl:h-[12rem]" : "h-[0rem]"}`}
+        className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1] lg:bg-transparent ${showTop ? "h-[10rem] xl:h-[12rem]" : "h-[0rem]"}`}
       />
 
       <div className="flex flex-row h-screen w-full">

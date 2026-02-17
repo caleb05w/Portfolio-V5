@@ -9,6 +9,8 @@ import { useCaseContext } from "../../../utils/caseContext";
 import Label from "../../../components/label";
 import Sidebar from "../../../components/sidebar";
 import FixedSidebar from "../../../components/FixedSidebar";
+import ContainerImage from "../../../components/containerImage";
+import Image from "next/image";
 
 function Page() {
   const team = ["1 Designer (Me)", "2 Developers"];
@@ -39,7 +41,7 @@ function Page() {
     <div className="flex flex-col">
       {/* Fixed spacer */}
       <div
-        className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1]  lg:bg-transparent ${showTop ? "h-[8rem] xl:h-[12rem]" : "h-[0rem]"}`}
+        className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1]  lg:bg-transparent ${showTop ? "h-[10rem] xl:h-[12rem]" : "h-[0rem]"}`}
       />
 
       <div className="flex flex-row h-screen w-full">
@@ -47,7 +49,6 @@ function Page() {
         <div
           className={` h-full ${showTop ? "md:w-[4rem] lg:w-[4rem] xl:w-[4rem]" : "md:w-[8rem] lg:w-[8rem] xl:w-[12rem]"} ease-fast duration-[400ms]`}
         >
-
           {/* //need to use fixed sidebar here, which uses a react portal to take it out of the normal flow nbecause of the absolute page transitions. */}
           <FixedSidebar
             className={`fixed h-full w-[0] xl:w-[8rem] md:w-[8rem] lg:w-[8rem] xl:w-[12rem] flex flex-col overflow-hidden top-[6rem] justify-start  h-full ease-fast duration-[450ms] pl-[1rem]
@@ -79,30 +80,43 @@ function Page() {
             >
               {/* About Section */}
               <div id="about" className="flex flex-col case-gap case-mt">
-                <ContainerIntro
-                  Name="RevisionDojo"
-                  Year="2025"
-                  body={[
-                    "RevisionDojo is the fastest growing edtech startup, providing digital IB study tools to 400,000+ users.",
-                    "My team developed a scalable navigation system to anchor the products rapid growth.",
-                  ]}
-                  Teammates={team}
-                  videoSrc="/images/RDCoverNew.mp4"
-                  image2={{
-                    src: "/images/showcase2.svg",
-                    width: 1920,
-                    height: 1080,
-                    alt: "RevisionDojo second image",
-                    className: "object-cover w-full h-full",
-                  }}
-                  image3={{
-                    src: "/images/showcase3b.png",
-                    width: 1920,
-                    height: 1080,
-                    alt: "RevisionDojo third image",
-                    className: "object-cover w-full h-auto",
-                  }}
-                />
+                <div className="flex flex-col gap-[4rem]">
+                  <div className="case-x-gutter">
+                    <div className="w-[4rem] h-[4rem]">
+                      <Image
+                        src="images/revision-dojo-logo.svg"
+                        alt="RevisionDojo Logo"
+                        width={200}
+                        height={200}
+                        className="w-full h-full border"
+                      />
+                    </div>
+                  </div>
+                  <ContainerIntro
+                    Name="RevisionDojo"
+                    Year="2025"
+                    body={[
+                      "RevisionDojo is the fastest growing edtech startup, providing digital IB study tools to 400,000+ users.",
+                      "My team developed a scalable navigation system to anchor the products rapid growth.",
+                    ]}
+                    Teammates={team}
+                    videoSrc="/images/RDCoverNew.mp4"
+                    image2={{
+                      src: "/images/showcase2.svg",
+                      width: 1920,
+                      height: 1080,
+                      alt: "RevisionDojo second image",
+                      className: "object-cover w-full h-full",
+                    }}
+                    image3={{
+                      src: "/images/showcase3b.png",
+                      width: 1920,
+                      height: 1080,
+                      alt: "RevisionDojo third image",
+                      className: "object-cover w-full h-auto",
+                    }}
+                  />
+                </div>
               </div>
 
               {/* Mission Section */}

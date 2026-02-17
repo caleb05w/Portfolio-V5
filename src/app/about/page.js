@@ -31,7 +31,7 @@ function Page() {
       {/* Dynamic spacer */}
       <div
         className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1] 
-                ${isScrollDown === true ? "h-[0rem]" : showTop === false ? "h-[0rem]" : "h-[8rem] xl:h-[12rem]"}`}
+                ${isScrollDown === true ? "h-[0rem]" : showTop === false ? "h-[0rem]" : "h-[10rem] xl:h-[12rem]"}`}
       />
       <div ref={pageTop}></div>
       {/* Main content */}
