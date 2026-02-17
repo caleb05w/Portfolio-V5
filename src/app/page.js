@@ -291,7 +291,7 @@ export default function Page() {
                     ? "transform 0ms, filter 0ms, opacity 0ms"
                     : `transform 450ms cubic-bezier(0.62, 0.61, 0.02, 1), filter 450ms cubic-bezier(0.62, 0.61, 0.02, 1), opacity 450ms cubic-bezier(0.62, 0.61, 0.02, 1) ${opacityDelay}`,
                 }}
-                className={`overflow-hidden max-w-full flex flex-row absolute lg:mt-[14vh] xl:mt-[4vh] md:mt-[12vh]
+                className={`overflow-hidden min-w-0 flex-1 flex flex-row  justify-center absolute lg:mt-[14vh] xl:mt-[4vh] md:mt-[12vh]
             before:content-[''] before:absolute before:inset-0 before:rounded-[1rem] before:pointer-events-none before:transition-opacity before:duration-700
             ${!isActive && "brightness-100"}
           `}

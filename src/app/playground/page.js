@@ -27,62 +27,184 @@ const toBase64 = (str) =>
     ? Buffer.from(str).toString("base64")
     : window.btoa(str);
 
+// Rive preview component for grid cards
+function RivePreview({ src }) {
+  const { RiveComponent, rive } = useRive({
+    src: src,
+    autoplay: true,
+  });
+
+  const isRestarting = useRef(false);
+
+  // Set up looping for one-shot animations
+  useEffect(() => {
+    if (!rive) return;
+
+    const handleStop = () => {
+      if (isRestarting.current) return;
+
+      isRestarting.current = true;
+      setTimeout(() => {
+        rive.reset();
+        rive.play();
+        isRestarting.current = false;
+      }, 0);
+    };
+
+    rive.on("stop", handleStop);
+
+    return () => {
+      rive.off("stop", handleStop);
+    };
+  }, [rive]);
+
+  return (
+    <div className="w-full h-full flex items-center justify-center p-[3rem] py-[4rem]">
+      <RiveComponent className="w-full h-full" />
+    </div>
+  );
+}
+
 const cards = [
   {
-    name: "Namecard",
-    category: "Design",
+    name: "Rank Up Animation",
+    category: "Animation",
+    year: "2026",
+    src: "/images/playground/riv/rank-emerald-diamond.riv",
+    alt: "Jojo listening to music",
+    tools: ["Figma", "Rive"],
+    isRiveFile: true,
+    description:
+      "A small animation to celebrate when users rank up during RevisionDojo's Question Rush.",
+  },
+  {
+    name: "Jojo Music",
+    category: "Animation",
+    year: "2026",
+    src: "/images/playground/riv/jojo-music.riv",
+    alt: "Jojo listening to music",
+    tools: ["Figma", "Rive"],
+    isRiveFile: true,
+    description: "Loading screen for the RevisionDojo app.",
+  },
+  {
+    name: "Jojo Walk",
+    category: "Animation",
+    year: "2026",
+    src: "/images/playground/riv/jojo-walk.riv",
+    alt: "Jojo walking",
+    tools: ["Figma", "Rive"],
+    isRiveFile: true,
+    description: "Loading screen animation for RevisionDojo.",
+  },
+  {
+    name: "3 Stars",
+    category: "Animation",
+    year: "2026",
+    src: "/images/playground/riv/lesson-complete-3-stars.riv",
+    alt: "Lesson complete 3 stars",
+    tools: ["Figma", "Rive"],
+    isRiveFile: true,
+    description: "Reward animation for users who get 3 stars after a lesson.",
+  },
+  {
+    name: "Streak Animation",
+    category: "Animation",
+    year: "2026",
+    src: "/images/playground/riv/fire.riv",
+    alt: "Fire animation",
+    tools: ["Figma", "Rive"],
+    isRiveFile: true,
+    description: "Fire animation for our streaks.",
+  },
+  {
+    name: "Paywall Animation",
+    category: "Animation",
+    year: "2026",
+    src: "/images/playground/riv/rd-paywall.riv",
+    alt: "Rd paywall",
+    tools: ["Figma", "Rive"],
+    isRiveFile: true,
+    description: "Paywall animation for RevisionDojo",
+  },
+  {
+    name: "Tank Heads",
+    category: "Game Assets",
     year: "2025",
-    src: "/images/playground1a.png",
-    alt: "Card 1",
-    tools: ["Figma", "Fun"],
+    src: "/images/playground/tank-heads.png",
+    alt: "Tank heads",
+    tools: ["Adobe Illustrator"],
+    description:
+      "Turret upgrade system for a tank game that I made back in first year.",
+  },
+  {
+    name: "Oil Tycoon Simulator",
+    category: "Game Assets",
+    year: "2024",
+    src: "/images/playground/265-game.png",
+    alt: "265 game",
+    tools: ["Figma"],
+    description:
+      "Game assets for a school project that I made. The game was an Oil Tycoon Simulator.",
   },
   {
     name: "Neal, Nah I'd Win.",
     year: "2024",
     category: "Pixel Art",
-    src: "/images/playground2aa.png",
-    alt: "Card 2",
-    tools: ["Figma", "Fun"],
+    src: "/images/playground/neal.png",
+    alt: "Neal",
+    tools: ["Adobe Illustrator"],
+    description:
+      "Made this for a friend a while back when Lobotomy Kaisen was trending.",
   },
   {
-    name: "Pixel Aquarium",
-    year: "2025",
-    category: "Pixel Art",
-    src: "/images/playground3a.png",
-    alt: "Card 3",
-    tools: ["Figma", "Fun"],
-  },
-  {
-    name: "Empire Clash",
+    name: "Empyrean Monarch & Jester",
     year: "2024",
     category: "Digital Art",
-    src: "/images/playground4a.png",
-    alt: "Card 4",
-    tools: ["Figma", "Fun"],
+    src: "/images/playground/empire-clash.png",
+    alt: "Empire clash",
+    tools: ["Adobe Illustrator"],
+    description:
+      "Fanart for Empire Clash, a Roblox Game. Depicts the Empyrean faction Monarch and Jester",
   },
   {
-    name: "Dojo Calendar",
-    year: "2025",
+    name: "Praey Assets",
+    category: "Game Assets",
+    year: "2023",
+    src: "/images/playground/praey-assets.png",
+    alt: "Praey assets",
+    tools: ["Adobe Illustrator"],
+    description:
+      "Pixel Art that I created for my first game, Praey: It's a dungeons rougelike bullet hell. These are the villians and bosses, which are supposed to resemble demons.",
+  },
+  {
+    name: "Holiday Heroes",
+    category: "Vector Art",
+    year: "2022",
+    src: "/images/playground/holiday-heros.png",
+    alt: "Holiday heroes",
+    tools: ["Adobe Illustrator", "My Trackpad"],
+    description:
+      "Drawing of SEA Military's Founding team to celebrate the holidays.",
+  },
+  {
+    name: "Sea Background",
     category: "Digital Art",
-    src: "/images/playground5.png",
-    alt: "Card 5",
-    tools: ["Figma", "Fun"],
+    year: "2021",
+    src: "/images/playground/sea-bg.png",
+    alt: "Sea background",
+    tools: ["Adobe Illustrator"],
+    description:
+      "A banner I drew for one of Roblox Navy Simulators game covers. As you can probably tell, I was a huge fan.",
   },
   {
-    name: "Slide Showcase",
-    year: "2025",
-    category: "Design",
-    src: "/images/playground6.png",
-    alt: "Card 6",
-    tools: ["Figma", "Fun"],
-  },
-  {
-    name: "Dojo Treasure Chest",
-    year: "2025",
+    name: "Sea Chan",
     category: "Digital Art",
-    src: "/images/playground7.png",
-    alt: "Card 7",
-    tools: ["Figma", "Fun"],
+    year: "2021",
+    src: "/images/playground/sea-chan.png",
+    alt: "Sea chan",
+    tools: ["Adobe Illustrator"],
+    description: "Uhhhh an original OC...!!  ",
   },
 ];
 
@@ -93,20 +215,43 @@ function Page() {
   const { setShowTop, showTop } = useCaseContext();
   const isScrollDown = useScrollDown();
   const pageTop = useRef(null);
+  const isRestarting = useRef(false);
 
   // Check if current selection is a Rive file
   const currentSrc = selected?.src ?? lastSelected.src;
-  const isRiveFile = currentSrc?.endsWith('.riv');
+  const isRiveFile = currentSrc?.endsWith(".riv");
 
   // Rive component setup
-  const { RiveComponent } = useRive(
+  const { RiveComponent, rive } = useRive(
     isRiveFile
       ? {
           src: currentSrc,
           autoplay: true,
         }
-      : { autoplay: false }
+      : { autoplay: false },
   );
+
+  // Set up looping for one-shot animations in modal
+  useEffect(() => {
+    if (!rive || !isRiveFile) return;
+
+    const handleStop = () => {
+      if (isRestarting.current) return;
+
+      isRestarting.current = true;
+      setTimeout(() => {
+        rive.reset();
+        rive.play();
+        isRestarting.current = false;
+      }, 0);
+    };
+
+    rive.on("stop", handleStop);
+
+    return () => {
+      rive.off("stop", handleStop);
+    };
+  }, [rive, isRiveFile]);
 
   // Set mounted state after hydration
   useEffect(() => {
@@ -115,6 +260,8 @@ function Page() {
 
   // Set up intersection observer
   useEffect(() => {
+    if (!pageTop.current) return;
+
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
       setShowTop(entry.isIntersecting);
@@ -136,7 +283,7 @@ function Page() {
           <>
             {/* Backdrop */}
             <button
-              className={`fixed inset-0 z-[9] bg-black/20 backdrop-blur-sm hover:cursor-pointer ease-fast duration-[400ms] transition-all ${
+              className={`fixed inset-0 z-[9] bg-black/20 backdrop-blur-sm cursor-pointer ease-fast duration-[400ms] transition-all ${
                 selected
                   ? "opacity-100 pointer-events-auto"
                   : "opacity-0 pointer-events-none"
@@ -147,7 +294,7 @@ function Page() {
 
             {/* Modal container */}
             <div
-              className={`fixed inset-0 z-[10] flex flex-col items-center justify-center hover:cursor-pointer ease-fast duration-400 transition-all ${
+              className={`fixed inset-0 z-[10] flex flex-col items-center justify-center cursor-pointer ease-fast duration-[400ms] transition-all ${
                 selected
                   ? "translate-y-0 scale-100 opacity-100 pointer-events-auto"
                   : "translate-y-[1rem] scale-95 opacity-0 pointer-events-none"
@@ -156,13 +303,13 @@ function Page() {
             >
               {/* Modal content */}
               <div
-                className="w-[70%] h-fit xl:h-[60vh] md:h-[60vh] lg:h-[60vh] flex xl:flex-row md:flex-row lg:flex-row flex-col bg-white px-8 lg:py-16 xl:py-16 md:py-16 py-8 z-11 rounded-2xl gap-16 relative hover:cursor-default"
+                className="w-[70%] h-fit xl:h-[60vh] md:h-[60vh] lg:h-[70vh] flex xl:flex-row md:flex-row lg:flex-row flex-col bg-white px-8 lg:py-16 xl:py-16 md:py-16 py-8 z-11 rounded-2xl gap-16 relative cursor-default"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Close button */}
                 <button
                   onClick={handleClose}
-                  className="absolute top-8 right-8 w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors z-12 hover:cursor-pointer"
+                  className="absolute top-8 right-8 w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors z-12 cursor-pointer"
                   aria-label="Close"
                 >
                   <svg
@@ -181,9 +328,9 @@ function Page() {
                 </button>
 
                 {/* Image section */}
-                <div className="xl:w-[50%] md:w-[50%] lg:w-[50%] w-full h-full flex flex-col items-center justify-center">
+                <div className="xl:w-[60%] md:w-[60%] lg:w-[60%] w-full h-full flex flex-col items-center justify-center">
                   {isRiveFile ? (
-                    <div className="w-full h-full">
+                    <div key={currentSrc} className="w-full h-full">
                       <RiveComponent className="w-full h-full" />
                     </div>
                   ) : (
@@ -202,7 +349,7 @@ function Page() {
                 </div>
 
                 {/* Info section */}
-                <div className="xl:w-[30%] md:w-[30%] lg:w-[30%] w-full]">
+                <div className="xl:w-[30%] md:w-[30%] lg:w-[30%] w-full">
                   <div className="max-w-full h-full flex flex-col justify-center lg:gap-16 xl:gap-16 md:gap-16 gap-4">
                     <div className="flex flex-col h-fit">
                       <h6 className="text-text-secondary">{selected?.year}</h6>
@@ -210,8 +357,8 @@ function Page() {
                         {selected?.name}
                       </h3>
                       <h6 className="text-left text-text-secondary">
-                        Here&apos;s where a little description about why I made
-                        this drawing would go.
+                        {selected?.description ??
+                          "Here's where a little description about why I made this drawing would go."}
                       </h6>
                     </div>
                     <div className="flex flex-col gap-4">
@@ -229,38 +376,6 @@ function Page() {
                     </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Thumbnail gallery - separate from modal */}
-              <div
-                className="w-[70%] flex flex-row gap-2 mt-4 hover:cursor-default"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {cards.map((item, key) => (
-                  <button
-                    key={key}
-                    onClick={() => setSelected(item)}
-                    className={`min-w-16 h-16 rounded-lg overflow-hidden bg-white flex items-center justify-center hover:opacity-80 transition-opacity ${
-                      selected?.src === item.src ? "ring-2 ring-primary" : ""
-                    }`}
-                  >
-                    {item.src.endsWith('.riv') ? (
-                      <div className="w-full h-full bg-secondary flex items-center justify-center">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <polygon points="5 3 19 12 5 21 5 3" />
-                        </svg>
-                      </div>
-                    ) : (
-                      <Image
-                        src={item.src}
-                        alt={item.alt}
-                        width={200}
-                        height={200}
-                        className="object-cover w-full h-full"
-                      />
-                    )}
-                  </button>
-                ))}
               </div>
             </div>
           </>,
@@ -290,28 +405,32 @@ function Page() {
                   <div
                     key={key}
                     onClick={() => setSelected(item)}
-                    className="min-w-[50vw] lg:min-w-[32%] lg:max-w-[33%] md:min-w-[45%] md:max-w-[50%] origin-center rounded-[1rem] overflow-hidden flex-1 aspect-square bg-white flex flex-col justify-center items-start relative hover:cursor-pointer"
+                    className="min-w-[50vw] lg:min-w-[32%] lg:max-w-[33%] md:min-w-[45%] md:max-w-[50%] origin-center rounded-[1rem] overflow-hidden flex-1 aspect-square bg-white flex flex-col justify-center items-start relative cursor-pointer"
                   >
-                    <div className="w-full h-fit flex flex-row justify-between absolute bottom-0 p-[1rem] items-end">
+                    <div className="w-full h-fit flex flex-row justify-between absolute bottom-0 p-[1rem] items-end z-10">
                       <div className="flex flex-col items-start gap-[0.25rem]">
                         <h6 className="text-text-secondary">{item.category}</h6>
                         <h6>{item.name}</h6>
                       </div>
                       <h6>{item.year}</h6>
                     </div>
-                    <Image
-                      src={item.src}
-                      alt={item.alt}
-                      width={1200}
-                      height={1200}
-                      placeholder="blur"
-                      blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                        shimmer(1200, 1200),
-                      )}`}
-                      priority={key < 3}
-                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 45vw, 30vw"
-                      className="object-contain w-full min-h-0 flex-1 p-[3rem] ease-in-out duration-200 py-[4rem]"
-                    />
+                    {item.isRiveFile ? (
+                      <RivePreview key={item.src} src={item.src} />
+                    ) : (
+                      <Image
+                        src={item.src}
+                        alt={item.alt}
+                        width={1200}
+                        height={1200}
+                        placeholder="blur"
+                        blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                          shimmer(1200, 1200),
+                        )}`}
+                        priority={key < 3}
+                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 45vw, 30vw"
+                        className="object-contain w-full min-h-0 flex-1 p-[3rem] ease-in-out duration-200 py-[4rem]"
+                      />
+                    )}
                   </div>
                 ))}
               </div>
