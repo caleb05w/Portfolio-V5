@@ -41,17 +41,17 @@ function Page() {
     <div className="flex flex-col">
       {/* Fixed spacer */}
       <div
-        className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1]  lg:bg-transparent ${showTop ? "h-[10rem] xl:h-[12rem]" : "h-[0rem]"}`}
+        className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1] lg:bg-transparent ${showTop ? "h-[10rem] xl:h-[12rem]" : "h-[0rem]"}`}
       />
 
       <div className="flex flex-row h-screen w-full">
         {/* Sidebar */}
         <div
-          className={` h-full ${showTop ? "md:w-[4rem] lg:w-[4rem] xl:w-[4rem]" : "md:w-[8rem] lg:w-[8rem] xl:w-[12rem]"} ease-fast duration-[400ms]`}
+          className={`h-full ${showTop ? "md:w-[4rem] lg:w-[4rem] xl:w-[4rem]" : "md:w-[8rem] lg:w-[8rem] xl:w-[12rem]"} ease-fast duration-[400ms]`}
         >
           {/* //need to use fixed sidebar here, which uses a react portal to take it out of the normal flow nbecause of the absolute page transitions. */}
           <FixedSidebar
-            className={`fixed h-full w-[0] xl:w-[8rem] md:w-[8rem] lg:w-[8rem] xl:w-[12rem] flex flex-col overflow-hidden top-[6rem] justify-start  h-full ease-fast duration-[450ms] pl-[1rem]
+            className={`fixed h-full w-[0] xl:w-[8rem] md:w-[8rem] lg:w-[8rem] xl:w-[12rem] flex flex-col overflow-hidden top-[6rem] justify-start h-full ease-fast duration-[450ms] pl-[1rem]
                     ${showTop ? "opacity-[0%]" : "opacity-[100%]"}
                     `}
           >
@@ -84,11 +84,11 @@ function Page() {
                   <div className="case-x-gutter">
                     <div className="w-[4rem] h-[4rem]">
                       <Image
-                        src="images/revision-dojo-logo.svg"
+                        src="/images/revision-dojo-logo.svg"
                         alt="RevisionDojo Logo"
                         width={200}
                         height={200}
-                        className="w-full h-full border"
+                        className="w-full h-full"
                       />
                     </div>
                   </div>
@@ -233,8 +233,8 @@ function Page() {
         </div>
         {/* //left side */}
         <div
-          className={` h-full duration-[400ms] ease-fast
-                ${showTop ? "xl:w-[4rem] md:w-[4rem] lg:w-[4rem]" : "md:w-[0rem] xl:w-[0rem] lg:w-[0rem]"}
+          className={`h-full duration-[400ms] ease-fast
+                ${showTop ? "md:w-[4rem] xl:w-[4rem] lg:w-[4rem]" : "w-[0rem]"}
                 `}
         ></div>
       </div>

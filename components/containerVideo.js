@@ -44,7 +44,7 @@ function ContainerVideo({ title, body, videoSrc, hint, subheader, gutter, vidPad
     }, []);
 
     return (
-        <div className={`flex flex-col min-h-full justify-between w-full ${gutter}`}>
+        <div className={`flex flex-col min-h-full justify-between flex-1 min-w-0 ${gutter}`}>
             <ContainerText title={title} body={body} subheader={subheader} />
 
             {(videoSrc || rivSrc) && (

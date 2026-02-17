@@ -13,7 +13,7 @@ function ContainerIntro({ Teammates, Name, Year, body, videoSrc, image2, image3 
                         <p key={key}> {item}</p>
                     ))}
                 </div>
-                <div className='flex flex-col justify-between lg:gap-[0rem] md:gap-[0rem] gap-[1rem] w-[30%] md:w-[30%] lg:w-[30%]'>
+                <div className='flex flex-col justify-between lg:gap-[0rem] md:gap-[0rem] gap-[1rem] w-full md:w-[30%] lg:w-[30%] xl:w-[30%]'>
                     <div className="flex flex-col gap-[1rem]">
                         <h2> Team </h2>
                         <div className="flex flex-col gap-[0]">

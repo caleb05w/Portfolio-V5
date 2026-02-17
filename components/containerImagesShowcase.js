@@ -26,9 +26,9 @@ function containerImagesShowcase({ videoSrc, image2, image3 }) {
                 </div>
             }
             {(secondImage || thirdImage) && (
-                <div className="flex flex-row gap-[0.5rem] w-full">
+                <div className="flex flex-row gap-[0.5rem] w-full max-w-full">
                     {secondImage && (
-                        <div className="w-[30%] h-auto">
+                        <div className="flex-[3] min-w-0 h-auto">
                             <Image
                                 src={secondImage.src}
                                 width={secondImage.width}
@@ -40,7 +40,7 @@ function containerImagesShowcase({ videoSrc, image2, image3 }) {
                         </div>
                     )}
                     {thirdImage && (
-                        <div className={secondImage ? "w-[70%] h-auto" : "w-full h-auto"}>
+                        <div className={secondImage ? "flex-[7] min-w-0 h-auto" : "w-full h-auto"}>
                             <Image
                                 src={thirdImage.src}
                                 width={thirdImage.width}
