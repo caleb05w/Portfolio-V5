@@ -8,12 +8,14 @@ function ContainerVideo({ title, body, videoSrc, hint, subheader, gutter, vidPad
 
     //animation component
     const { RiveComponent } = useRive(
-        {
-            src: rivSrc,
-            stateMachines: { rivStateMachine },
-            autoplay: true
-        }
-    )
+        rivSrc
+            ? {
+                src: rivSrc,
+                stateMachines: { rivStateMachine },
+                autoplay: true,
+            }
+            : { autoplay: false }
+    );
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -56,9 +58,8 @@ function ContainerVideo({ title, body, videoSrc, hint, subheader, gutter, vidPad
                                 muted
                                 loop
                                 playsInline
-                                preload={videoPreload}
+                                preload={videoPreload ?? "none"}
                                 poster={posterSrc}
-                                autoPlay
                                 style={{
                                     backgroundColor: "#F8F8F8",
                                     objectFit: "contain",

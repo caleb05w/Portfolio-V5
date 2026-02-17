@@ -8,6 +8,7 @@ import ContainerVideo from "../../../components/containerVideo";
 import { useCaseContext } from "../../../utils/caseContext";
 import Label from "../../../components/label";
 import Sidebar from "../../../components/sidebar";
+import FixedSidebar from "../../../components/FixedSidebar";
 
 function Page() {
   const team = ["1 Designer (Me)", "2 Developers"];
@@ -46,7 +47,9 @@ function Page() {
         <div
           className={` h-full ${showTop ? "md:w-[4rem] lg:w-[4rem] xl:w-[4rem]" : "md:w-[8rem] lg:w-[8rem] xl:w-[12rem]"} ease-fast duration-[400ms]`}
         >
-          <div
+
+          {/* //need to use fixed sidebar here, which uses a react portal to take it out of the normal flow nbecause of the absolute page transitions. */}
+          <FixedSidebar
             className={`fixed h-full w-[0] xl:w-[8rem] md:w-[8rem] lg:w-[8rem] xl:w-[12rem] flex flex-col overflow-hidden top-[6rem] justify-start  h-full ease-fast duration-[450ms] pl-[1rem]
                     ${showTop ? "opacity-[0%]" : "opacity-[100%]"}
                     `}
@@ -61,7 +64,7 @@ function Page() {
               ]}
               onCardSelect={scrollToSection}
             />
-          </div>
+          </FixedSidebar>
         </div>
 
         {/* Main content */}
@@ -114,6 +117,7 @@ function Page() {
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
                   imgHeight="h-[50vh]"
+                  lazy
                 />
 
                 <div className="flex flex-col md:flex-row lg:flex-row gap-[2rem] case-x-gutter">
@@ -125,6 +129,7 @@ function Page() {
                     ]}
                     img="/images/RD4.png"
                     alt="Project Research Timeline"
+                    lazy
                   />
 
                   <ContainerLine
@@ -135,6 +140,7 @@ function Page() {
                     ]}
                     img="/images/RD5.png"
                     alt="Project Research Timeline"
+                    lazy
                   />
                 </div>
               </div>
@@ -180,6 +186,7 @@ function Page() {
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
                   imgHeight="h-[60vh]"
+                  lazy
                 />
 
                 <ContainerVideo

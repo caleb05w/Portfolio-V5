@@ -10,6 +10,7 @@ import { Analytics } from "@vercel/analytics/next";
 
 import ToolTip from "../../components/toolTip";
 import Navbar from "../../components/navbar";
+import AnimationWrapper from "../../components/AnimationWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,14 +29,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${ppNeueMontreal.variable} antialiased`}
       > 
         <ToolTipProvider>
           <CaseProvider>
             <Navbar />
-            {children}
+            <AnimationWrapper>
+              {children}
+            </AnimationWrapper>
             <ToolTip />
           </CaseProvider>
         </ToolTipProvider>

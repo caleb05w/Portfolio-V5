@@ -4,7 +4,7 @@ import React, { useState, useLayoutEffect, useRef, useEffect, useId } from "reac
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
-function ContainerImage({ img, alt, width, height, className, gutter, head, imgHeight, imgWidth, object }) {
+function ContainerImage({ img, alt, width, height, className, gutter, head, imgHeight, imgWidth, object, lazy }) {
     const [isOpen, setIsOpen] = useState(false);
 
     const uid = useId();
@@ -63,6 +63,7 @@ function ContainerImage({ img, alt, width, height, className, gutter, head, imgH
                         fill
                         alt={alt || "no alt text"}
                         className={`h-fit ${object ?? "object-contain"}`}
+                        loading={lazy ? "lazy" : "eager"}
                     />
                 </button>
             </div >

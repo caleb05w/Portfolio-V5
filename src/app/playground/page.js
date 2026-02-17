@@ -4,6 +4,58 @@ import Image from "next/image";
 import { useCaseContext } from "../../../utils/caseContext";
 import { useScrollDown } from "../../../utils/useScrollDown";
 
+const cards = [
+  {
+    name: "Namecard",
+    category: "Design",
+    year: "2025",
+    src: "/images/playground1a.png",
+    alt: "Card 1",
+  },
+  {
+    name: "Neal, Nah I'd Win.",
+    year: "2024",
+    category: "Pixel Art",
+    src: "/images/playground2aa.png",
+    alt: "Card 2",
+  },
+  {
+    name: "Pixel Aquarium",
+    year: "2025",
+    category: "Pixel Art",
+    src: "/images/playground3a.png",
+    alt: "Card 3",
+  },
+  {
+    name: "Empire Clash",
+    year: "2024",
+    category: "Digital Art",
+    src: "/images/playground4a.png",
+    alt: "Card 4",
+  },
+  {
+    name: "Dojo Calendar",
+    year: "2025",
+    category: "Digital Art",
+    src: "/images/playground5.png",
+    alt: "Card 5",
+  },
+  {
+    name: "Slide Showcase",
+    year: "2025",
+    category: "Design",
+    src: "/images/playground6.png",
+    alt: "Card 6",
+  },
+  {
+    name: "Dojo Treasure Chest",
+    year: "2025",
+    category: "Digital Art",
+    src: "/images/playground7.png",
+    alt: "Card 7",
+  },
+];
+
 function Page() {
   const [selected, setSelected] = useState(null);
   const { setShowTop, showTop } = useCaseContext();
@@ -18,59 +70,7 @@ function Page() {
     });
     observer.observe(pageTop.current);
     return () => observer.disconnect();
-  }, []); // Empty array - run once on moun
-
-  const cards = [
-    {
-      name: "Namecard",
-      category: "Design",
-      year: "2025",
-      src: "/images/playground1a.png",
-      alt: "Card 1",
-    },
-    {
-      name: "Neal, Nah I'd Win.",
-      year: "2024",
-      category: "Pixel Art",
-      src: "/images/playground2aa.png",
-      alt: "Card 2",
-    },
-    {
-      name: "Pixel Aquarium",
-      year: "2025",
-      category: "Pixel Art",
-      src: "/images/playground3a.png",
-      alt: "Card 3",
-    },
-    {
-      name: "Empire Clash",
-      year: "2024",
-      category: "Digital Art",
-      src: "/images/playground4a.png",
-      alt: "Card 4",
-    },
-    {
-      name: "Dojo Calendar",
-      year: "2025",
-      category: "Digital Art",
-      src: "/images/playground5.png",
-      alt: "Card 4",
-    },
-    {
-      name: "Slide Showcase",
-      year: "2025",
-      category: "Design",
-      src: "/images/playground6.png",
-      alt: "Card 4",
-    },
-    {
-      name: "Dojo Treasure Chest",
-      year: "2025",
-      category: "Digital Art",
-      src: "/images/playground7.png",
-      alt: "Card 4",
-    },
-  ];
+  }, [setShowTop]);
 
   return (
     <div className="flex flex-col">
@@ -109,12 +109,12 @@ function Page() {
 
       {/* Dynamic spacer */}
       <div
-        className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1]
+        className={`relative top-0 left-0 w-full pointer-events-none transition-[height] duration-300 ease-fast z-[1]
                 ${isScrollDown === true ? "h-[0rem]" : showTop === false ? "h-[0rem]" : "h-[8rem] xl:h-[12rem]"}`}
       />
 
       {/* Main content */}
-      <div className="flex flex-col transition-all duration-300 ease-fast y-gutter gap-[2rem] ">
+      <div className="flex flex-col transition-[gap] duration-300 ease-fast y-gutter gap-[2rem] ">
         <div ref={pageTop} className=""></div>
         <div className="top-0 max-w-screen flex flex-col gap-4 justify-center items-center  case-x-gutter">
           <div className="w-full flex flex-col items-center justify-center">
@@ -124,7 +124,7 @@ function Page() {
                   <div
                     key={key}
                     // onClick={() => setSelected(item)}
-                    className={`ease-in-out duration-700 transition-all min-w-[50vw] lg:min-w-[32%] lg:max-w-[33%] md:min-w-[45%] md:max-w-[50%] origin-center rounded-[1rem] overflow-hidden flex-1 aspect-square bg-white flex flex-col justify-center items-start relative`}
+                    className={`min-w-[50vw] lg:min-w-[32%] lg:max-w-[33%] md:min-w-[45%] md:max-w-[50%] origin-center rounded-[1rem] overflow-hidden flex-1 aspect-square bg-white flex flex-col justify-center items-start relative`}
                   >
                     <div className="w-full h-fit flex flex-row justify-between absolute bottom-[0] p-[1rem] items-end">
                       <div className="flex flex-col items-start gap-[0.25rem]">
@@ -139,6 +139,7 @@ function Page() {
                       width={1200}
                       height={1200}
                       className="object-contain w-full min-h-0 flex-1 p-[3rem] ease-in-out duration-200 py-[4rem]"
+                      loading={key < 3 ? "eager" : "lazy"}
                     />
                     <div className="h-[2rem] w-screen"></div>
                   </div>

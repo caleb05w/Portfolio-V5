@@ -16,7 +16,7 @@ export function useScrollDown() {
                 window.requestAnimationFrame(() => {
                     const currentScrollY = window.scrollY;
 
-                    if (Math.abs(currentScrollY - lastScrollY.current) > 1) { // Changed to 1px
+                    if (Math.abs(currentScrollY - lastScrollY.current) > 5) {
                         setIsScrollingDown(currentScrollY > lastScrollY.current);
                     }
 

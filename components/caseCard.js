@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import Image from "next/image"
 import Link from "next/link"
-import TitleAnimation from './titleAnimation'
+import dynamic from 'next/dynamic'
+
+const TitleAnimation = dynamic(() => import('./titleAnimation'), { ssr: false })
 
 function CaseCard({
     name,
@@ -24,12 +26,10 @@ function CaseCard({
     useEffect(() => {
         if (videoRef.current) {
             if (position === 0) {
-                // Play when active
                 videoRef.current.play().catch(err => {
                     console.log("Video play prevented:", err);
                 });
             } else {
-                // Pause when not active
                 videoRef.current.pause();
             }
         }
@@ -46,12 +46,11 @@ function CaseCard({
             xl:aspect-[5.5/3]
             md:aspect-[5.5/3]
             max-w-[60rem]
-            transition-all duration-700 
-            flex flex-row items-center justify-center 
-            rounded-[1.4rem] 
+            transition-all duration-700
+            flex flex-row items-center justify-center
+            rounded-[1.4rem]
             overflow-hidden
            `}>
-            {/* //about card */}
             {type === "Intro" &&
                 <section className="w-full h-full flex-col items-center flex p-[5%] bg-white justify-between">
                     <h6 className='text-text-secondary w-full text-center'>Caleb Wu</h6>
@@ -81,9 +80,7 @@ function CaseCard({
                     </div>
                 </section>}
 
-            {/* //case card */}
-            {
-                type === "Case" &&
+            {type === "Case" &&
                 <section className="w-full h-full hover:cursor-pointer">
                     <Link href={link ?? "/"}>
                         <div className="flex overflow-hidden w-full h-full relative">
@@ -100,7 +97,7 @@ function CaseCard({
                                 videoSrc &&
                                 <div className='bg-[#F7F7F7] w-full flex flex-row justify-center'>
                                     <video
-                                        ref={videoRef}  // ✅ ADDED REF
+                                        ref={videoRef}
                                         className="h-full w-full"
                                         src={videoSrc}
                                         preload={videoPreload}

@@ -8,6 +8,7 @@ import ContainerVideo from "../../../components/containerVideo";
 import { useCaseContext } from "../../../utils/caseContext";
 import Label from "../../../components/label";
 import Sidebar from "../../../components/sidebar";
+import FixedSidebar from "../../../components/FixedSidebar";
 
 function Page() {
   const team = ["1 Design Director (Me)", "2 Designers"];
@@ -46,7 +47,7 @@ function Page() {
         <div
           className={`h-full ${showTop ? "md:w-[4rem] lg:w-[4rem] xl:w-[4rem]" : "md:w-[8rem] lg:w-[8rem] xl:w-[12rem]"} ease-fast duration-[400ms]`}
         >
-          <div
+          <FixedSidebar
             className={`z-[10] fixed h-full w-[0] xl:w-[8rem] md:w-[8rem] lg:w-[8rem] xl:w-[12rem] flex flex-col overflow-hidden top-[6rem] justify-start h-full ease-fast duration-[450ms] pl-[1rem]
                     ${showTop ? "opacity-[0%]" : "opacity-[100%]"}
                     `}
@@ -60,7 +61,7 @@ function Page() {
               ]}
               onCardSelect={scrollToSection}
             />
-          </div>
+          </FixedSidebar>
         </div>
 
         {/* Main content */}
@@ -94,6 +95,7 @@ function Page() {
                   imgw2="lg:w-[50%] w-full"
                   imgobj2="object-cover"
                   imgobj="object-cover"
+                  lazy
                 />
                 <ContainerLine
                   img="/images/Axis/Axis3.png"
@@ -101,6 +103,7 @@ function Page() {
                   gutter="case-x-gutter"
                   imgHeight="h-[25rem]"
                   imgobj="object-cover"
+                  lazy
                 />
               </div>
 
@@ -119,12 +122,14 @@ function Page() {
                   imgHeight="h-[20rem]"
                   imgobj="object-cover"
                   imgobj2="object-cover"
+                  lazy
                 />
                 <ContainerLine
                   img="/images/Axis/Axis6.png"
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
                   imgHeight="h-[25rem]"
+                  lazy
                 />
                 <ContainerLine
                   img="/images/Axis/Axis7.png"
@@ -135,6 +140,7 @@ function Page() {
                   imgw="w-full"
                   imgw2="lg:w-[60%] w-full"
                   imgobj2="object-cover"
+                  lazy
                 />
                 <ContainerLine
                   img2="/images/Axis/Axis10.png"
@@ -144,6 +150,7 @@ function Page() {
                   imgw=" lg:w-[40%] w-full"
                   imgw2="w-full"
                   imgobj="object-cover"
+                  lazy
                 />
               </div>
 
@@ -159,12 +166,14 @@ function Page() {
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
                   imgHeight="h-[25rem]"
+                  lazy
                 />
                 <ContainerLine
                   img="/images/Axis/Axis12.png"
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
                   imgHeight="h-[25rem]"
+                  lazy
                 />
                 <ContainerLine
                   img="/images/Axis/Axis13.png"
@@ -173,6 +182,7 @@ function Page() {
                   gutter="case-x-gutter"
                   imgHeight="h-[20rem]"
                   imgobj2="object-cover"
+                  lazy
                 />
               </div>
 

@@ -198,7 +198,9 @@ export default function Page() {
               <div
                 key={card.id}
                 className="flex flex-col group py-[0.25rem] hover:cursor-pointer w-full"
-                onClick={() => setIndices((prev) => ({ current: key, prev: prev.current }))}
+                onClick={() =>
+                  setIndices((prev) => ({ current: key, prev: prev.current }))
+                }
               >
                 <div
                   className={`flex flex-row gap-[0.5rem] items-center w-full h-fit`}

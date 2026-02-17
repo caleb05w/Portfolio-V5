@@ -17,6 +17,7 @@ function containerImagesShowcase({ videoSrc, image2, image3 }) {
                         muted
                         loop
                         playsInline
+                        preload="metadata"
                         style={{
                             backgroundColor: "#F8F8F8",
                             objectFit: "contain",
@@ -34,6 +35,7 @@ function containerImagesShowcase({ videoSrc, image2, image3 }) {
                                 height={secondImage.height}
                                 alt={secondImage.alt || ''}
                                 className={secondImage.className || 'object-cover w-full h-full'}
+                                loading="lazy"
                             />
                         </div>
                     )}
@@ -45,6 +47,7 @@ function containerImagesShowcase({ videoSrc, image2, image3 }) {
                                 height={thirdImage.height}
                                 alt={thirdImage.alt || ''}
                                 className={thirdImage.className || 'object-cover w-full h-auto'}
+                                loading="lazy"
                             />
                         </div>
                     )}
