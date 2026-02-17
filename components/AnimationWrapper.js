@@ -20,7 +20,7 @@ export default function AnimationWrapper({ children }) {
   const pathname = usePathname();
 
   return (
-    <div style={{ position: 'relative', display: 'grid' }}>
+    <div style={{ position: 'relative', display: 'grid', width: '100%', maxWidth: '100vw' }}>
       <AnimatePresence initial={false}>
         <PageTransition key={pathname}>
           <FrozenRouter>{children}</FrozenRouter>

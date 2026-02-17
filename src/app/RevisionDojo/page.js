@@ -81,7 +81,7 @@ function Page() {
               {/* About Section */}
               <div id="about" className="flex flex-col case-gap case-mt">
                 <div className="flex flex-col gap-[4rem]">
-                  <div className="case-x-gutter">
+                  <div className="w-fit case-x-gutter">
                     <div className="w-[4rem] h-[4rem]">
                       <Image
                         src="/images/revision-dojo-logo.svg"
@@ -118,7 +118,6 @@ function Page() {
                   />
                 </div>
               </div>
-
               {/* Mission Section */}
               <div id="mission" className="flex flex-col case-gap case-mt">
                 <ContainerLine
@@ -158,7 +157,6 @@ function Page() {
                   />
                 </div>
               </div>
-
               {/* Solution Section */}
               <div id="solution" className="flex flex-col case-gap case-mt">
                 <ContainerVideo
@@ -187,7 +185,6 @@ function Page() {
                   videoHeight="h-[60vh]"
                 />
               </div>
-
               {/* Decisions Section */}
               <div id="decisions" className="flex flex-col case-gap case-mt">
                 <ContainerLine
@@ -217,7 +214,6 @@ function Page() {
                   videoHeight="h-[60vh]"
                 />
               </div>
-
               {/* Reflection Section */}
               <div id="reflection" className="case-mt case-gap flex flex-col">
                 <ContainerReflection

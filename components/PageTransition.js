@@ -24,6 +24,7 @@ export default function PageTransition({ children }) {
       style={{
         gridArea: "1 / 1",
         width: "100%",
+        maxWidth: "100%",
         willChange: "opacity, transform",
       }}
     >
