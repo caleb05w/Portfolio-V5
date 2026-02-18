@@ -59,7 +59,7 @@ function RivePreview({ src }) {
   }, [rive]);
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-[3rem] py-[4rem]">
+    <div className="absolute inset-0 flex items-center justify-center p-[3rem] py-[4rem]">
       <RiveComponent className="w-full h-full" />
     </div>
   );
@@ -98,6 +98,16 @@ const cards = [
     isRiveFile: true,
     description: "Loading screen for the RevisionDojo app.",
   },
+
+  {
+    name: "Jojo Sky Banner",
+    category: "Drawing",
+    year: "2026",
+    src: "/images/playground/bright-sky.png",
+    alt: "Jojo flying through the sky",
+    tools: ["Figma"],
+    description: "Banner to decorate one of our feature pages.",
+  },
   {
     name: "Jojo Walk",
     category: "Animation",
@@ -109,16 +119,6 @@ const cards = [
     description: "Loading screen animation for RevisionDojo.",
   },
   {
-    name: "3 Stars",
-    category: "Animation",
-    year: "2026",
-    src: "/images/playground/riv/lesson-complete-3-stars.riv",
-    alt: "Lesson complete 3 stars",
-    tools: ["Figma", "Rive"],
-    isRiveFile: true,
-    description: "Reward animation for users who get 3 stars after a lesson.",
-  },
-  {
     name: "Streak Animation",
     category: "Animation",
     year: "2026",
@@ -127,6 +127,16 @@ const cards = [
     tools: ["Figma", "Rive"],
     isRiveFile: true,
     description: "Fire animation for our streaks.",
+  },
+  {
+    name: "3 Stars",
+    category: "Animation",
+    year: "2026",
+    src: "/images/playground/riv/lesson-complete-3-stars.riv",
+    alt: "Lesson complete 3 stars",
+    tools: ["Figma", "Rive"],
+    isRiveFile: true,
+    description: "Reward animation for users who get 3 stars after a lesson.",
   },
   {
     name: "Paywall Animation",
@@ -314,7 +324,7 @@ function Page() {
             >
               {/* Modal content */}
               <div
-                className="w-[70%] h-fit xl:h-[60vh] md:h-[60vh] lg:h-[70vh] flex xl:flex-row md:flex-row lg:flex-row flex-col bg-white px-8 lg:py-16 xl:py-16 md:py-16 py-8 z-11 rounded-2xl gap-16 relative cursor-default"
+                className="w-[90%] xl:w-[70%] md:w-[70%] lg:w-[70%] h-fit xl:h-[60vh] md:h-[60vh] lg:h-[70vh] flex xl:flex-row md:flex-row lg:flex-row flex-col bg-white px-8 lg:py-16 xl:py-16 md:py-16 py-8 z-11 rounded-2xl gap-16 relative cursor-default"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Close button */}
@@ -341,7 +351,10 @@ function Page() {
                 {/* Image section */}
                 <div className="xl:w-[60%] md:w-[60%] lg:w-[60%] w-full h-full flex flex-col items-center justify-center">
                   {isRiveFile ? (
-                    <div key={currentSrc} className="w-full h-full">
+                    <div
+                      key={currentSrc}
+                      className="w-full h-full min-h-[40vh]"
+                    >
                       <RiveComponent className="w-full h-full" />
                     </div>
                   ) : (
@@ -363,26 +376,29 @@ function Page() {
                 <div className="xl:w-[30%] md:w-[30%] lg:w-[30%] w-full">
                   <div className="max-w-full h-full flex flex-col justify-center lg:gap-16 xl:gap-16 md:gap-16 gap-4">
                     <div className="flex flex-col h-fit">
-                      <h6 className="text-text-secondary">{selected?.year}</h6>
+                      <h6 className="text-text-secondary">
+                        {selected?.year ?? lastSelected.year}
+                      </h6>
                       <h3 className="text-left mb-2 md:mb-8 xl:mb-8 lg:mb-8">
-                        {selected?.name}
+                        {selected?.name ?? lastSelected.name}
                       </h3>
                       <h6 className="text-left text-text-secondary">
-                        {selected?.description ??
-                          "Here's where a little description about why I made this drawing would go."}
+                        {selected?.description ?? lastSelected.description}
                       </h6>
                     </div>
                     <div className="flex flex-col gap-4">
                       <h5 className="text-left">Tools Used</h5>
                       <div className="flex md:flex-col xl:flex-col lg:flex-col flex-row gap-1">
-                        {selected?.tools?.map((item, key) => (
-                          <h6
-                            className="text-left text-text-secondary"
-                            key={key}
-                          >
-                            {item}
-                          </h6>
-                        ))}
+                        {(selected?.tools ?? lastSelected.tools).map(
+                          (item, key) => (
+                            <h6
+                              className="text-left text-text-secondary"
+                              key={key}
+                            >
+                              {item}
+                            </h6>
+                          ),
+                        )}
                       </div>
                     </div>
                   </div>

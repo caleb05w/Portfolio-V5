@@ -282,6 +282,10 @@ function Navbar({ active }) {
                     <Link
                       href={item.new.cta ?? "/"}
                       target={item.new.target ?? ""}
+                      onClick={() => {
+                        // Reset scroll immediately before navigation
+                        window.scrollTo(0, 0);
+                      }}
                     >
                       {item.new.isLogo ? (
                         <div className="flex flex-row gap-[0.6rem] items-center justify-center hover:cursor-pointer whitespace-nowrap">

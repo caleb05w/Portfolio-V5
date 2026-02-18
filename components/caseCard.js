@@ -97,7 +97,13 @@ function CaseCard({
 
       {type === "Case" && (
         <section className="w-full h-full hover:cursor-pointer">
-          <Link href={link ?? "/"}>
+          <Link
+            href={link ?? "/"}
+            onClick={() => {
+              // Reset scroll immediately before navigation
+              window.scrollTo(0, 0);
+            }}
+          >
             <div className="flex overflow-hidden w-full h-full relative">
               {img && (
                 <Image
