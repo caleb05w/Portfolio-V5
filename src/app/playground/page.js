@@ -69,13 +69,24 @@ const cards = [
   {
     name: "Rank Up Animation",
     category: "Animation",
-    year: "2026",
+    year: "2025",
     src: "/images/playground/riv/rank-emerald-diamond.riv",
     alt: "Jojo listening to music",
     tools: ["Figma", "Rive"],
     isRiveFile: true,
     description:
       "A small animation to celebrate when users rank up during RevisionDojo's Question Rush.",
+  },
+
+  {
+    name: "Reading books",
+    category: "Animation",
+    year: "2026",
+    src: "/images/playground/riv/jojo-book.riv",
+    alt: "Jojo reading a book, kicking his feet",
+    tools: ["Figma", "Rive"],
+    isRiveFile: true,
+    description: "Another idle animation for RevisionDojo's Mobile App",
   },
   {
     name: "Jojo Music",
