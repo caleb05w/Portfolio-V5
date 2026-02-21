@@ -58,9 +58,11 @@ function ContainerVideo({
             videoRef.current
               ?.play()
               .catch((err) => console.log("Video play failed:", err));
+            reactionRef.current?.play().catch(() => {});
           }
         } else {
           videoRef.current?.pause();
+          reactionRef.current?.pause();
         }
       },
       {
@@ -135,8 +137,8 @@ function ContainerVideo({
                 src={reactionSrc}
                 muted
                 loop
-                autoPlay
                 playsInline
+                preload="none"
               />
               <div className="absolute bottom-full right-0 mb-2 w-56 bg-black/80 text-white text-xs rounded-lg px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                 The reaction of the founding team and engineers after seeing the

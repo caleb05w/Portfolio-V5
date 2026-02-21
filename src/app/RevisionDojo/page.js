@@ -1,7 +1,16 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useRive } from "@rive-app/react-canvas";
+
+// Isolated so useRive only runs when this component mounts (lazy)
+function JojoBookRive() {
+  const { RiveComponent: JojoBook } = useRive({
+    src: "/images/playground/riv/jojo-book.riv",
+    autoplay: true,
+  });
+  return <JojoBook className="w-full h-full" />;
+}
 import ContainerLine from "../../../components/containerLine";
 import ContainerIntro from "../../../components/ContainerIntro";
 import ContainerReflection from "../../../components/containerReflection";
@@ -19,11 +28,8 @@ function Page() {
   const team = ["1 Designer (Me)", "2 Developers"];
   const { setShowTop, showTop } = useCaseContext();
   const pageTop = useRef(null);
-
-  const { RiveComponent: JojoBook } = useRive({
-    src: "/images/playground/riv/jojo-book.riv",
-    autoplay: true,
-  });
+  const jojoRef = useRef(null);
+  const [jojoVisible, setJojoVisible] = useState(false);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -37,6 +43,8 @@ function Page() {
   };
 
   useEffect(() => {
+    // Reset on mount so there's no layout-shift animation on page entry
+    setShowTop(true);
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
       setShowTop(entry.isIntersecting);
@@ -44,6 +52,22 @@ function Page() {
     observer.observe(pageTop.current);
     return () => observer.disconnect();
   }, [setShowTop]);
+
+  useEffect(() => {
+    const el = jojoRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setJojoVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="flex flex-col max-w-screen">
@@ -316,8 +340,8 @@ function Page() {
                   </div>
                   <div className="h-[50vh] w-full bg-[#F8F8F8] flex flex-col items-center justify-center">
                     <div className="w-[50%] flex flex-col gap-[0.5rem] items-center">
-                      <div className="w-[12rem] h-[12rem]">
-                        <JojoBook />
+                      <div ref={jojoRef} className="w-48 h-48">
+                        {jojoVisible && <JojoBookRive />}
                       </div>
                       <p>Our North Star</p>
                       <p className="text-text-secondary text-center">
@@ -340,7 +364,7 @@ function Page() {
                     ]}
                   />
                   <CaseCarousel
-                    imgHeight="60vh"
+                    imgHeight="h-[60vh]"
                     items={[
                       {
                         img: "/images/RD/RDN4-searchbarb.png",
@@ -365,7 +389,7 @@ function Page() {
                   <Label2
                     title="The search bar was the best option."
                     body="Initial solutions, while promising, were not uniquely positioned to validate subject resonance for users in the first 2 minutes."
-                    image="/images/rd/orange-star.svg"
+                    image="/images/RD/orange-star.svg"
                   />
                 </div>
                 <ContainerLine
@@ -389,12 +413,11 @@ function Page() {
                   body={[
                     "After ideating many many many wireframes, I consolidated my features into a final prototype, which was prepared for testing with users and the founding team.",
                   ]}
-                  img="/images/RD/RDN5.png"
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
                   imgHeight="h-[60vh]"
                   lazy
-                  videoSrc="/images/rd/RDN9.mp4"
+                  videoSrc="/images/RD/RDN9.mp4"
                   videoHeight="h-[60vh]"
                 />
                 <ContainerLine
@@ -404,7 +427,7 @@ function Page() {
                     "Testing with users, the founding team, and engineers revealed quite a few valuable insights that challenged our initial solution:",
                     "Users felt way too much pressure to choose a subject, then a corresponding feature. (Largely due to not understanding all the different features, since many were native to the webapp)",
                   ]}
-                  img="/images/RD/RDN10a.png"
+                  img="/images/RD/RDN10A.png"
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
                   imgHeight="h-[60vh]"
