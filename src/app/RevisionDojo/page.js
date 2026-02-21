@@ -312,7 +312,7 @@ function Page() {
                     title="Our Audience"
                     body="We surveyed both new and existing users — to uncover friction points driving drop-off, and to understand the workarounds and habits long-term users had developed."
                     alt="Dojo logo with a notepad"
-                    image="/images/rd/rd-audience.svg"
+                    image="/images/RD/rd-audience.svg"
                   />
                 </div>{" "}
                 <div className="flex flex-col gap-[1.5rem] case-x-gutter">
