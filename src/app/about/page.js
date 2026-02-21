@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useCaseContext } from "../../../utils/caseContext";
 import { useScrollDown } from "../../../utils/useScrollDown";
-import ContainerImage from "../../../components/containerImage";
+import CaseCarousel from "../../../components/caseCarousel";
 
 function Page() {
   const { setShowTop, showTop } = useCaseContext();
@@ -145,30 +145,16 @@ function Page() {
         </div>
 
         <div className="flex flex-col gap-[1rem]">
-          <div className="flex flex-row gap-[1rem] w-full h-[25vh]">
-            <div className="flex-1 h-full">
-              <ContainerImage
-                img="/images/about/about1.png"
-                alt="me and crew"
-                imgHeight="h-[25vh]"
-                imgWidth="flex-1"
-                object="object-cover"
-              />
-            </div>
-            <div className="flex-1 h-full">
-              <ContainerImage
-                img="/images/about/caleb.png"
-                alt="me and crew"
-                imgHeight="h-[25vh]"
-                imgWidth="flex-1"
-                object="object-cover"
-              />
-            </div>
-          </div>
-          <h6 className="text-text-secondary">
-            {" "}
-            Photos from RevisionDojo&apos;s Offsite
-          </h6>
+          <CaseCarousel
+            items={[
+              { img: "/images/about/caleb.png", alt: "Caleb", object: "object-cover" },
+              { img: "/images/about/about1.png", alt: "Photos from RevisionDojo's Offsite", object: "object-cover" },
+              { img: "/images/about/about2.png", alt: "About 2", object: "object-cover" },
+              { img: "/images/about/about3.png", alt: "About 3", object: "object-cover" },
+            ]}
+            imgHeight="h-[40vh]"
+          />
+          <h6 className="text-text-secondary">Photos from RevisionDojo&apos;s Offsite</h6>
         </div>
       </div>
       {/* <div className="flex flex-row gap-[0.5rem] mt-[2rem]">

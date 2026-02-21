@@ -58,7 +58,7 @@ function CaseCard({
       {type === "Intro" && (
         <section className="w-full h-full flex-col items-center flex p-[5%] bg-white justify-between">
           <h6 className="text-text-secondary w-full text-center">Caleb Wu</h6>
-          <div className="lg:w-[70%] w-[80%] aspect-[3/1]">
+          <div className="lg:w-[70%] w-[80%] aspect-3/1">
             <TitleAnimation />
           </div>
           <div className="flex flex-col w-full items-center">

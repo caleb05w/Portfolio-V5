@@ -192,7 +192,7 @@ const cards = [
     name: "Praey Assets",
     category: "Game Assets",
     year: "2023",
-    src: "/images/playground/praey-assets.png",
+    src: "/images/playground/praey-final.png",
     alt: "Praey assets",
     tools: ["Adobe Illustrator"],
     description:

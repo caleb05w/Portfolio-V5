@@ -1,74 +1,88 @@
 "use client";
 
-import React, { useState, useLayoutEffect, useRef, useEffect, useId } from "react";
+import React, {
+  useState,
+  useLayoutEffect,
+  useRef,
+  useEffect,
+  useId,
+} from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
-function ContainerImage({ img, alt, width, height, className, gutter, head, imgHeight, imgWidth, object, lazy }) {
-    const [isOpen, setIsOpen] = useState(false);
+function ContainerImage({
+  img,
+  alt,
+  width,
+  height,
+  className,
+  gutter,
+  imgHeight,
+  object,
+  lazy,
+}) {
+  const [isOpen, setIsOpen] = useState(false);
 
-    const uid = useId();
-    const layoutId = `img-${uid}`;
+  const uid = useId();
+  const layoutId = `img-${uid}`;
 
-    const anchorRef = useRef(null);
-    const src = img || "/images/test.svg";
-    const w = width || 1920;
-    const h = height || 1080;
+  const anchorRef = useRef(null);
+  const src = img || "/images/test.svg";
+  const w = width || 1920;
+  const h = height || 1080;
 
-    useLayoutEffect(() => {
-        if (!isOpen) return;
+  useLayoutEffect(() => {
+    if (!isOpen) return;
 
-        // Wait a frame so the new classes/layout apply first
-        requestAnimationFrame(() => {
-            anchorRef.current?.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-            });
-        });
-    }, [isOpen]);
+    // Wait a frame so the new classes/layout apply first
+    requestAnimationFrame(() => {
+      anchorRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    });
+  }, [isOpen]);
 
-    //lock down scrolling
-    useEffect(() => {
-        if (!isOpen) return;
+  //lock down scrolling
+  useEffect(() => {
+    if (!isOpen) return;
 
-        const originalOverflow = document.body.style.overflow;
-        const originalPaddingRight = document.body.style.paddingRight;
+    const originalOverflow = document.body.style.overflow;
+    const originalPaddingRight = document.body.style.paddingRight;
 
-        // Prevent layout shift when scrollbar disappears
-        const scrollbarWidth =
-            window.innerWidth - document.documentElement.clientWidth;
+    // Prevent layout shift when scrollbar disappears
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
 
-        document.body.style.overflow = "hidden";
-        document.body.style.paddingRight = `${scrollbarWidth}px`;
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
 
-        return () => {
-            document.body.style.overflow = originalOverflow;
-            document.body.style.paddingRight = originalPaddingRight;
-        };
-    }, [isOpen]);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = originalPaddingRight;
+    };
+  }, [isOpen]);
 
+  return (
+    <>
+      <div
+        className={`relative w-full overflow-hidden bg-[#F8F8F8] ${imgHeight ?? "h-[40vh]"}`}
+        id="image"
+        ref={anchorRef}
+      >
+        <div className="w-full items-center flex flex-col h-full">
+          <Image
+            src={src}
+            width={1200}
+            height={1200}
+            alt={alt || "no alt text"}
+            className={`${object ?? "object-contain w-fit"} h-full`}
+            loading={lazy ? "lazy" : "eager"}
+          />
+        </div>
+      </div>
 
-    return (
-        <>
-            <div
-                className={`ease-fast duration-600 transform-all flex items-center justify-center bg-[#F8F8F8] ${isOpen === true ? "px-[2rem] max-h-screen min-w-[80vw] z-[10]" : ` "w-full" ${imgHeight ?? "h-[40vh]"} z-[2]`}
-                    `}
-                id="image"
-                ref={anchorRef}
-            >
-                {/* onClick={() => { setIsOpen(!isOpen) }} */}
-                <button className={` ${head}  hover:cursor-pointer w-full relative h-full`}>
-                    <Image
-                        src={src}
-                        fill
-                        alt={alt || "no alt text"}
-                        className={`h-fit ${object ?? "object-contain"}`}
-                        loading={lazy ? "lazy" : "eager"}
-                    />
-                </button>
-            </div >
-
-            {/* <button
+      {/* <button
                 className={`fixed inset-0 z-[5]
             transition-all duration-200 ease-in-out origin-center hover:cursor-pointer
             ${isOpen
@@ -77,9 +91,8 @@ function ContainerImage({ img, alt, width, height, className, gutter, head, imgH
                     }`}
                 onClick={() => { setIsOpen(!isOpen) }}
             /> */}
-        </>
-    );
+    </>
+  );
 }
 
 export default ContainerImage;
-

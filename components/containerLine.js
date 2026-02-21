@@ -13,12 +13,12 @@ function containerLine({ title, body, img, alt, hint, subheader, gutter, imgHeig
             {img && (
                 img2 ?
 
-                    <div className='flex flex-row gap-[0.5rem] w-full max-w-full'>
-                        < div className={`${imgw ?? "flex-1 min-w-0"} overflow-hidden`}>
-                            <ContainerImage img={img} alt={alt} gutter={''} head="h-[35rem]" imgHeight={imgHeight} imgWidth={imgw} object={imgobj} lazy={lazy} />
+                    <div className={`flex flex-row gap-[0.5rem] w-full max-w-full ${imgHeight ?? "h-[40vh]"}`}>
+                        <div className={`${imgw ?? "flex-1 min-w-0"} overflow-hidden h-full`}>
+                            <ContainerImage img={img} alt={alt} gutter={''} imgHeight="h-full" object={imgobj} lazy={lazy} />
                         </div>
-                        < div className={`${imgw2 ?? "flex-1 min-w-0"} overflow-hidden`}>
-                            <ContainerImage img={img2} alt={alt2} gutter={''} head="h-[35rem]" imgHeight={imgHeight} imgWidth={imgw2} object={imgobj2} lazy={lazy} />
+                        <div className={`${imgw2 ?? "flex-1 min-w-0"} overflow-hidden h-full`}>
+                            <ContainerImage img={img2} alt={alt2} gutter={''} imgHeight="h-full" object={imgobj2} lazy={lazy} />
                         </div>
                     </div>
                     :

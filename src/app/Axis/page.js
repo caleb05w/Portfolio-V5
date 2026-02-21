@@ -36,7 +36,7 @@ function Page() {
   }, [setShowTop]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-screen">
       {/* Fixed spacer */}
       <div
         className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1] lg:bg-transparent ${showTop ? "h-[10rem] xl:h-[12rem]" : "h-[0rem]"}`}
@@ -45,14 +45,15 @@ function Page() {
       <div className="flex flex-row h-screen w-full">
         {/* Sidebar */}
         <div
-          className={`h-full ${showTop ? "md:w-[4rem] lg:w-[4rem] xl:w-[4rem]" : "md:w-[8rem] lg:w-[8rem] xl:w-[12rem]"} ease-fast duration-[400ms]`}
+          className={`shrink-0 h-full transition-all ease-fast duration-450 ${showTop ? "md:w-16 lg:w-24 xl:w-[9rem]" : "md:w-32 lg:w-48 xl:w-[18rem]"}`}
         >
           <FixedSidebar
-            className={`z-[10] fixed h-full w-[0] xl:w-[8rem] md:w-[8rem] lg:w-[8rem] xl:w-[12rem] flex flex-col overflow-hidden top-[6rem] justify-start h-full ease-fast duration-[450ms] pl-[1rem]
-                    ${showTop ? "opacity-[0%]" : "opacity-[100%]"}
+            className={`fixed h-full w-[0] md:w-[8rem] lg:w-[12rem] xl:w-[12rem] flex flex-col overflow-hidden top-[5vh] lg:top-[8vh] xl:top-[6vh] justify-start h-full transition-all ease-fast duration-450 pl-[4vw] xl:pl-[2.4vw] lg:pl-[3vw]
+                    ${showTop ? "opacity-0" : "opacity-100"}
                     `}
           >
             <Sidebar
+              isVisible={!showTop}
               cards={[
                 { id: "about", name: "Intro" },
                 { id: "design", name: "Design" },
@@ -93,7 +94,7 @@ function Page() {
                   imgHeight="h-[20rem]"
                   imgw="w-full"
                   imgw2="lg:w-[50%] w-full"
-                  imgobj2="object-cover"
+                  imgobj2="object-cover w-full"
                   imgobj="object-cover"
                   lazy
                 />
@@ -201,8 +202,8 @@ function Page() {
         </div>
         {/* //left side */}
         <div
-          className={` h-full duration-[400ms] ease-fast
-                ${showTop ? "md:w-[4rem] xl:w-[4rem] lg:w-[4rem]" : "w-[0rem]"}
+          className={`h-full duration-450 ease-fast
+                ${showTop ? "md:w-[4rem] xl:w-[9rem] lg:w-[6rem]" : "w-[0rem]"}
                 `}
         ></div>
       </div>
