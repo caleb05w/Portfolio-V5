@@ -14,6 +14,7 @@ const cards = [
     posterSrc: "/images/RDDemo2a-poster.jpg",
     body: "Redesigning the search experience for 400,000 IBDP users.",
     year: "2025",
+    vidPad: "p-[2rem]",
   },
   {
     id: 3,
@@ -305,6 +306,7 @@ export default function Page() {
                   videoSrc={card.videoSrc}
                   posterSrc={card.posterSrc}
                   videoPreload={videoLoadStrategy}
+                  vidPad={card.vidPad}
                 />
               </div>
             );

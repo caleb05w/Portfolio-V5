@@ -20,6 +20,7 @@ function CaseCard({
   videoPreload = "none", //controls video preload
   position = 0, //position which determines preload state
   isEmpty,
+  vidPad,
 }) {
   const videoRef = useRef(null);
 
@@ -115,7 +116,7 @@ function CaseCard({
                 />
               )}
               {videoSrc && (
-                <div className="bg-[#F7F7F7] w-full flex flex-row justify-center">
+                <div className={`bg-[#F7F7F7] w-full flex flex-row justify-center ${vidPad ?? ""}`}>
                   <video
                     ref={videoRef}
                     className="h-full w-full"
@@ -127,7 +128,7 @@ function CaseCard({
                     playsInline
                     style={{
                       backgroundColor: "#F8F8F8",
-                      objectFit: "cover",
+                      objectFit: vidPad ? "contain" : "cover",
                     }}
                   />
                 </div>

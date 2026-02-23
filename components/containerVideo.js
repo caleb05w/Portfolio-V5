@@ -14,7 +14,6 @@ function ContainerVideo({
   vidPad,
   rivSrc,
   rivStateMachine,
-  videoHeight,
   videoPreload,
   posterSrc,
   reactionSrc,
@@ -91,7 +90,7 @@ function ContainerVideo({
       {(videoSrc || rivSrc) && (
         <div className="w-full mt-[2rem] relative" ref={videoContainerRef}>
           <div
-            className={`relative w-full bg-[#F8F8F8] overflow-hidden ${videoHeight ?? "lg:h-100 h-[40vh]"}`}
+            className="relative w-full bg-[#F8F8F8] overflow-hidden"
           >
             {videoSrc && (
               <button
@@ -109,18 +108,14 @@ function ContainerVideo({
             {videoSrc && (
               <video
                 ref={videoRef}
-                className="absolute top-0 left-0 w-full h-full"
+                className={`w-full block ${vidPad ?? ""}`}
                 src={videoSrc}
                 muted
                 loop
                 playsInline
                 preload={videoPreload ?? "none"}
                 poster={posterSrc}
-                style={{
-                  backgroundColor: "#F8F8F8",
-                  objectFit: "contain",
-                  padding: vidPad,
-                }}
+                style={{ backgroundColor: "#F8F8F8" }}
               />
             )}
             {rivSrc && (

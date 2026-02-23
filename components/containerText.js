@@ -9,7 +9,7 @@ function containerText({ title, body, gutter, subheader = [] }) {
         <h6 className="text-text-secondary"> {subheader || ""}</h6>
         <h2>{title || ""}</h2>
       </div>
-      {body.map((item, key) => (
+      {body?.map((item, key) => (
         <p className="text-text-teritary" key={key}>
           {item}
         </p>

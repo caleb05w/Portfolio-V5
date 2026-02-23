@@ -216,7 +216,7 @@ function Page() {
                   ]}
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
-                  vidPad="p-[0rem] lg:p-[2rem] md:p-[2rem]"
+                  vidPad="p-[0rem] lg:p-[4rem] md:p-[2rem]"
                   videoSrc="/images/RDDemo2a.mp4"
                   videoHeight="h-[60vh]"
                 />
@@ -243,10 +243,9 @@ function Page() {
                     "The search bar also supports feature discovery for new users. Since many of RevisionDojo's features are unfamiliar, I created illustrations to help communicate their purpose at a glance without relying on heavy text.",
                   ]}
                   alt="Project Research Timeline"
-                  rivSrc="/../images/features.riv"
-                  rivStateMachine="State Machine 2"
+                  videoSrc="/images/RD-drawings.mp4"
                   gutter="case-x-gutter"
-                  vidPad="p-[0rem] lg:p-[6rem] md:p-[4rem]"
+                  // vidPad="p-[0rem] lg:p-[4rem] md:p-[4rem]"
                   videoHeight="h-[60vh]"
                 />
               </div>
@@ -287,32 +286,36 @@ function Page() {
                   lazy
                 />
                 <div className=" case-x-gutter flex flex-col gap-[2rem]">
-                  <div className="flex flex-col gap-[1.5rem]">
-                    <ContainerLine
-                      subheader="Research"
-                      title="Researching pain points and understanding user rationale."
-                      body={[
-                        "While I had my own assumptions about why users dropped off, what better way to understand the process (and avoid assumptions!!) then to ask the users. ",
-                      ]}
-                    />
-                    <div className="flex flex-col max-w-full md:max-w-[36rewm] lg:max-w-[42rem] xl:max-w-[60rem]">
-                      <p className="text-text-secondary">Goals:</p>
-                      <div className="gap-0">
-                        <p className="text-text-secondary">
-                          1. Determine why users are struggling in the flow.
-                        </p>
-                        <p className="text-text-secondary">
-                          2. Understand successes and where/why they may be
-                          happening.
-                        </p>
-                      </div>
+                  <ContainerLine
+                    subheader="Research"
+                    title="Researching pain points and understanding user rationale."
+                    body={[
+                      "While I had my own assumptions about why users dropped off, what better way to understand the process (and avoid assumptions!!) then to ask the users. ",
+                    ]}
+                  />
+                  <div className="flex flex-col max-w-full md:max-w-[36rewm] lg:max-w-[42rem] xl:max-w-[60rem]">
+                    <p className="text-text-secondary">Goals:</p>
+                    <div className="gap-0">
+                      <p className="text-text-secondary">
+                        1. Understand rationale for drop off.
+                      </p>
+                      <p className="text-text-secondary">
+                        2. Identify motivations for new users that convert.
+                      </p>
                     </div>
                   </div>
+                  <ContainerLine
+                    img="/images/RD/RDN9-sticky-latest.png"
+                    alt="my research affinity maps"
+                    imgHeight="h-[60vh]"
+                    imgobj="object-cover"
+                  />
+
                   <Label2
                     title="Our Audience"
-                    body="We surveyed both new and existing users — to uncover friction points driving drop-off, and to understand the workarounds and habits long-term users had developed."
+                    body="60 Surveyants, 12 User Interviews: We surveyed both new and existing users — to uncover friction points driving drop-off, and to understand the workarounds and habits long-term users had developed."
                     alt="Dojo logo with a notepad"
-                    image="/images/RD/rd-audience.svg"
+                    image="/images/RD/RD-audience.svg"
                   />
                 </div>{" "}
                 <div className="flex flex-col gap-[1.5rem] case-x-gutter">
@@ -420,17 +423,17 @@ function Page() {
                   videoSrc="/images/RD/RDN9.mp4"
                   videoHeight="h-[60vh]"
                 />
-                <ContainerLine
+                <ContainerVideo
                   subheader="Solution Ideation"
                   title="Making difficult decisions post user testing"
                   body={[
                     "Testing with users, the founding team, and engineers revealed quite a few valuable insights that challenged our initial solution:",
                     "Users felt way too much pressure to choose a subject, then a corresponding feature. (Largely due to not understanding all the different features, since many were native to the webapp)",
                   ]}
-                  img="/images/RD/RDN10A.png"
+                  videoSrc="/images/RD/RDN9-sticky.mp4"
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
-                  imgHeight="h-[60vh]"
+                  videoHeight="h-[60vh]"
                   lazy
                 />
 
@@ -446,7 +449,7 @@ function Page() {
                   gutter="case-x-gutter"
                   videoSrc="/images/RDDemo1.mp4"
                   videoHeight="h-[60vh]"
-                  reactionSrc="/images/RD/RDN9-reaction.mov"
+                  reactionSrc="/images/RD/RDN9-reaction.mp4"
                 />
               </div>
 
