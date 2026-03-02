@@ -197,7 +197,7 @@ export default function Page() {
               <p>Hi, I&apos;m Caleb.</p>
               <div className="group flex flex-row gap-[0.5rem] items-center">
                 <h6 className="text-text-secondary">
-                  Product Design | Seeking Summer &amp; Fall 2026
+                  Product Designer | Seeking Summer &amp; Fall 2026 Internships
                 </h6>
                 <a
                   href="#contact"
@@ -209,6 +209,11 @@ export default function Page() {
             </div>
             <div className="flex flex-col gap-[2rem]">
               <p>I dream of shipping a product worldwide.</p>
+              <p>
+                {" "}
+                Currently, I'm a fourth year @SFU's School of Interactive Arts &
+                Technology.
+              </p>
               <p>
                 Most recently, I was the first design hire at{" "}
                 <a
@@ -311,7 +316,7 @@ export default function Page() {
 
           {/* Say Hello */}
           <div id="contact" className="flex flex-col gap-[1.25rem]">
-            <p> Say Hello! </p>
+            <SectionHeader title="Contact" />
             <div className="flex flex-row gap-[0.5rem] items-center">
               <a
                 href="https://x.com/calebwu_"
