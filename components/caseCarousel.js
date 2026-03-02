@@ -82,6 +82,7 @@ export default function CaseCarousel({ items = PLACEHOLDER_ITEMS, imgHeight }) {
                 alt={item.alt}
                 imgHeight={item.imgHeight ?? imgHeight}
                 object={item.object}
+                caption={item.caption}
                 lazy={false}
               />
             )}
@@ -97,7 +98,7 @@ export default function CaseCarousel({ items = PLACEHOLDER_ITEMS, imgHeight }) {
               key={i}
               onClick={() => scrollTo(i)}
               aria-label={`Go to slide ${i + 1}`}
-              className={`w-[0.45rem] h-[0.45rem] rounded-full shrink-0 ${i === activeIndex ? "bg-black" : "bg-secondary"}`}
+              className={`w-[0.45rem] h-[0.45rem] rounded-full shrink-0 ${i === activeIndex ? "bg-primary" : "bg-secondary"}`}
             />
           ))}
         </div>

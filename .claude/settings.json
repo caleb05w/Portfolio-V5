@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build)",
+      "Bash(claude mcp add agentation -- npx agentation-mcp server)",
+      "Read(//usr/local/bin/**)",
+      "Read(//usr/local/**)"
+    ]
+  }
+}

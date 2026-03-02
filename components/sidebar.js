@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Sidebar({ cards = [], isVisible = false }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isExiting, setIsExiting] = useState(false);
+  const [prevVisible, setPrevVisible] = useState(isVisible);
+  useEffect(() => {
+    setPrevVisible(isVisible);
+  }, [isVisible]);
+  const useReverseStagger = (prevVisible && !isVisible) || isExiting;
+
+  useEffect(() => {
+    const handler = () => setIsExiting(true);
+    window.addEventListener("route-change", handler);
+    return () => window.removeEventListener("route-change", handler);
+  }, []);
 
   useEffect(() => {
     // Create intersection observer to track which section is in view
@@ -42,25 +55,40 @@ export default function Sidebar({ cards = [], isVisible = false }) {
   const atStart = currentIndex === 0;
 
   return (
-    <div className="z-[10] flex flex-col w-full gap-[6rem] items-center">
+    <div className="z-[10] flex flex-col w-full gap-[4rem] items-center">
       {/* //Go back home */}
-      {/* <div className="flex flex-row gap-[0.25rem] group">
-                <div className='w-[0.75rem] h-fit'> <IoIosArrowBack className='w-full aspect-square text-text-secondary group-hover:text-black ease-in-out duration-300' /> </div>
-                <Link href="/"> <h6 className='text-text-secondary hover:text-black ease-in-out duration-300'>Home</h6> </Link>
-            </div> */}
-      <div className="flex flex-col justify-center w-full h-fit gap">
+      <div className="flex flex-col justify-center w-full h-fit gap w-full ">
+        <Link
+          href="/"
+          scroll={false}
+          className="flex flex-row gap-[0.5rem] items-center"
+        >
+          {" "}
+          <h6 className="text-text-secondary hover:text-black ease-in-out duration-300">
+            Home
+          </h6>{" "}
+        </Link>
+      </div>
+      <div className="flex flex-col justify-center w-full h-fit">
         {cards.map((card, key) => {
           const isActive = currentIndex === key;
           return (
             <motion.a
               key={key}
-              className="flex flex-col group py-[0.25rem] hover:cursor-pointer"
+              className="flex flex-col group lg:py-[0.2rem] py-[0.15rem] xl:py-[0.35rem] hover:cursor-pointer"
               href={`#${card.id}`}
-              animate={isVisible ? { y: 0, opacity: 1 } : { y: 16, opacity: 0 }}
+              initial={{ y: 16, opacity: 0 }}
+              animate={
+                isVisible && !isExiting
+                  ? { y: 0, opacity: 1 }
+                  : { y: 16, opacity: 0 }
+              }
               transition={{
-                duration: 0.45,
+                duration: useReverseStagger ? 0.25 : 0.45,
                 ease: [0.5, 0, 0, 1],
-                delay: key * 0.06,
+                delay: useReverseStagger
+                  ? (cards.length - 1 - key) * 0.04
+                  : key * 0.06,
               }}
             >
               <div
@@ -77,56 +105,6 @@ export default function Sidebar({ cards = [], isVisible = false }) {
           );
         })}
       </div>
-
-      {/* Scroll mouse indicator */}
-      {/* <motion.div
-        className={`flex flex-col items-center gap-[0.3rem] ${atStart ? "pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-        animate={
-          isVisible && atStart ? { y: 0, opacity: 1 } : { y: 16, opacity: 0 }
-        }
-        transition={{
-          duration: 0.45,
-          ease: [0.5, 0, 0, 1],
-          delay: cards.length * 0.06,
-        }}
-      >
-        <svg
-          width="18"
-          height="28"
-          viewBox="0 0 18 28"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect
-            x="1"
-            y="1"
-            width="16"
-            height="26"
-            rx="8"
-            stroke="#737373"
-            strokeWidth="1.5"
-          />
-          <rect
-            x="8"
-            y="6"
-            width="2"
-            height="5"
-            rx="1"
-            fill="#737373"
-            style={{
-              animation:
-                "scrollWheel 1.4s cubic-bezier(0.45,0,0.55,1) infinite",
-            }}
-          />
-        </svg>
-        <style>{`
-                    @keyframes scrollWheel {
-                        0%   { transform: translateY(0);   opacity: 1; }
-                        60%  { transform: translateY(5px); opacity: 0.3; }
-                        100% { transform: translateY(0);   opacity: 1; }
-                    }
-                `}</style>
-      </motion.div> */}
     </div>
   );
 }

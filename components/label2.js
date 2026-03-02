@@ -17,7 +17,7 @@ export default function label2({
     >
       <div className="flex flex-row gap-[0.4rem] items-center">
         {image && (
-          <div className="w-auto h-[2.2rem]">
+          <div className="w-auto h-[2.2rem] xl:aspect-square">
             <Image
               src={image}
               height={400}

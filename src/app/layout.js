@@ -7,6 +7,7 @@ import "@qpokychuk/sf-pro-display/index.css";
 import "@qpokychuk/sf-pro-display/normal.css";
 import "@qpokychuk/sf-pro-display/italic.css";
 import { Analytics } from "@vercel/analytics/next";
+import { Agentation } from "agentation";
 
 import ToolTip from "../../components/toolTip";
 import Navbar from "../../components/navbar";
@@ -32,13 +33,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${ppNeueMontreal.variable} antialiased`}
-      > 
+      >
+        <Agentation />
         <ToolTipProvider>
           <CaseProvider>
             <Navbar />
-            <AnimationWrapper>
-              {children}
-            </AnimationWrapper>
+            <AnimationWrapper>{children}</AnimationWrapper>
             <ToolTip />
           </CaseProvider>
         </ToolTipProvider>

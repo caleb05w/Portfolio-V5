@@ -73,17 +73,17 @@ function Page() {
     <div className="flex flex-col max-w-screen">
       {/* Fixed spacer */}
       <div
-        className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1] lg:bg-transparent ${showTop ? "h-[10rem] xl:h-[12rem]" : "h-[0rem]"}`}
+        className={`relative top-0 left-0 w-full pointer-events-none z-[1] lg:bg-transparent h-[10rem] xl:h-[12rem]`}
       />
 
       <div className="flex flex-row h-screen w-full">
         {/* Sidebar */}
         <div
-          className={`shrink-0 h-full transition-all ease-fast duration-450 ${showTop ? "md:w-16 lg:w-[6rem] xl:w-[9rem]" : "md:w-32 lg:w-[12rem] xl:w-[18rem]"}`}
+          className={`shrink-0 h-full transition-all ease-fast duration-700 ${showTop ? "md:w-[8rem] lg:w-[12rem] xl:w-[18rem]" : "md:w-[8rem] lg:w-[12rem] xl:w-[18rem]"}`}
         >
           {/* //need to use fixed sidebar here, which uses a react portal to take it out of the normal flow nbecause of the absolute page transitions. */}
           <FixedSidebar
-            className={`fixed h-full w-[0] md:w-[8rem] lg:w-[12rem] xl:w-[12rem] flex flex-col overflow-hidden top-[5vh] lg:top-[8vh] xl:top-[6vh] justify-start h-full transition-all ease-fast duration-450 pl-[4vw] xl:pl-[2.4vw] lg:pl-[3vw]
+            className={`fixed h-full w-[0] md:w-[8rem] lg:w-[12rem] xl:w-[18rem] flex flex-col overflow-hidden top-[5vh] lg:top-[8vh] xl:top-[6vh] justify-start h-full transition-all ease-fast duration-700 pl-[4vw] xl:pl-[4vw] lg:pl-[3vw]
                     ${showTop ? "opacity-0" : "opacity-100"}
                     `}
           >
@@ -108,7 +108,7 @@ function Page() {
         <div className="flex flex-col flex-1 min-w-0 h-fit transition-all duration-[450ms] ease-out">
           <div ref={pageTop} />
 
-          <div className="w-full flex flex-col pb-[4-rem] bg-secondary items-center">
+          <div className="w-full flex flex-col pb-[4-rem] items-center">
             <div
               className={`flex flex-col bg-white w-full justify-center y-gutter ease-in-out duration-[450ms] px-[0] md:px-[2rem] lg:px-[2rem] xl:px-[2rem]
                             ${showTop ? " rounded-[1rem]" : " rounded-[0rem]"}
@@ -120,7 +120,7 @@ function Page() {
                   <div className="w-fit case-x-gutter">
                     <div className="w-[4rem] h-[4rem]">
                       <Image
-                        src="/images/revision-dojo-logo.svg"
+                        src="/images/rd-modal.svg"
                         alt="RevisionDojo Logo"
                         width={200}
                         height={200}
@@ -165,11 +165,11 @@ function Page() {
                   img="/images/RD3a.png"
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
-                  imgHeight="h-[60vh]"
+                  imgHeight="h-[40vh]"
                   lazy
                 />
 
-                <div className="flex flex-col md:flex-row lg:flex-row gap-[2rem] case-x-gutter">
+                <div className="flex flex-col md:flex-col lg:flex-row xl:flex-row gap-[0.5rem] case-x-gutter">
                   <ContainerLine
                     subheader="Key Insight"
                     title="Students  need to navigate mountains of content."
@@ -205,7 +205,8 @@ function Page() {
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
                   videoSrc="/images/RDDemo1.mp4"
-                  videoHeight="h-[60vh]"
+                  videoHeight="h-[40vh]"
+                  caption="Select a subject before a feature."
                 />
 
                 <ContainerVideo
@@ -218,7 +219,8 @@ function Page() {
                   gutter="case-x-gutter"
                   vidPad="p-[0rem] lg:p-[4rem] md:p-[2rem]"
                   videoSrc="/images/RDDemo2a.mp4"
-                  videoHeight="h-[60vh]"
+                  videoHeight="h-[40vh]"
+                  caption="Exerpts from our solution"
                 />
               </div>
               {/* Decisions Section */}
@@ -232,8 +234,9 @@ function Page() {
                   img="/images/RD10c.png"
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
-                  imgHeight="h-[60vh]"
+                  imgHeight="h-[40vh]"
                   lazy
+                  caption="Breaking down the anatomy of a feature block."
                 />
 
                 <ContainerVideo
@@ -246,13 +249,15 @@ function Page() {
                   videoSrc="/images/RD-drawings.mp4"
                   gutter="case-x-gutter"
                   // vidPad="p-[0rem] lg:p-[4rem] md:p-[4rem]"
-                  videoHeight="h-[60vh]"
+                  videoHeight="h-[40vh]"
+                  caption="All hand drawn in Figma"
                 />
               </div>
 
               {/* //case line */}
-              <div className="w-full h-fit case-x-gutter case-mt">
-                <div className="border-[0.75px] border-secondary"></div>
+              <div className="w-full h-fit case-x-gutter case-mt flex flex-row gap-[1rem] items-center">
+                <h6>Research</h6>
+                <div className="border-b-[1px] border-secondary w-full h-[1px]"></div>
               </div>
 
               <div id="research" className="flex flex-col gap-[0.5rem] case-mt">
@@ -260,13 +265,13 @@ function Page() {
                   subheader="Context"
                   title="Where it all started"
                   body={[
-                    "RevisionDojo’s content, features, and subject coverage dwarfs our competitors.",
+                    "RevisionDojo's content, features, and subject coverage dwarfs our competitors.",
                     "Yet consistently, through each update, new feature added, and content added, we would see the same staggering amount of drop off.",
                   ]}
                   img="/images/RD/RDN1.png"
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
-                  imgHeight="h-[60vh]"
+                  imgHeight="h-[40vh]"
                   lazy
                 />
               </div>
@@ -274,16 +279,17 @@ function Page() {
               <div id="research" className="flex flex-col case-gap case-mt">
                 <ContainerLine
                   subheader="Research"
-                  title="So... why wasn’t this happening?"
+                  title="So... why wasn't this happening?"
                   body={[
                     "Analyzing session recordings, user reviews, reddit ect.. I realize the most concentrated drop off point was right after onboarding.",
-                    "Why wasn’t our product converting?",
+                    "Why wasn't our product converting?",
                   ]}
                   img="/images/RD/RDN2a.png"
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
-                  imgHeight="h-[60vh]"
+                  imgHeight="h-[40vh]"
                   lazy
+                  caption="The biggest pain point."
                 />
                 <div className=" case-x-gutter flex flex-col gap-[2rem]">
                   <ContainerLine
@@ -293,13 +299,13 @@ function Page() {
                       "While I had my own assumptions about why users dropped off, what better way to understand the process (and avoid assumptions!!) then to ask the users. ",
                     ]}
                   />
-                  <div className="flex flex-col max-w-full md:max-w-[36rewm] lg:max-w-[42rem] xl:max-w-[60rem]">
-                    <p className="text-text-secondary">Goals:</p>
+                  <div className="flex flex-col gap-[1rem] max-w-full md:max-w-[36rewm] lg:max-w-[42rem] xl:max-w-[60rem]">
+                    <h5 className="text-text-secondary">Goals:</h5>
                     <div className="gap-0">
-                      <p className="text-text-secondary">
+                      <p className="text-text-teritary">
                         1. Understand rationale for drop off.
                       </p>
-                      <p className="text-text-secondary">
+                      <p className="text-text-teritary">
                         2. Identify motivations for new users that convert.
                       </p>
                     </div>
@@ -307,8 +313,9 @@ function Page() {
                   <ContainerLine
                     img="/images/RD/RDN9-sticky-latest.png"
                     alt="my research affinity maps"
-                    imgHeight="h-[60vh]"
+                    imgHeight="h-[40vh]"
                     imgobj="object-cover"
+                    caption="All of our sorted insights."
                   />
 
                   <Label2
@@ -328,26 +335,26 @@ function Page() {
                   />
                   <div className="flex flex-col gap-[0.5rem] max-w-full md:max-w-[36rewm] lg:max-w-[42rem] xl:max-w-[60rem]">
                     <div className="gap-[0.5rem] flex flex-col">
-                      <p className="text-text-secondary">
+                      <p className="text-text-teritary">
                         1. IB Students drop off after ~25s
                       </p>
-                      <p className="text-text-secondary">
+                      <p className="text-text-teritary">
                         2. We can extrapolate a clear goal via subject resonace
                         from users.
                       </p>
-                      <p className="text-text-secondary">
+                      <p className="text-text-teritary">
                         3. The relevancy of a site is determined by how closely
                         our content aligns with class curriculum.
                       </p>
                     </div>
                   </div>
-                  <div className="h-[50vh] w-full bg-[#F8F8F8] flex flex-col items-center justify-center">
+                  <div className="h-[40vh] w-full bg-[#F8F8F8] flex flex-col items-center justify-center">
                     <div className="w-[50%] flex flex-col gap-[0.5rem] items-center">
                       <div ref={jojoRef} className="w-48 h-48">
                         {jojoVisible && <JojoBookRive />}
                       </div>
                       <p>Our North Star</p>
-                      <p className="text-text-secondary text-center">
+                      <p className="text-text-teritary text-center">
                         It is imperative that we get relevant content in front
                         of users as soon as they hit the site.{" "}
                       </p>
@@ -367,7 +374,7 @@ function Page() {
                     ]}
                   />
                   <CaseCarousel
-                    imgHeight="h-[60vh]"
+                    imgHeight="h-[40vh]"
                     items={[
                       {
                         img: "/images/RD/RDN4-searchbarb.png",
@@ -397,15 +404,16 @@ function Page() {
                 </div>
                 <ContainerLine
                   subheader="Solution Ideation"
-                  title="Transitioning from ideation --> implementation"
+                  title="Transitioning from ideation to implementation"
                   body={[
                     "Nowadays, there are so many different ways to build search. Informed by competitive research, I built many, many, many variations of the searchbar before settling on a final design.",
                   ]}
                   img="/images/RD/RDN5.png"
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
-                  imgHeight="h-[60vh]"
+                  imgHeight="h-[40vh]"
                   lazy
+                  caption="Many, many many ideations were built."
                 />
               </div>
 
@@ -418,10 +426,11 @@ function Page() {
                   ]}
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
-                  imgHeight="h-[60vh]"
+                  imgHeight="h-[40vh]"
                   lazy
                   videoSrc="/images/RD/RDN9.mp4"
-                  videoHeight="h-[60vh]"
+                  videoHeight="h-[40vh]"
+                  caption="Initial prototype"
                 />
                 <ContainerVideo
                   subheader="Solution Ideation"
@@ -433,23 +442,25 @@ function Page() {
                   videoSrc="/images/RD/RDN9-sticky.mp4"
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
-                  videoHeight="h-[60vh]"
+                  videoHeight="h-[40vh]"
                   lazy
+                  caption="User feedback we received"
                 />
 
                 <ContainerVideo
                   subheader="Final Solution"
                   title="Landing on the Final Solution"
                   body={[
-                    "We recognized that most users wouldn’t understand our features to the point of deriving value from them (“whats question rush, and why do I care about it?), so a good middle point was navigating them to the subject itself, and letting them crawl from there via a directory of features",
+                    "We recognized that most users wouldn't understand our features to the point of deriving value from them (\"whats question rush, and why do I care about it?), so a good middle point was navigating them to the subject itself, and letting them crawl from there via a directory of features",
                     "What we initially assumed to help with precise decision making, actually created decision paralysis.",
                   ]}
                   img="/images/RD8.png"
                   alt="Project Research Timeline"
                   gutter="case-x-gutter"
                   videoSrc="/images/RDDemo1.mp4"
-                  videoHeight="h-[60vh]"
+                  videoHeight="h-[40vh]"
                   reactionSrc="/images/RD/RDN9-reaction.mp4"
+                  caption="The final solution, and reaction."
                 />
               </div>
 
@@ -468,8 +479,8 @@ function Page() {
         </div>
         {/* //left side */}
         <div
-          className={`h-full duration-[400ms] ease-fast
-                ${showTop ? "md:w-[4rem] xl:w-[9rem] lg:w-[6rem]" : "w-[0rem]"}
+          className={`h-full duration-700 ease-fast
+                ${showTop ? "md:w-[8rem] xl:w-[9rem] lg:w-[12rem]" : " md:w-[8rem] lg:w-[12rem]"}
                 `}
         ></div>
       </div>

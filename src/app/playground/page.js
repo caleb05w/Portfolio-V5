@@ -4,9 +4,9 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useRive } from "@rive-app/react-canvas";
 import { useCaseContext } from "../../../utils/caseContext";
-import { useScrollDown } from "../../../utils/useScrollDown";
+import { useTooltip } from "../../../utils/toolTipContext";
+import Label from "../../../components/label";
 
-// Generate blur placeholder
 const shimmer = (w, h) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
@@ -27,22 +27,19 @@ const toBase64 = (str) =>
     ? Buffer.from(str).toString("base64")
     : window.btoa(str);
 
-// Rive preview component for grid cards
-function RivePreview({ src }) {
-  const { RiveComponent, rive } = useRive({
-    src: src,
-    autoplay: true,
-  });
+const blurPlaceholder = `data:image/svg+xml;base64,${toBase64(shimmer(1200, 1200))}`;
 
+// Shared hook: plays a Rive file and auto-restarts on stop
+function useRiveLoop(src) {
+  const { RiveComponent, rive } = useRive(
+    src ? { src, autoplay: true } : { autoplay: false },
+  );
   const isRestarting = useRef(false);
 
-  // Set up looping for one-shot animations
   useEffect(() => {
-    if (!rive) return;
-
+    if (!rive || !src) return;
     const handleStop = () => {
       if (isRestarting.current) return;
-
       isRestarting.current = true;
       setTimeout(() => {
         rive.reset();
@@ -50,16 +47,18 @@ function RivePreview({ src }) {
         isRestarting.current = false;
       }, 0);
     };
-
     rive.on("stop", handleStop);
+    return () => rive.off("stop", handleStop);
+  }, [rive, src]);
 
-    return () => {
-      rive.off("stop", handleStop);
-    };
-  }, [rive]);
+  return RiveComponent;
+}
 
+// Rive preview component for grid cards
+function RivePreview({ src }) {
+  const RiveComponent = useRiveLoop(src);
   return (
-    <div className="absolute inset-0 flex items-center justify-center p-[3rem] py-[4rem]">
+    <div className="absolute inset-0 flex items-center justify-center p-[3rem] py-[4rem] bg-white">
       <RiveComponent className="w-full h-full" />
     </div>
   );
@@ -77,7 +76,6 @@ const cards = [
     description:
       "A small animation to celebrate when users rank up during RevisionDojo's Question Rush.",
   },
-
   {
     name: "Reading books",
     category: "Animation",
@@ -98,7 +96,6 @@ const cards = [
     isRiveFile: true,
     description: "Loading screen for the RevisionDojo app.",
   },
-
   {
     name: "Jojo Sky Banner",
     category: "Drawing",
@@ -233,72 +230,41 @@ function Page() {
   const [selected, setSelected] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
   const [lastSelected, setLastSelected] = useState(cards[0]);
-  const { setShowTop, showTop } = useCaseContext();
-  const isScrollDown = useScrollDown();
+  const { setShowTop } = useCaseContext();
+  const { setMessage } = useTooltip();
   const pageTop = useRef(null);
-  const isRestarting = useRef(false);
 
-  // Check if current selection is a Rive file
-  const currentSrc = selected?.src ?? lastSelected.src;
-  const isRiveFile = currentSrc?.endsWith(".riv");
+  const current = selected ?? lastSelected;
+  const isRiveFile = current.src?.endsWith(".riv");
 
-  // Rive component setup
-  const { RiveComponent, rive } = useRive(
-    isRiveFile
-      ? {
-          src: currentSrc,
-          autoplay: true,
-        }
-      : { autoplay: false },
-  );
+  const RiveComponent = useRiveLoop(isRiveFile ? current.src : null);
 
-  // Set up looping for one-shot animations in modal
-  useEffect(() => {
-    if (!rive || !isRiveFile) return;
-
-    const handleStop = () => {
-      if (isRestarting.current) return;
-
-      isRestarting.current = true;
-      setTimeout(() => {
-        rive.reset();
-        rive.play();
-        isRestarting.current = false;
-      }, 0);
-    };
-
-    rive.on("stop", handleStop);
-
-    return () => {
-      rive.off("stop", handleStop);
-    };
-  }, [rive, isRiveFile]);
-
-  // Set mounted state after hydration
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // Set up intersection observer
   useEffect(() => {
     if (!pageTop.current) return;
-
     const observer = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      setShowTop(entry.isIntersecting);
+      setShowTop(entries[0].isIntersecting);
     });
     observer.observe(pageTop.current);
     return () => observer.disconnect();
   }, [setShowTop]);
 
   const handleClose = () => {
+    setMessage("");
     if (selected) setLastSelected(selected);
     setSelected(null);
   };
 
+  const handleCardClick = (item) => {
+    setMessage("");
+    setSelected(item);
+  };
+
   return (
-    <div className="">
-      {/* Fixed preview modal - always rendered */}
+    <div style={{ backgroundColor: "#F4F4F4" }}>
       {isMounted &&
         createPortal(
           <>
@@ -313,7 +279,7 @@ function Page() {
               aria-label="Close preview"
             />
 
-            {/* Modal container */}
+            {/* Modal */}
             <div
               className={`fixed inset-0 z-[10] flex flex-col items-center justify-center cursor-pointer ease-fast duration-[400ms] transition-all ${
                 selected
@@ -322,9 +288,8 @@ function Page() {
               }`}
               onClick={handleClose}
             >
-              {/* Modal content */}
               <div
-                className="w-[90%] xl:w-[70%] md:w-[70%] lg:w-[70%] h-fit xl:h-[60vh] md:h-[60vh] lg:h-[70vh] flex xl:flex-row md:flex-row lg:flex-row flex-col bg-white px-8 lg:py-16 xl:py-16 md:py-16 py-8 z-11 rounded-2xl gap-16 relative cursor-default"
+                className="w-[90%] xl:w-[70%] md:w-[70%] lg:w-[70%] h-fit xl:h-[60vh] md:h-[60vh] lg:h-[70vh] flex xl:flex-row md:flex-row lg:flex-row flex-col bg-white p-8 z-11 rounded-2xl gap-16 relative cursor-default"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Close button */}
@@ -348,57 +313,48 @@ function Page() {
                   </svg>
                 </button>
 
-                {/* Image section */}
+                {/* Media */}
                 <div className="xl:w-[60%] md:w-[60%] lg:w-[60%] w-full h-full flex flex-col items-center justify-center">
                   {isRiveFile ? (
                     <div
-                      key={currentSrc}
+                      key={current.src}
                       className="w-full h-full min-h-[40vh]"
                     >
                       <RiveComponent className="w-full h-full" />
                     </div>
                   ) : (
                     <Image
-                      src={selected?.src ?? lastSelected.src}
-                      alt={selected?.alt ?? lastSelected.alt}
+                      src={current.src}
+                      alt={current.alt}
                       width={1200}
                       height={1200}
                       placeholder="blur"
-                      blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                        shimmer(1200, 1200),
-                      )}`}
+                      blurDataURL={blurPlaceholder}
                       className="object-contain h-full w-full flex-1 ease-in-out duration-200"
                     />
                   )}
                 </div>
 
-                {/* Info section */}
+                {/* Info */}
                 <div className="xl:w-[30%] md:w-[30%] lg:w-[30%] w-full">
                   <div className="max-w-full h-full flex flex-col justify-center lg:gap-16 xl:gap-16 md:gap-16 gap-4">
                     <div className="flex flex-col h-fit">
-                      <h6 className="text-text-secondary">
-                        {selected?.year ?? lastSelected.year}
-                      </h6>
+                      <h6 className="text-text-secondary">{current.year}</h6>
                       <h3 className="text-left mb-2 md:mb-8 xl:mb-8 lg:mb-8">
-                        {selected?.name ?? lastSelected.name}
+                        {current.name}
                       </h3>
                       <h6 className="text-left text-text-secondary">
-                        {selected?.description ?? lastSelected.description}
+                        {current.description}
                       </h6>
                     </div>
                     <div className="flex flex-col gap-4">
                       <h5 className="text-left">Tools Used</h5>
                       <div className="flex md:flex-col xl:flex-col lg:flex-col flex-row gap-1">
-                        {(selected?.tools ?? lastSelected.tools).map(
-                          (item, key) => (
-                            <h6
-                              className="text-left text-text-secondary"
-                              key={key}
-                            >
-                              {item}
-                            </h6>
-                          ),
-                        )}
+                        {current.tools.map((tool, i) => (
+                          <h6 className="text-left text-text-secondary" key={i}>
+                            {tool}
+                          </h6>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -409,29 +365,27 @@ function Page() {
           document.body,
         )}
 
-      {/* Dynamic spacer */}
-      <div
-        className={`relative top-0 left-0 w-full pointer-events-none transition-[height] duration-300 ease-fast z-[1] ${
-          isScrollDown || !showTop ? "h-0" : "h-[8rem] xl:h-[12rem]"
-        }`}
-      />
-
       {/* Main content */}
       <div
         className={`flex flex-col transition-transform duration-[700ms] ease-fast y-gutter gap-[2rem] will-change-transform ${
-          selected ? "scale-95" : "scale-100"
+          selected ? "scale-98" : "scale-100"
         }`}
         style={{ transform: "translateZ(0)" }}
       >
         <div ref={pageTop} />
+
+        <div className="h-[7.7rem] lg:h-[7.9rem] xl:h-34 shrink-0 w-full" />
+        {/* navbar height placeholder */}
         <div className="top-0 max-w-screen flex flex-col gap-4 justify-center items-center case-x-gutter">
-          <div className="w-full flex flex-col items-center justify-center">
+          <div className="w-full flex flex-col items-center justify-center gap-[0.25rem]">
             <div className="w-full flex justify-center">
               <div className="xl:w-[90%] md:w-[90%] lg:w-[90%] w-full h-fit flex flex-row justify-start gap-[1rem] md:gap-[0.6rem] lg:gap-[0.8rem] flex-wrap">
                 {cards.map((item, key) => (
                   <div
                     key={key}
-                    onClick={() => setSelected(item)}
+                    onClick={() => handleCardClick(item)}
+                    onMouseEnter={() => setMessage("Click to open")}
+                    onMouseLeave={() => setMessage("")}
                     className="min-w-[50vw] lg:min-w-[32%] lg:max-w-[33%] md:min-w-[45%] md:max-w-[50%] origin-center rounded-[1rem] overflow-hidden flex-1 aspect-square bg-white flex flex-col justify-center items-start relative cursor-pointer"
                   >
                     <div className="w-full h-fit flex flex-row justify-between absolute bottom-0 p-[1rem] items-end z-10">
@@ -450,9 +404,7 @@ function Page() {
                         width={1200}
                         height={1200}
                         placeholder="blur"
-                        blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                          shimmer(1200, 1200),
-                        )}`}
+                        blurDataURL={blurPlaceholder}
                         priority={key < 3}
                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 45vw, 30vw"
                         className="object-contain w-full min-h-0 flex-1 p-[3rem] ease-in-out duration-200 py-[4rem]"
@@ -463,6 +415,20 @@ function Page() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="w-full items-center justify-center flex flex-col gap-[0.5rem] mt-[2rem]">
+          <h6>
+            I post much more frequently on{" "}
+            <a
+              href="https://x.com/calebwu_"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-text-secondary transition-colors duration-200"
+            >
+              Twitter.
+            </a>
+          </h6>
+          <h6 className="text-text-secondary">Last Updated: Feb 14th</h6>
         </div>
       </div>
     </div>

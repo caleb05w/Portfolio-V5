@@ -20,6 +20,7 @@ function ContainerImage({
   imgHeight,
   object,
   lazy,
+  caption,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -64,34 +65,36 @@ function ContainerImage({
   }, [isOpen]);
 
   return (
-    <>
+    <div className={`w-full relative ${imgHeight === "h-full" ? "h-full" : ""}`} ref={anchorRef}>
       <div
         className={`relative w-full overflow-hidden bg-[#F8F8F8] ${imgHeight ?? "h-[40vh]"}`}
         id="image"
-        ref={anchorRef}
       >
-        <div className="w-full items-center flex flex-col h-full">
+        {object ? (
           <Image
             src={src}
-            width={1200}
-            height={1200}
             alt={alt || "no alt text"}
-            className={`${object ?? "object-contain w-fit"} h-full`}
+            fill
+            className={object}
             loading={lazy ? "lazy" : "eager"}
           />
-        </div>
+        ) : (
+          <div className="w-full items-center flex flex-col h-full">
+            <Image
+              src={src}
+              width={1200}
+              height={1200}
+              alt={alt || "no alt text"}
+              className="object-contain w-fit h-full"
+              loading={lazy ? "lazy" : "eager"}
+            />
+          </div>
+        )}
       </div>
-
-      {/* <button
-                className={`fixed inset-0 z-[5]
-            transition-all duration-200 ease-in-out origin-center hover:cursor-pointer
-            ${isOpen
-                        ? "opacity-100 scale-100 backdrop-blur-sm"
-                        : "opacity-0 scale-0 backdrop-blur-0"
-                    }`}
-                onClick={() => { setIsOpen(!isOpen) }}
-            /> */}
-    </>
+      {caption && (
+        <h6 className="text-center pt-4 text-text-secondary">{caption}</h6>
+      )}
+    </div>
   );
 }
 

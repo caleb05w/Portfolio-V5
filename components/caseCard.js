@@ -1,11 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
+import TitleAnimation from "./titleAnimation";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-
-const TitleAnimation = dynamic(() => import("./titleAnimation"), {
-  ssr: false,
-});
+import StickerGrid from "./StickerGrid";
 
 function CaseCard({
   name,
@@ -21,6 +18,12 @@ function CaseCard({
   position = 0, //position which determines preload state
   isEmpty,
   vidPad,
+  cardBg = "black",
+  logoSrc,
+  introBgVisible = false,
+  titleAnimRevealed = false,
+  stickers = [],
+  endColor = "#2563eb",
 }) {
   const videoRef = useRef(null);
 
@@ -40,33 +43,47 @@ function CaseCard({
   return (
     <div
       className={`
-            w-[80vw]
-            md:w-[60vw]
-            lg:w-[65vw]
-            xl:w-[80vw]
-            aspect-[1/1]
-            lg:aspect-[5.5/3]
-            xl:aspect-[5.5/3]
-            md:aspect-[5.5/3]
-            max-w-[60rem]
-            xl:max-w-[80rem]
+            w-[90vw] md:w-[60vw] lg:w-[65vw] xl:w-[80vw]
+            aspect-2/3 md:aspect-2/1
+            max-w-240 xl:max-w-320
             transition-all duration-700
             flex flex-row items-center justify-center
-            rounded-[1.4rem]
+            rounded-2xl md:rounded-xl
             overflow-hidden
            `}
     >
       {type === "Intro" && (
-        <section className="w-full h-full flex-col items-center flex p-[5%] bg-white justify-between">
-          <h6 className="text-text-secondary w-full text-center">Caleb Wu</h6>
-          <div className="lg:w-[70%] w-[80%] aspect-3/1">
-            <TitleAnimation />
+        <section className="w-full h-full flex-col items-center flex p-[1rem] md:p-[5%] justify-between relative">
+          {introBgVisible && (
+            <div className="absolute inset-0 bg-white animate-pop-in pointer-events-none" />
+          )}
+          <h6
+            className="relative text-text-secondary w-full text-center"
+            style={{
+              opacity: introBgVisible ? 1 : 0,
+              transform: introBgVisible ? "translateY(0)" : "translateY(8px)",
+              transition:
+                "opacity 450ms var(--ease-fast), transform 450ms var(--ease-fast)",
+            }}
+          >
+            Caleb Wu
+          </h6>
+          <div className="relative w-full">
+            <TitleAnimation revealed={titleAnimRevealed} />
           </div>
-          <div className="flex flex-col w-full items-center">
-            <div className="flex flex-col gap-[1rem] h-full items-center w-full">
-              <div className="flex flex-col gap-[1rem] w-full items-center">
-                <div className="border-[0.75px] w-[3rem] border-secondary"></div>
-                <div className="flex flex-col gap-[0.5rem">
+          <div
+            className="relative flex flex-col w-full items-center"
+            style={{
+              opacity: introBgVisible ? 1 : 0,
+              transform: introBgVisible ? "translateY(0)" : "translateY(8px)",
+              transition:
+                "opacity 450ms var(--ease-fast), transform 450ms var(--ease-fast)",
+            }}
+          >
+            <div className="flex flex-col gap-[0.5rem] md:gap-[1rem] h-full items-center w-full">
+              <div className="flex flex-col gap-[0.5rem] md:gap-[1rem] w-full items-center">
+                <div className="border-[0.75px] w-[3rem] border-black/10"></div>
+                <div className="flex flex-col gap-[0.25rem] md:gap-[0.5rem]">
                   <h6 className="text-text-secondary text-center">
                     Currently Product @
                     <a
@@ -105,7 +122,7 @@ function CaseCard({
               window.scrollTo(0, 0);
             }}
           >
-            <div className="flex overflow-hidden w-full h-full relative">
+            <div className="flex overflow-hidden w-full h-full relative isolate">
               {img && (
                 <Image
                   src={img ?? "/images/testfram1.png"}
@@ -116,7 +133,9 @@ function CaseCard({
                 />
               )}
               {videoSrc && (
-                <div className={`bg-[#F7F7F7] w-full flex flex-row justify-center ${vidPad ?? ""}`}>
+                <div
+                  className={`bg-white w-full flex flex-row justify-center ${vidPad ?? ""}`}
+                >
                   <video
                     ref={videoRef}
                     className="h-full w-full"
@@ -127,47 +146,108 @@ function CaseCard({
                     loop
                     playsInline
                     style={{
-                      backgroundColor: "#F8F8F8",
                       objectFit: vidPad ? "contain" : "cover",
                     }}
                   />
                 </div>
               )}
+
+              {/* Gradient blur — stacked solid layers, compounds toward bottom */}
+              <div
+                className="absolute bottom-0 left-0 w-full h-[55%] pointer-events-none"
+                style={{
+                  backdropFilter: "blur(1px)",
+                  WebkitBackdropFilter: "blur(1px)",
+                }}
+              />
+              <div
+                className="absolute bottom-0 left-0 w-full h-[40%] pointer-events-none"
+                style={{
+                  backdropFilter: "blur(2px)",
+                  WebkitBackdropFilter: "blur(2px)",
+                }}
+              />
+              <div
+                className="absolute bottom-0 left-0 w-full h-[25%] pointer-events-none"
+                style={{
+                  backdropFilter: "blur(3px)",
+                  WebkitBackdropFilter: "blur(3px)",
+                }}
+              />
+              <div
+                className="absolute bottom-0 left-0 w-full h-[12%] pointer-events-none"
+                style={{
+                  backdropFilter: "blur(4px)",
+                  WebkitBackdropFilter: "blur(4px)",
+                }}
+              />
+
+              {/* Gradient overlay */}
+              <div
+                className={`absolute bottom-0 left-0 w-full h-[60%] bg-linear-to-t pointer-events-none ${cardBg === "white" ? "from-white/80" : "from-black/75"} to-transparent`}
+              />
+
+              {/* Text + logo */}
+              <div className="absolute bottom-0 left-0 w-full p-[5%] flex flex-col gap-3 ">
+                <div className="flex flex-row gap-4 items-center">
+                  {/* Logo */}
+                  {logoSrc ? (
+                    <Image
+                      src={logoSrc}
+                      width={32}
+                      height={32}
+                      className="shrink-0 object-contain border  w-[1.6rem] aspect-square"
+                      alt=""
+                    />
+                  ) : (
+                    <div className="w-8 h-8 shrink-0 bg-white " />
+                  )}
+                  <h2
+                    className={`${cardBg === "white" ? "text-black" : "text-white"}`}
+                  >
+                    {name}
+                  </h2>
+                </div>
+                {body && (
+                  <div className=" max-w-[24rem]">
+                    <p
+                      className={
+                        cardBg === "white" ? "text-black/70" : "text-white/70"
+                      }
+                    >
+                      {body}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </Link>
         </section>
       )}
 
       {type === "End" && (
-        <section className="w-full h-full flex-col flex justify-between bg-primary p-[2rem] lg:p-[3rem]">
-          <div className="flex flex-row w-full h-full justify-between items-start">
-            <h1>Thanks for stopping by.</h1>
+        <section
+          className="w-full h-full flex-col flex justify-between p-[2rem] lg:p-[3rem] transition-colors duration-500"
+          style={{ backgroundColor: endColor }}
+        >
+          <div className="flex flex-col gap-[0.5rem] w-full justify-center items-center">
+            <h1 className="text-white">Thanks for stopping by :)</h1>
+            <h3 className="text-white/60">
+              {stickers.filter(Boolean).length >= 6
+                ? "I don't have any more stickers for you"
+                : "Here's a sticker!"}
+            </h3>
           </div>
-          <div className="max-w-[45%] h-fit flex flex-col">
-            <div className="flex flex-col gap-[2rem]">
-              <h2> Say Helloooo </h2>
-              <div className="flex flex-row gap-[0.25rem]">
-                <a
-                  href="https://www.linkedin.com/in/caleb-wu-/"
-                  target="_blank"
-                >
-                  <p className="hover:text-underline text-black hover:text-black hover:cursor-pointer">
-                    / Linkedin
-                  </p>
-                </a>
-                <a href="https://x.com/calebwu_" target="_blank">
-                  <p className="hover:text-underline text-black hover:text-black hover:cursor-pointer">
-                    / Twitter
-                  </p>
-                </a>
-                <a href="mailto:caleb05w@gmail.com" target="_blank">
-                  <p className=" text-black hover:text-underlinehover:cursor-pointer">
-                    / caleb05w@gmail.com
-                  </p>
-                </a>
-              </div>
-            </div>
+
+          {/* Sticker collection */}
+          <div className="flex flex-col gap-3 items-center">
+            <StickerGrid stickers={stickers} position={position} />
           </div>
+          <h4 className="text-white/70 w-full text-center">
+            {stickers.filter(Boolean).length >= 6
+              ? "You've earned all the stickers!"
+              : "Come back again for another one."}
+          </h4>
         </section>
       )}
     </div>

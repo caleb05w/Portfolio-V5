@@ -246,7 +246,7 @@ function Navbar({ active }) {
 
                   {/* Old item - visible */}
                   <div
-                    className={`absolute top-0 left-0 w-full ${enableTransitions ? "duration-700 transition-transform ease-fast will-change-transform" : ""}`}
+                    className={`absolute top-0 left-0 w-full ${enableTransitions ? "duration-700 transition-transform ease-fast" : ""}`}
                     style={{
                       transitionDelay: enableTransitions
                         ? `${staggerDelay}ms`
@@ -271,7 +271,7 @@ function Navbar({ active }) {
 
                   {/* New item - visible */}
                   <div
-                    className={`absolute top-0 left-0 w-full ${enableTransitions ? "duration-700 transition-transform ease-fast will-change-transform hover:cursor-pointer" : ""}`}
+                    className={`absolute top-0 left-0 w-full ${enableTransitions ? "duration-700 transition-transform ease-fast hover:cursor-pointer" : ""}`}
                     style={{
                       transitionDelay: enableTransitions
                         ? `${staggerDelay}ms`
@@ -282,10 +282,7 @@ function Navbar({ active }) {
                     <Link
                       href={item.new.cta ?? "/"}
                       target={item.new.target ?? ""}
-                      onClick={() => {
-                        // Reset scroll immediately before navigation
-                        window.scrollTo(0, 0);
-                      }}
+                      scroll={item.new.cta === "/" ? false : undefined}
                     >
                       {item.new.isLogo ? (
                         <div className="flex flex-row gap-[0.6rem] items-center justify-center hover:cursor-pointer whitespace-nowrap">

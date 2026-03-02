@@ -26,6 +26,13 @@ export default function AnimationWrapper({ children }) {
     }
   }, []);
 
+  // Signal to in-page components (e.g. sidebar) that a route change is happening
+  const isMounted = useRef(false);
+  useEffect(() => {
+    if (!isMounted.current) { isMounted.current = true; return; }
+    window.dispatchEvent(new CustomEvent('route-change'));
+  }, [pathname]);
+
   return (
     <div style={{ position: 'relative', display: 'grid', width: '100%', maxWidth: '100vw' }}>
       <AnimatePresence initial={false}>

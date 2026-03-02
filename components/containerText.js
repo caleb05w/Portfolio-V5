@@ -1,6 +1,6 @@
 import React from "react";
 
-function containerText({ title, body, gutter, subheader = [] }) {
+function containerText({ title, body, gutter, subheader = [], caption }) {
   return (
     <div
       className={`flex flex-col gap-[0.8rem] md:gap-[1rem] lg:gap-[1rem] md:max-w-[36rewm] lg:max-w-[42rem] xl:max-w-[60rem] max-w-full w-full ${gutter}} `}
@@ -14,6 +14,9 @@ function containerText({ title, body, gutter, subheader = [] }) {
           {item}
         </p>
       ))}
+      {caption && (
+        <h6 className="text-center pt-4 text-text-secondary">{caption}</h6>
+      )}
     </div>
   );
 }

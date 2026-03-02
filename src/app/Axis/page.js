@@ -39,16 +39,16 @@ function Page() {
     <div className="flex flex-col w-screen">
       {/* Fixed spacer */}
       <div
-        className={`relative top-0 left-0 w-full pointer-events-none transition-all duration-300 ease-fast z-[1] lg:bg-transparent ${showTop ? "h-[10rem] xl:h-[12rem]" : "h-[0rem]"}`}
+        className={`relative top-0 left-0 w-full pointer-events-none z-[1] lg:bg-transparent h-[10rem] xl:h-[12rem]`}
       />
 
       <div className="flex flex-row h-screen w-full">
         {/* Sidebar */}
         <div
-          className={`shrink-0 h-full transition-all ease-fast duration-450 ${showTop ? "md:w-16 lg:w-24 xl:w-[9rem]" : "md:w-32 lg:w-48 xl:w-[18rem]"}`}
+          className={`shrink-0 h-full transition-all ease-fast duration-700 ${showTop ? "md:w-32 lg:w-48 xl:w-[18rem]" : "md:w-32 lg:w-48 xl:w-[18rem]"}`}
         >
           <FixedSidebar
-            className={`fixed h-full w-[0] md:w-[8rem] lg:w-[12rem] xl:w-[12rem] flex flex-col overflow-hidden top-[5vh] lg:top-[8vh] xl:top-[6vh] justify-start h-full transition-all ease-fast duration-450 pl-[4vw] xl:pl-[2.4vw] lg:pl-[3vw]
+            className={`fixed h-full w-[0] md:w-[8rem] lg:w-[12rem] xl:w-[18rem] flex flex-col overflow-hidden top-[5vh] lg:top-[8vh] xl:top-[6vh] justify-start h-full transition-all ease-fast duration-700 pl-[4vw] xl:pl-[4vw] lg:pl-[3vw]
                     ${showTop ? "opacity-0" : "opacity-100"}
                     `}
           >
@@ -69,7 +69,7 @@ function Page() {
         <div className="flex flex-col flex-1 min-w-0 h-fit transition-all duration-[450ms] ease-out">
           <div ref={pageTop} />
 
-          <div className="w-full flex flex-col pb-[4-rem] bg-secondary items-center">
+          <div className="w-full flex flex-col pb-[4-rem] items-center">
             <div
               className={`flex flex-col bg-white w-full justify-center y-gutter ease-in-out duration-[450ms] px-[0] md:px-[2rem] lg:px-[2rem] xl:px-[2rem]
                             ${showTop ? " rounded-[1rem]" : " rounded-[0rem]"}
@@ -202,8 +202,8 @@ function Page() {
         </div>
         {/* //left side */}
         <div
-          className={`h-full duration-450 ease-fast
-                ${showTop ? "md:w-[4rem] xl:w-[9rem] lg:w-[6rem]" : "w-[0rem]"}
+          className={`h-full duration-700 ease-fast
+                ${showTop ? "md:w-32 xl:w-36 lg:w-48" : "md:w-32 lg:w-48"}
                 `}
         ></div>
       </div>

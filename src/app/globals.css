@@ -1,18 +1,73 @@
 @import "tailwindcss";
 
 :root {
-  --background: #e8eaeb;
+  --background: #FFFFFF; 
+  /* #e8eaeb */
   --foreground: #171717;
   --text-teritary: #58534d;
   --primary-orange: #f54900;
   --primary-gray: #e8eaeb;
-  --text-secondary: #737373;
+  --text-secondary: #808080;
+  --custard: #ffffff;
   --ease-slow: cubic-bezier(0.7, 0, 0.2, 1);
   --ease-fast: cubic-bezier(0.62, 0.61, 0.02, 1);
   --ease-fastfast: cubic-bezier(0.5, 0, 0, 1);
 }
 
+@keyframes float {
+  0%   { transform: translateY(var(--float-base, 0px)) rotate(0deg); }
+  35%  { transform: translateY(calc(var(--float-base, 0px) - var(--float-amp, 8px))) rotate(var(--float-rot, 3deg)); }
+  65%  { transform: translateY(calc(var(--float-base, 0px) + var(--float-dip, 4px))) rotate(calc(var(--float-rot, 3deg) * -0.4)); }
+  100% { transform: translateY(var(--float-base, 0px)) rotate(0deg); }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes stickerPop {
+  0%   { opacity: 0; transform: scale(0); }
+  60%  { opacity: 1; transform: scale(1.25); }
+  80%  { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes introFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @layer utilities {
+  .animate-slide-in-left {
+    animation: slideInLeft 200ms ease forwards;
+  }
+
+  .animate-float {
+    animation: float var(--float-dur, 3s) ease-in-out infinite;
+    animation-fill-mode: backwards;
+  }
+
+  .animate-pop-in {
+    animation: popIn 450ms var(--ease-fast) forwards;
+  }
+
+  .animate-intro {
+    will-change: transform, opacity;
+    animation: introFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
   .ease-slow {
     transition-timing-function: var(--ease-slow);
   }
@@ -34,6 +89,7 @@
   --color-text-secondary: var(--text-secondary);
   --color-text-teritary: var(--text-teritary);
   --color-secondary: var(--primary-gray);
+  --color-custard: var(--custard);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --duration-450: 450ms;
@@ -50,6 +106,8 @@
     --foreground: #ededed;
   }
 } */
+
+
 
 html {
   scroll-behavior: smooth;
@@ -111,6 +169,7 @@ h6 {
   letter-spacing: 0.12px;
   font-weight: 400;
 }
+
 
 .clamp {
   height: full;
@@ -266,7 +325,7 @@ h6 {
 
   .clamp {
     height: 100%;
-    width: clamp(10rem, 18vw, 24rem);
+    width: clamp(10rem, 12vw, 24rem);
   }
 
   h1 {
@@ -275,20 +334,20 @@ h6 {
   }
 
   h2 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     line-height: 140%;
   }
 
   h3 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   h4 {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     line-height: 170%;
   }
 
@@ -301,7 +360,15 @@ h6 {
   }
 }
 
-/* Extra Large (lg) */
+/* Extra Large (xl) - 1680px */
+@media (min-width: 1680px) {
+  .clamp {
+    height: 100%;
+    width: clamp(12rem, 14vw, 28rem);
+  }
+}
+
+/* 2xl - 1920px */
 @media (min-width: 1920px) {
   :root {
   }
@@ -327,10 +394,14 @@ h6 {
     font-size: 1.6rem;
   }
 
-  h4,
-  h5,
-  h6 {
+  h4
+  {
     font-size: 1.5rem;
+  }
+
+    h5,
+  h6 {
+    font-size: 1.3rem;
   }
 
   /* //clamps control the left and right elements on the home page. */

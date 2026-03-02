@@ -17,6 +17,7 @@ function ContainerVideo({
   videoPreload,
   posterSrc,
   reactionSrc,
+  caption,
 }) {
   const videoContainerRef = useRef(null);
   const videoRef = useRef(null);
@@ -88,10 +89,8 @@ function ContainerVideo({
       <ContainerText title={title} body={body} subheader={subheader} />
 
       {(videoSrc || rivSrc) && (
-        <div className="w-full mt-[2rem] relative" ref={videoContainerRef}>
-          <div
-            className="relative w-full bg-[#F8F8F8] overflow-hidden"
-          >
+        <div className="w-full mt-8 relative" ref={videoContainerRef}>
+          <div className="relative w-full bg-[#F8F8F8] overflow-hidden">
             {videoSrc && (
               <button
                 onClick={togglePlay}
@@ -123,23 +122,26 @@ function ContainerVideo({
                 <RiveComponent className="border border-transparent h-full w-full" />
               </div>
             )}
-          </div>
-          {reactionSrc && (
-            <div className="absolute  group z-10 bottom-[1rem] right-[1rem]">
-              <video
-                ref={reactionRef}
-                className="w-48 h-48 rounded-[0.5rem] object-cover"
-                src={reactionSrc}
-                muted
-                loop
-                playsInline
-                preload="none"
-              />
-              <div className="absolute bottom-full right-0 mb-2 w-56 bg-black/80 text-white text-xs rounded-lg px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                The reaction of the founding team and engineers after seeing the
-                final product.
+            {reactionSrc && (
+              <div className="absolute group z-10 bottom-4 right-4">
+                <video
+                  ref={reactionRef}
+                  className="xl:w-[18rem] w-32 aspect-square xl:rounded-2xl rounded-[0.5rem] object-cover"
+                  src={reactionSrc}
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                />
+                <div className="absolute bottom-full right-0 mb-2 w-56 bg-black/80 text-white text-xs rounded-lg px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                  The reaction of the founding team and engineers after seeing
+                  the final product.
+                </div>
               </div>
-            </div>
+            )}
+          </div>
+          {caption && (
+            <h6 className="text-center pt-4 text-text-secondary">{caption}</h6>
           )}
         </div>
       )}
