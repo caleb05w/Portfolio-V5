@@ -6,13 +6,16 @@ import ContainerIntro from "../../../components/ContainerIntro";
 import ContainerReflection from "../../../components/containerReflection";
 import ContainerVideo from "../../../components/containerVideo";
 import { useCaseContext } from "../../../utils/caseContext";
+import { useTooltip } from "../../../utils/toolTipContext";
 import Label from "../../../components/label";
 import Sidebar from "../../../components/sidebar";
 import FixedSidebar from "../../../components/FixedSidebar";
+import CaseCard from "../../../components/caseCard";
 
 function Page() {
   const team = ["1 Design Director (Me)", "2 Designers"];
   const { setShowTop, showTop } = useCaseContext();
+  const { tooltip } = useTooltip();
   const pageTop = useRef(null);
 
   const scrollToSection = (sectionId) => {
@@ -196,6 +199,25 @@ function Page() {
                   ]}
                 />
                 <Label text="This is just a snapshot of the entire design process." />
+              </div>
+
+              {/* Next case */}
+              <div className="case-mt case-x-gutter flex flex-col gap-4 pb-[2rem]">
+                <h6 className="text-text-secondary">Next</h6>
+                <div {...tooltip("Click to open")}>
+                  <CaseCard
+                    type="Case"
+                    name="RevisionDojo"
+                    link="/RevisionDojo"
+                    videoSrc="/images/RD/rd-cover-new.mp4"
+                    body="Redesigning the search experience for 500,000 IB students."
+                    cardBg="white"
+                    logoSrc="/images/rd-modal.svg"
+                    vidPad="p-[2rem]"
+                    position={0}
+                    className="w-full aspect-[2/1] min-h-[12rem] border border-black/10"
+                  />
+                </div>
               </div>
             </div>
           </div>

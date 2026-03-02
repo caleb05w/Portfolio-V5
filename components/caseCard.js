@@ -26,6 +26,7 @@ function CaseCard({
   stickers = [],
   endColor = "#2563eb",
   resetStickers,
+  className = "",
 }) {
   const videoRef = useRef(null);
   const [isResetting, setIsResetting] = useState(false);
@@ -62,13 +63,11 @@ function CaseCard({
   return (
     <div
       className={`
-            w-[90vw] md:w-[60vw] lg:w-[65vw] xl:w-[80vw]
-            aspect-2/3 md:aspect-2/1
-            max-w-240 xl:max-w-320
             transition-all duration-700
             flex flex-row items-center justify-center
             rounded-2xl md:rounded-xl
             overflow-hidden
+            ${className || "w-[90vw] md:w-[60vw] lg:w-[65vw] xl:w-[80vw] aspect-2/3 md:aspect-2/1 max-w-240 xl:max-w-320"}
            `}
     >
       {type === "Intro" && (

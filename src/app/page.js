@@ -41,6 +41,9 @@ const cards = [
 ];
 
 const SCROLL_RATE_LIMIT = 225;
+// 50ms (TITLE delay) + 420ms (max POP_DELAY in titleAnimation) + 500ms (CSS transition) = 970ms
+const TITLE_ANIM_DONE_MS = 970;
+const CARDS_ANIM_DONE_MS = 250;
 
 const INTRO = {
   PRE: 0,
@@ -132,16 +135,22 @@ export default function Page() {
   ];
   const [endColorIndex, setEndColorIndex] = useState(1);
   const introTimersRef = useRef([]);
+  const cardChangesAllowedRef = useRef(false);
+  const mountedAtRef = useRef(0);
   const endCardIndex = cards.findIndex((c) => c.type === "End");
   const { stickers, resetStickers } = useStickers(currentIndex, endCardIndex);
 
   useEffect(() => {
+    mountedAtRef.current = performance.now();
     const t1 = setTimeout(() => setIP(INTRO.TITLE), 50);
-    const t2 = setTimeout(() => setIP(INTRO.SCROLL_ON), 500);
-    const t3 = setTimeout(() => setIP(INTRO.CARDS_ON), 1050);
-    const t4 = setTimeout(() => setIP(INTRO.COMPLETE), 1750);
-    introTimersRef.current = [t1, t2, t3, t4];
-    return () => [t1, t2, t3, t4].forEach(clearTimeout);
+    const t2 = setTimeout(() => {
+      cardChangesAllowedRef.current = true;
+    }, CARDS_ANIM_DONE_MS);
+    const t3 = setTimeout(() => setIP(INTRO.SCROLL_ON), 500);
+    const t4 = setTimeout(() => setIP(INTRO.CARDS_ON), 1050);
+    const t5 = setTimeout(() => setIP(INTRO.COMPLETE), 1750);
+    introTimersRef.current = [t1, t2, t3, t4, t5];
+    return () => introTimersRef.current.forEach(clearTimeout);
   }, [setIP]);
 
   const { tooltip } = useTooltip();
@@ -168,10 +177,17 @@ export default function Page() {
     if (introPhaseRef.current >= INTRO.COMPLETE) return;
     introTimersRef.current.forEach(clearTimeout);
     setIP(INTRO.COMPLETE);
+    // Allow card changes only after title animation + first card load (CARDS_ANIM_DONE_MS from mount).
+    const elapsed = performance.now() - mountedAtRef.current;
+    const remaining = Math.max(0, CARDS_ANIM_DONE_MS - elapsed);
+    const t = setTimeout(() => {
+      cardChangesAllowedRef.current = true;
+    }, remaining + 50);
+    introTimersRef.current = [t];
   }, [setIP]);
 
   const moveUp = useCallback(() => {
-    if (introPhaseRef.current < INTRO.SCROLL_ON) return;
+    if (!cardChangesAllowedRef.current) return;
     if (introPhaseRef.current < INTRO.NAV) setIP(INTRO.NAV);
     setIndices((prev) => ({
       current: (prev.current + 1) % cards.length,
@@ -180,7 +196,7 @@ export default function Page() {
   }, [setIP]);
 
   const moveDown = useCallback(() => {
-    if (introPhaseRef.current < INTRO.SCROLL_ON) return;
+    if (!cardChangesAllowedRef.current) return;
     if (introPhaseRef.current < INTRO.NAV) setIP(INTRO.NAV);
     setIndices((prev) => ({
       current: (prev.current - 1 + cards.length) % cards.length,
@@ -333,7 +349,8 @@ export default function Page() {
       if (!touchOnCenter.current) return;
       if (introPhaseRef.current < INTRO.SCROLL_ON) {
         skipIntro();
-        return;
+        cardChangesAllowedRef.current = true;
+        // fall through so the swipe direction also moves the card
       }
       const distance = touchStartY.current - lastTouchY.current;
       const velocity = touchVelocity.current; // px/ms
@@ -510,7 +527,9 @@ export default function Page() {
                         introBgVisible={elementsReady}
                         titleAnimRevealed={introPhase >= INTRO.TITLE}
                         stickers={card.type === "End" ? stickers : undefined}
-                        resetStickers={card.type === "End" ? resetStickers : undefined}
+                        resetStickers={
+                          card.type === "End" ? resetStickers : undefined
+                        }
                         endColor={
                           card.type === "End"
                             ? endColors[endColorIndex]
@@ -555,13 +574,26 @@ export default function Page() {
 
       {/* Social buttons — bottom right corner */}
       <div className="fixed bottom-4 right-4 z-20 flex flex-col gap-2">
-        <a href="https://www.linkedin.com/in/caleb-wu-/" target="_blank" rel="noopener noreferrer" className="border border-black/60 hover:bg-black/10 rounded-full w-6 h-6 flex items-center justify-center transition-colors duration-450 ease-fast">
+        <a
+          href="https://www.linkedin.com/in/caleb-wu-/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="border border-black/60 hover:bg-black/10 rounded-full w-6 h-6 flex items-center justify-center transition-colors duration-450 ease-fast"
+        >
           <FaLinkedin className="text-black text-[12px]" />
         </a>
-        <a href="https://x.com/calebwu_" target="_blank" rel="noopener noreferrer" className="border border-black/60 hover:bg-black/10 rounded-full w-6 h-6 flex items-center justify-center transition-colors duration-450 ease-fast">
+        <a
+          href="https://x.com/calebwu_"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="border border-black/60 hover:bg-black/10 rounded-full w-6 h-6 flex items-center justify-center transition-colors duration-450 ease-fast"
+        >
           <CiTwitter className="text-black text-[12px]" />
         </a>
-        <a href="mailto:caleb05w@gmail.com" className="border border-black/60 hover:bg-black/10 rounded-full w-6 h-6 flex items-center justify-center transition-colors duration-450 ease-fast">
+        <a
+          href="mailto:caleb05w@gmail.com"
+          className="border border-black/60 hover:bg-black/10 rounded-full w-6 h-6 flex items-center justify-center transition-colors duration-450 ease-fast"
+        >
           <AiOutlineMail className="text-black text-[12px]" />
         </a>
       </div>

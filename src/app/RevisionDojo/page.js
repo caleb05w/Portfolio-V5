@@ -16,6 +16,7 @@ import ContainerIntro from "../../../components/ContainerIntro";
 import ContainerReflection from "../../../components/containerReflection";
 import ContainerVideo from "../../../components/containerVideo";
 import { useCaseContext } from "../../../utils/caseContext";
+import { useTooltip } from "../../../utils/toolTipContext";
 import Label from "../../../components/label";
 import Sidebar from "../../../components/sidebar";
 import FixedSidebar from "../../../components/FixedSidebar";
@@ -23,10 +24,12 @@ import ContainerImage from "../../../components/containerImage";
 import Image from "next/image";
 import Label2 from "../../../components/label2";
 import CaseCarousel from "../../../components/caseCarousel";
+import CaseCard from "../../../components/caseCard";
 
 function Page() {
   const team = ["1 Designer (Me)", "2 Developers"];
   const { setShowTop, showTop } = useCaseContext();
+  const { tooltip } = useTooltip();
   const pageTop = useRef(null);
   const jojoRef = useRef(null);
   const [jojoVisible, setJojoVisible] = useState(false);
@@ -199,7 +202,7 @@ function Page() {
                   subheader="Solution"
                   title="Segmenting search through filters"
                   body={[
-                    "We split search between subject and features. Subjects serve as a pre-flight filter so returned search results are relevant.",
+                    "Search that knows what you're looking for. By filtering by subject first, results are scoped before you ever type a keyword — so you're choosing from 24 relevant results, not scrolling through hundreds.",
                   ]}
                   img="/images/RD8.png"
                   alt="Project Research Timeline"
@@ -227,7 +230,7 @@ function Page() {
               <div id="flows" className="flex flex-col case-gap case-mt">
                 <ContainerLine
                   subheader="Design Decision"
-                  title="How to contextualize a whole feature in just a moment?"
+                  title="Contextualizing a whole feature in just a moment"
                   body={[
                     "Each cell's content was carefully considered. Students could be crawling through hundreds of results, so we needed to make sure we could communicate a whole feature's value in just a few points.",
                   ]}
@@ -256,6 +259,7 @@ function Page() {
 
               {/* //case line */}
               <div className="w-full h-fit case-x-gutter case-mt flex flex-row gap-[1rem] items-center">
+                <div className="border-b-[1px] border-secondary w-full h-[1px]"></div>
                 <h6>Research</h6>
                 <div className="border-b-[1px] border-secondary w-full h-[1px]"></div>
               </div>
@@ -281,7 +285,7 @@ function Page() {
                   subheader="Research"
                   title="So... why wasn't this happening?"
                   body={[
-                    "Analyzing session recordings, user reviews, reddit ect.. I realize the most concentrated drop off point was right after onboarding.",
+                    "Analyzing session recordings, user reviews, reddit ect.. I realized the most concentrated drop off point was right after onboarding.",
                     "Why wasn't our product converting?",
                   ]}
                   img="/images/RD/RDN2a.png"
@@ -473,6 +477,24 @@ function Page() {
                   ]}
                 />
                 <Label text="This is just a snapshot of the entire design process." />
+              </div>
+
+              {/* Next case */}
+              <div className="case-mt case-x-gutter flex flex-col gap-4 pb-[2rem]">
+                <h6 className="text-text-secondary">Next</h6>
+                <div {...tooltip("Click to open")}>
+                  <CaseCard
+                    type="Case"
+                    name="Axis Consulting"
+                    link="/Axis"
+                    videoSrc="/images/Axis/AxisCover.mp4"
+                    body="Launching an ambitious rebrand for a university consulting club."
+                    cardBg="black"
+                    logoSrc="/images/axis-logo-nobg.svg"
+                    position={0}
+                    className="w-full aspect-[2/1] min-h-[12rem]"
+                  />
+                </div>
               </div>
             </div>
           </div>
