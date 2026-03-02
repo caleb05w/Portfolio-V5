@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${ppNeueMontreal.variable} antialiased`}
       >
-        <Agentation />
+        {/* <Agentation /> */}
         <ToolTipProvider>
           <CaseProvider>
             <Navbar />
