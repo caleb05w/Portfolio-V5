@@ -3,7 +3,12 @@ import { useEffect, useReducer, useRef } from "react";
 function stickerReducer(state, action) {
   switch (action.type) {
     case "INIT":
-      return { stickers: action.payload, initialCount: action.payload.length };
+      return {
+        stickers: action.payload.map((s, i) =>
+          s.stickerIndex !== undefined ? s : { ...s, stickerIndex: i }
+        ),
+        initialCount: action.payload.length,
+      };
     case "ADD":
       return { ...state, stickers: [...state.stickers, action.payload] };
     case "RESET":
@@ -35,13 +40,14 @@ export function useStickers(currentIndex, endCardIndex) {
     localStorage.setItem("stickers", JSON.stringify(state.stickers));
   }, [state.stickers]);
 
-  // Award a sticker when user reaches the end card
+  // Award a random sticker when user reaches the end card
   useEffect(() => {
     if (currentIndex !== endCardIndex) return;
     if (awardedRef.current || state.stickers.length >= 6) return;
     awardedRef.current = true;
+    const stickerIndex = state.stickers.length;
     const t = setTimeout(
-      () => dispatch({ type: "ADD", payload: { id: Date.now() } }),
+      () => dispatch({ type: "ADD", payload: { id: Date.now(), stickerIndex } }),
       500,
     );
     return () => clearTimeout(t);

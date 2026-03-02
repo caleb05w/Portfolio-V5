@@ -510,6 +510,7 @@ export default function Page() {
                         introBgVisible={elementsReady}
                         titleAnimRevealed={introPhase >= INTRO.TITLE}
                         stickers={card.type === "End" ? stickers : undefined}
+                        resetStickers={card.type === "End" ? resetStickers : undefined}
                         endColor={
                           card.type === "End"
                             ? endColors[endColorIndex]

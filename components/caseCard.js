@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import TitleAnimation from "./titleAnimation";
 import Link from "next/link";
 import StickerGrid from "./StickerGrid";
+import { motion } from "framer-motion";
 
 function CaseCard({
   name,
@@ -24,8 +25,26 @@ function CaseCard({
   titleAnimRevealed = false,
   stickers = [],
   endColor = "#2563eb",
+  resetStickers,
 }) {
   const videoRef = useRef(null);
+  const [isResetting, setIsResetting] = useState(false);
+  const [endAnimKey, setEndAnimKey] = useState(0);
+
+  useEffect(() => {
+    if (position !== 0 || type !== "End") return;
+    const id = requestAnimationFrame(() => setEndAnimKey((k) => k + 1));
+    return () => cancelAnimationFrame(id);
+  }, [position, type]);
+
+  const handleReset = () => {
+    setIsResetting(true);
+    // wait for last sticker's animation to finish: 5 * 60ms stagger + 350ms duration
+    setTimeout(() => {
+      resetStickers?.();
+      setIsResetting(false);
+    }, 750);
+  };
 
   // Play/pause video when position changes
   useEffect(() => {
@@ -230,24 +249,67 @@ function CaseCard({
           className="w-full h-full flex-col flex justify-between p-[2rem] lg:p-[3rem] transition-colors duration-500"
           style={{ backgroundColor: endColor }}
         >
-          <div className="flex flex-col gap-[0.5rem] w-full justify-center items-center">
-            <h1 className="text-white">Thanks for stopping by :)</h1>
-            <h3 className="text-white/60">
-              {stickers.filter(Boolean).length >= 6
-                ? "I don't have any more stickers for you"
-                : "Here's a sticker!"}
-            </h3>
-          </div>
+          {(() => {
+            const allCollected = stickers.filter(Boolean).length >= 6;
+            const ease = [0.22, 1, 0.36, 1];
+            const textDelay = allCollected ? 1.5 : 0.5;
+            const footerDelay = allCollected ? 1.65 : 0.65;
+            return (
+              <>
+                <div className="flex flex-col gap-[0.5rem] w-full justify-center items-center">
+                  <motion.h1
+                    key={`title-${endAnimKey}`}
+                    className="text-white"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3, ease }}
+                  >
+                    Thanks for stopping by :)
+                  </motion.h1>
+                  <motion.h4
+                    key={`subtitle-${endAnimKey}-${allCollected}`}
+                    className="text-white/60"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: textDelay, ease }}
+                  >
+                    {allCollected
+                      ? "Your a superstar, you collected them all!"
+                      : "Here's a sticker!"}
+                  </motion.h4>
+                </div>
 
-          {/* Sticker collection */}
-          <div className="flex flex-col gap-3 items-center">
-            <StickerGrid stickers={stickers} position={position} />
-          </div>
-          <h4 className="text-white/70 w-full text-center">
-            {stickers.filter(Boolean).length >= 6
-              ? "You've earned all the stickers!"
-              : "Come back again for another one."}
-          </h4>
+                {/* Sticker collection */}
+                <div className="flex flex-col gap-3 items-center">
+                  <StickerGrid
+                    stickers={stickers}
+                    position={position}
+                    isResetting={isResetting}
+                  />
+                </div>
+
+                <motion.div
+                  key={`footer-${endAnimKey}-${allCollected}`}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: footerDelay, ease }}
+                >
+                  {allCollected ? (
+                    <button
+                      onClick={handleReset}
+                      className="text-white/70 hover:text-white transition-colors duration-200 w-full text-center cursor-pointer"
+                    >
+                      <h3>Reset your stickers!</h3>
+                    </button>
+                  ) : (
+                    <h3 className="text-white/70 w-full text-center">
+                      Come back again for another one.
+                    </h3>
+                  )}
+                </motion.div>
+              </>
+            );
+          })()}
         </section>
       )}
     </div>
