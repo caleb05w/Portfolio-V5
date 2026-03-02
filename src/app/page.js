@@ -459,7 +459,7 @@ export default function Page() {
                     if (offset === 1) introRevealDelay = 150;
                     else if (offset === 2) introRevealDelay = 300;
                   }
-                  const cardDuration = 500;
+                  const cardDuration = 700;
 
                   let videoLoadStrategy = "none";
                   if (offset === 0) {
