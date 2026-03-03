@@ -412,7 +412,7 @@ export default function Page() {
             <div className="flex flex-col items-center gap-[12vh] w-full">
               <div className="relative h-fit w-full flex items-center justify-center">
                 {/* Invisible spacer matching CaseCard's responsive sizing — gives container natural height */}
-                <div className="w-[90vw] md:w-[60vw] lg:w-[65vw] xl:w-[80vw] aspect-2/3 md:aspect-2/1 max-w-240 xl:max-w-320 invisible pointer-events-none shrink-0" />
+                <div className="w-[90vw] md:w-[60vw] lg:w-[65vw] xl:w-[80vw] aspect-2/3 md:aspect-2/1 max-h-[65svh] md:max-h-none min-h-[15rem] max-w-240 xl:max-w-320 invisible pointer-events-none shrink-0" />
                 {cards.map((card, index) => {
                   const offset = getVisualPosition(index);
                   const isActive = offset === 0;

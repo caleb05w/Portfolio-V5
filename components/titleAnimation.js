@@ -61,10 +61,10 @@ function TitleImg({ index, floatReady, revealed }) {
   );
 }
 
-export default function TitleAnimation({ revealed = false }) {
+export default function TitleAnimation({ revealed = false, scale: scaleProp = 1 }) {
   const wrapperRef = useRef(null);
   const innerRef = useRef(null);
-  const [scale, setScale] = useState(1);
+  const [computedScale, setComputedScale] = useState(1);
   const [floatReady, setFloatReady] = useState(false);
 
   useIsomorphicLayoutEffect(() => {
@@ -75,7 +75,7 @@ export default function TitleAnimation({ revealed = false }) {
     const update = () => {
       const available = wrapper.clientWidth;
       const natural = inner.scrollWidth;
-      if (natural > 0) setScale(Math.min(1, available / natural));
+      if (natural > 0) setComputedScale(Math.min(1, available / natural));
     };
 
     const ro = new ResizeObserver(update);
@@ -98,7 +98,7 @@ export default function TitleAnimation({ revealed = false }) {
         ref={innerRef}
         className="flex flex-col items-center w-max py-6 md:py-[5vh]"
         style={{
-          transform: `scale(${scale})`,
+          transform: `scale(${computedScale * scaleProp})`,
           transformOrigin: "center center",
           transition: "transform 450ms var(--ease-fast)",
           opacity: revealed ? 1 : 0,
