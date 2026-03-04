@@ -139,6 +139,7 @@ function Page() {
                       "My team developed a scalable navigation system to anchor the products rapid growth.",
                     ]}
                     Teammates={team}
+                    ideatedWith={["Amy Zhao", "Rebecca Yeung", "Jolly Liu", "Jessica Chan"]}
                     videoSrc="/images/RDCoverNew.mp4"
                     image2={{
                       src: "/images/showcase2.svg",
