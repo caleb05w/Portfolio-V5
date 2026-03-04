@@ -418,7 +418,7 @@ export default function Page() {
                   const isActive = offset === 0;
 
                   let transformStyle = "";
-                  let filterStyle = "";
+                  let overlayOpacity = 0;
                   let opacity = 1;
                   let zIndex = 10 - offset;
                   let pointerEvents = "auto";
@@ -439,11 +439,11 @@ export default function Page() {
                     opacityDelay = 0;
                   } else if (offset === 1) {
                     transformStyle = "translateY(6vh) scale(0.90)";
-                    filterStyle = "brightness(85%)";
+                    overlayOpacity = 0.15;
                     zIndex = 9;
                   } else if (offset === 2) {
                     transformStyle = "translateY(12vh) scale(0.80)";
-                    filterStyle = "brightness(70%)";
+                    overlayOpacity = 0.30;
                     opacityDelay = 0;
                     zIndex = 8;
                   } else if (offset === 3 || offset >= cards.length - 1) {
@@ -487,6 +487,7 @@ export default function Page() {
 
                   return (
                     <div
+                      key={card.id}
                       {...tooltip(
                         card.type === "Case"
                           ? "Click to Open"
@@ -494,22 +495,16 @@ export default function Page() {
                             ? null
                             : "Scroll Down!",
                       )}
-                      key={card.id}
                       style={{
                         zIndex,
                         opacity,
                         transform: transformStyle,
-                        filter: filterStyle,
                         pointerEvents,
                         transition: isInstantTransition
-                          ? "transform 0ms, filter 0ms, opacity 0ms"
-                          : `transform ${cardDuration}ms var(--ease-fast) ${introRevealDelay}ms, filter ${cardDuration}ms var(--ease-fast) ${introRevealDelay}ms, opacity ${cardDuration}ms var(--ease-fast) ${Math.max(introRevealDelay, opacityDelay)}ms`,
+                          ? "transform 0ms, opacity 0ms"
+                          : `transform ${cardDuration}ms var(--ease-fast) ${introRevealDelay}ms, opacity ${cardDuration}ms var(--ease-fast) ${Math.max(introRevealDelay, opacityDelay)}ms`,
                       }}
-                      className={`overflow-hidden min-w-0 flex-1 flex flex-row justify-center absolute
-            before:content-[''] before:absolute before:inset-0 before:rounded-[1rem] before:pointer-events-none before:transition-opacity before:duration-700
-            ${!isActive && "brightness-100"}
-            ${isActive ? "will-change-transform" : ""}
-          `}
+                      className="will-change-transform overflow-hidden min-w-0 flex-1 flex flex-row justify-center absolute"
                     >
                       <CaseCard
                         type={card.type}
@@ -535,6 +530,15 @@ export default function Page() {
                             ? endColors[endColorIndex]
                             : undefined
                         }
+                      />
+                      <div
+                        className="absolute inset-0 bg-black pointer-events-none rounded-xl"
+                        style={{
+                          opacity: overlayOpacity,
+                          transition: isInstantTransition
+                            ? "opacity 0ms"
+                            : `opacity ${cardDuration}ms var(--ease-fast) ${introRevealDelay}ms`,
+                        }}
                       />
                     </div>
                   );

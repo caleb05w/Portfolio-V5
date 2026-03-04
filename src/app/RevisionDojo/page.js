@@ -452,7 +452,7 @@ function Page() {
                 />
 
                 <ContainerVideo
-                  subheader="Final Solution"
+                  subheader="Final Solution"hel
                   title="Landing on the Final Solution"
                   body={[
                     "We recognized that most users wouldn't understand our features to the point of deriving value from them (\"whats question rush, and why do I care about it?), so a good middle point was navigating them to the subject itself, and letting them crawl from there via a directory of features",

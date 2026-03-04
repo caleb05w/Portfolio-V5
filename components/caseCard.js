@@ -170,35 +170,27 @@ function CaseCard({
                 </div>
               )}
 
-              {/* Gradient blur — stacked solid layers, compounds toward bottom */}
-              <div
-                className="absolute bottom-0 left-0 w-full h-[55%] pointer-events-none"
-                style={{
-                  backdropFilter: "blur(1px)",
-                  WebkitBackdropFilter: "blur(1px)",
-                }}
-              />
-              <div
-                className="absolute bottom-0 left-0 w-full h-[40%] pointer-events-none"
-                style={{
-                  backdropFilter: "blur(2px)",
-                  WebkitBackdropFilter: "blur(2px)",
-                }}
-              />
-              <div
-                className="absolute bottom-0 left-0 w-full h-[25%] pointer-events-none"
-                style={{
-                  backdropFilter: "blur(3px)",
-                  WebkitBackdropFilter: "blur(3px)",
-                }}
-              />
-              <div
-                className="absolute bottom-0 left-0 w-full h-[12%] pointer-events-none"
-                style={{
-                  backdropFilter: "blur(4px)",
-                  WebkitBackdropFilter: "blur(4px)",
-                }}
-              />
+              {/* Gradient blur — only on active card to avoid compositing cost */}
+              {position === 0 && (
+                <>
+                  <div
+                    className="absolute bottom-0 left-0 w-full h-[55%] pointer-events-none"
+                    style={{ backdropFilter: "blur(1px)", WebkitBackdropFilter: "blur(1px)" }}
+                  />
+                  <div
+                    className="absolute bottom-0 left-0 w-full h-[40%] pointer-events-none"
+                    style={{ backdropFilter: "blur(2px)", WebkitBackdropFilter: "blur(2px)" }}
+                  />
+                  <div
+                    className="absolute bottom-0 left-0 w-full h-[25%] pointer-events-none"
+                    style={{ backdropFilter: "blur(3px)", WebkitBackdropFilter: "blur(3px)" }}
+                  />
+                  <div
+                    className="absolute bottom-0 left-0 w-full h-[12%] pointer-events-none"
+                    style={{ backdropFilter: "blur(4px)", WebkitBackdropFilter: "blur(4px)" }}
+                  />
+                </>
+              )}
 
               {/* Gradient overlay */}
               <div
