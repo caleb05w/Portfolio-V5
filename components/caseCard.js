@@ -67,7 +67,7 @@ function CaseCard({
             flex flex-row items-center justify-center
             rounded-2xl md:rounded-xl
             overflow-hidden
-            ${className || "w-[90vw] md:w-[60vw] lg:w-[65vw] xl:w-[80vw] aspect-2/3 md:aspect-2/1 max-h-[65svh] md:max-h-none min-h-[15rem] max-w-240 xl:max-w-320"}
+            ${className || "w-[90vw] md:w-[60vw] lg:w-[65vw] xl:w-[80vw] aspect-2/3 md:aspect-2/1 max-h-[52svh] md:max-h-none min-h-[15rem] max-w-240 xl:max-w-320"}
            `}
     >
       {type === "Intro" && (

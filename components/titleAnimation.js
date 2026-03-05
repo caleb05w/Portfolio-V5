@@ -1,9 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+import { useEffect, useState } from "react";
 
 const FLOAT_PHASES =     ["0ms",  "150ms", "300ms", "75ms",  "225ms", "375ms", "110ms"];
 const POP_DELAYS =       [0,      70,      140,     210,     280,     350,     420];
@@ -61,28 +58,8 @@ function TitleImg({ index, floatReady, revealed }) {
   );
 }
 
-export default function TitleAnimation({ revealed = false, scale: scaleProp = 1 }) {
-  const wrapperRef = useRef(null);
-  const innerRef = useRef(null);
-  const [computedScale, setComputedScale] = useState(1);
+export default function TitleAnimation({ revealed = false }) {
   const [floatReady, setFloatReady] = useState(false);
-
-  useIsomorphicLayoutEffect(() => {
-    const wrapper = wrapperRef.current;
-    const inner = innerRef.current;
-    if (!wrapper || !inner) return;
-
-    const update = () => {
-      const available = wrapper.clientWidth;
-      const natural = inner.scrollWidth;
-      if (natural > 0) setComputedScale(Math.min(1, available / natural));
-    };
-
-    const ro = new ResizeObserver(update);
-    ro.observe(wrapper);
-    update();
-    return () => ro.disconnect();
-  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => setFloatReady(revealed), revealed ? 950 : 0);
@@ -90,15 +67,12 @@ export default function TitleAnimation({ revealed = false, scale: scaleProp = 1 
   }, [revealed]);
 
   return (
-    <div
-      ref={wrapperRef}
-      className="w-full overflow-hidden flex justify-center items-center relative"
-    >
+    <div className="w-full overflow-hidden flex justify-center items-center relative [container-type:inline-size]">
       <div
-        ref={innerRef}
         className="flex flex-col items-center w-max py-6 md:py-[5vh]"
         style={{
-          transform: `scale(${computedScale * scaleProp})`,
+          // Scale to fit container on mobile; ~580px is the natural content width
+          transform: "scale(clamp(0.45, calc(100cqw / 580px), 1))",
           transformOrigin: "center center",
           transition: "transform 450ms var(--ease-fast)",
           opacity: revealed ? 1 : 0,

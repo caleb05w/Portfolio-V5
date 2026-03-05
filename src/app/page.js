@@ -412,7 +412,7 @@ export default function Page() {
             <div className="flex flex-col items-center gap-[12vh] w-full">
               <div className="relative h-fit w-full flex items-center justify-center">
                 {/* Invisible spacer matching CaseCard's responsive sizing — gives container natural height */}
-                <div className="w-[90vw] md:w-[60vw] lg:w-[65vw] xl:w-[80vw] aspect-2/3 md:aspect-2/1 max-h-[65svh] md:max-h-none min-h-[15rem] max-w-240 xl:max-w-320 invisible pointer-events-none shrink-0" />
+                <div className="w-[90vw] md:w-[60vw] lg:w-[65vw] xl:w-[80vw] aspect-2/3 md:aspect-2/1 max-h-[52svh] md:max-h-none min-h-[15rem] max-w-240 xl:max-w-320 invisible pointer-events-none shrink-0" />
                 {cards.map((card, index) => {
                   const offset = getVisualPosition(index);
                   const isActive = offset === 0;
@@ -443,7 +443,7 @@ export default function Page() {
                     zIndex = 9;
                   } else if (offset === 2) {
                     transformStyle = "translateY(12vh) scale(0.80)";
-                    overlayOpacity = 0.30;
+                    overlayOpacity = 0.3;
                     opacityDelay = 0;
                     zIndex = 8;
                   } else if (offset === 3 || offset >= cards.length - 1) {
@@ -577,7 +577,7 @@ export default function Page() {
       </div>
 
       {/* Social buttons — bottom right corner */}
-      <div className="fixed bottom-4 right-4 z-20 flex flex-col gap-2">
+      <div className="hidden fixed lg:flex xl:flex md:flex bottom-4 right-4 z-20 flex-col gap-2">
         <a
           href="https://www.linkedin.com/in/caleb-wu-/"
           target="_blank"
