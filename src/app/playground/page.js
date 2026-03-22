@@ -66,9 +66,19 @@ function RivePreview({ src }) {
 
 const cards = [
   {
+    name: "Dynamic Island Streak",
+    category: "Animation",
+    year: "2026",
+    src: "/images/playground/dynamic-streaks.mp4",
+    alt: "Dynamic Island streak animation",
+    tools: ["Figma", "Rive"],
+    description:
+      "A small animation to celebrate when users rank up during RevisionDojo's Question Rush.",
+  },
+  {
     name: "Rank Up Animation",
     category: "Animation",
-    year: "2025",
+    year: "2026",
     src: "/images/playground/riv/rank-emerald-diamond.riv",
     alt: "Jojo listening to music",
     tools: ["Figma", "Rive"],
@@ -115,16 +125,7 @@ const cards = [
     isRiveFile: true,
     description: "Loading screen animation for RevisionDojo.",
   },
-  {
-    name: "Streak Animation",
-    category: "Animation",
-    year: "2026",
-    src: "/images/playground/riv/fire.riv",
-    alt: "Fire animation",
-    tools: ["Figma", "Rive"],
-    isRiveFile: true,
-    description: "Fire animation for our streaks.",
-  },
+
   {
     name: "3 Stars",
     category: "Animation",
@@ -144,6 +145,16 @@ const cards = [
     tools: ["Figma", "Rive"],
     isRiveFile: true,
     description: "Paywall animation for RevisionDojo",
+  },
+  {
+    name: "Streak Animation",
+    category: "Animation",
+    year: "2025",
+    src: "/images/playground/riv/fire.riv",
+    alt: "Fire animation",
+    tools: ["Figma", "Rive"],
+    isRiveFile: true,
+    description: "Fire animation for our streaks.",
   },
   {
     name: "Tank Heads",
@@ -236,6 +247,7 @@ function Page() {
 
   const current = selected ?? lastSelected;
   const isRiveFile = current.src?.endsWith(".riv");
+  const isMp4 = current.src?.endsWith(".mp4");
 
   const RiveComponent = useRiveLoop(isRiveFile ? current.src : null);
 
@@ -322,6 +334,16 @@ function Page() {
                     >
                       <RiveComponent className="w-full h-full" />
                     </div>
+                  ) : isMp4 ? (
+                    <video
+                      key={current.src}
+                      src={current.src}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="block object-cover h-full w-full flex-1 ease-in-out duration-200"
+                    />
                   ) : (
                     <Image
                       src={current.src}
@@ -397,6 +419,15 @@ function Page() {
                     </div>
                     {item.isRiveFile ? (
                       <RivePreview key={item.src} src={item.src} />
+                    ) : item.src?.endsWith(".mp4") ? (
+                      <video
+                        src={item.src}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="block object-cover w-full h-full absolute inset-0"
+                      />
                     ) : (
                       <Image
                         src={item.src}
@@ -428,7 +459,7 @@ function Page() {
               Twitter.
             </a>
           </h6>
-          <h6 className="text-text-secondary">Last Updated: Feb 14th</h6>
+          <h6 className="text-text-secondary">Last Updated: March 22</h6>
         </div>
       </div>
     </div>

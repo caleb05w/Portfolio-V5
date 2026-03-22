@@ -116,16 +116,22 @@ const HOBBIES = [
 
 const EXPERIENCES = [
   {
+    name: "Incoming @Ando",
+    role: "Product Design Intern",
+    year: "2026",
+    href: "https://ando.so",
+  },
+  {
     name: "RevisionDojo (YCF24)",
     role: "Product Design Intern",
     year: "2025",
-    href: "/RevisionDojo",
+    href: "https://www.revisiondojo.com/",
   },
   {
     name: "Metalab",
     role: "Product Design Intern",
     year: "2025",
-    href: "/Axis",
+    href: "https://www.metalab.com/",
   },
 ];
 
@@ -147,7 +153,7 @@ function ListRow({ name, role, year, href }) {
     <div className="flex flex-row w-full justify-between">
       <div className="flex flex-row gap-[0.5rem]">
         {href ? (
-          <a href={href}>
+          <a href={href} target="_blank">
             <h6 className="hover:text-text-secondary transition-colors duration-200">
               {name}
             </h6>
@@ -197,7 +203,7 @@ export default function Page() {
               <p>Hi, I&apos;m Caleb.</p>
               <div className="group flex flex-row gap-[0.5rem] items-center">
                 <h6 className="text-text-secondary">
-                  Product Designer | Seeking Summer &amp; Fall 2026 Internships
+                  Product Designer | Seeking Fall 2026 Internships
                 </h6>
                 <a
                   href="#contact"
@@ -209,11 +215,6 @@ export default function Page() {
             </div>
             <div className="flex flex-col gap-[2rem]">
               <p>I dream of shipping a product worldwide.</p>
-              <p>
-                {" "}
-                Currently, I'm a fourth year @SFU's School of Interactive Arts &
-                Technology.
-              </p>
               <p>
                 Most recently, I was the first design hire at{" "}
                 <a
@@ -297,7 +298,7 @@ export default function Page() {
           {/* Experience */}
           <div id="experience" className="flex flex-col gap-[1.25rem]">
             <SectionHeader title="Experiences" />
-            <div className="flex flex-col gap-[0.25rem]">
+            <div className="flex flex-col gap-[0.5rem]">
               {EXPERIENCES.map((item) => (
                 <ListRow key={item.name} {...item} />
               ))}
@@ -307,7 +308,7 @@ export default function Page() {
           {/* Education */}
           <div id="education" className="flex flex-col gap-[1.25rem]">
             <SectionHeader title="Education" />
-            <div className="flex flex-col gap-[0.25rem]">
+            <div className="flex flex-col gap-[0.5rem]">
               {EDUCATION.map((item) => (
                 <ListRow key={item.name} {...item} />
               ))}
